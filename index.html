@@ -1,0 +1,662 @@
+<title>二年級數學小測驗</title>
+<meta name="claude:viewport-fit-sides" content="cover">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Huninn&display=swap">
+<style>
+/* Layout: one centered column. Home (three lesson cards) -> quiz (one question at a time) -> result (stars + review). */
+:root{
+  --bg:#e6f2ff; --bg-dot:#cfe3fa; --card:#ffffff; --ink:#1c3558; --ink-soft:#52698a;
+  --blue:#4c9cf2; --blue-deep:#1f6bcc; --blue-soft:#d6eaff;
+  --yellow:#ffd53f; --yellow-deep:#e0aa00; --yellow-soft:#fff2bd; --on-yellow:#3a2e00;
+  --pink:#ffc2d6; --pink-deep:#d9467c; --pink-soft:#ffe6ef;
+  --line:#b9d4f3;
+  --btn:#2f7de1; --on-btn:#ffffff; --btn-shadow:#1a55a8;
+  --font-body:'Huninn','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --font-num:'Fredoka','Huninn','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+}
+@media (prefers-color-scheme: dark){
+  :root:not([data-theme="light"]){
+    --bg:#0f1e38; --bg-dot:#18305a; --card:#193056; --ink:#eaf3ff; --ink-soft:#a8bfdf;
+    --blue:#6fb2ff; --blue-deep:#9bcbff; --blue-soft:#244677;
+    --yellow:#ffd53f; --yellow-deep:#ffd53f; --yellow-soft:#4f4520;
+    --pink:#ff9ec1; --pink-deep:#ff9ec1; --pink-soft:#4e2a45;
+    --line:#36598a;
+    --btn:#5aa8ff; --on-btn:#0b2447; --btn-shadow:#3478c2;
+    color-scheme:dark;
+  }
+}
+:root[data-theme="dark"]{
+  --bg:#0f1e38; --bg-dot:#18305a; --card:#193056; --ink:#eaf3ff; --ink-soft:#a8bfdf;
+  --blue:#6fb2ff; --blue-deep:#9bcbff; --blue-soft:#244677;
+  --yellow:#ffd53f; --yellow-deep:#ffd53f; --yellow-soft:#4f4520;
+  --pink:#ff9ec1; --pink-deep:#ff9ec1; --pink-soft:#4e2a45;
+  --line:#36598a;
+  --btn:#5aa8ff; --on-btn:#0b2447; --btn-shadow:#3478c2;
+  color-scheme:dark;
+}
+
+*{box-sizing:border-box}
+body{
+  margin:0; background:var(--bg); color:var(--ink);
+  font-family:var(--font-body); font-size:18px; line-height:1.6;
+  background-image:radial-gradient(var(--bg-dot) 2px, transparent 2px);
+  background-size:28px 28px;
+  padding-block:16px 48px;
+  padding-left:max(16px, env(safe-area-inset-left, 0px));
+  padding-right:max(16px, env(safe-area-inset-right, 0px));
+}
+button{font:inherit; color:inherit}
+.wrap{max-width:680px; margin-inline:auto}
+.screen{display:grid; gap:18px}
+:focus-visible{outline:4px solid var(--yellow-deep); outline-offset:3px}
+
+/* ---------- hero ---------- */
+.hero{display:grid; grid-template-columns:auto minmax(0,1fr); gap:16px; align-items:center; padding:8px 0 4px}
+.hero svg{width:96px; height:96px}
+.eyebrow{margin:0; font-size:.85rem; color:var(--blue-deep); letter-spacing:.08em}
+h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:balance}
+.lede{margin:4px 0 0; color:var(--ink-soft)}
+
+/* ---------- lesson cards ---------- */
+.lessons{display:grid; gap:14px}
+.lesson{
+  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:14px; align-items:center;
+  padding:14px 16px; border-radius:26px; border:3px solid; text-align:left; cursor:pointer;
+  transition:transform .1s;
+}
+.lesson:active{transform:translateY(3px)}
+.lesson .ico{width:76px; height:76px}
+.lesson .no{margin:0; font-size:.85rem; letter-spacing:.08em}
+.lesson .nm{margin:0; font-size:1.3rem; line-height:1.3}
+.lesson .best{margin:2px 0 0; font-size:.9rem; color:var(--ink-soft)}
+.lesson .go{padding:6px 14px; border-radius:999px; font-size:.95rem; white-space:nowrap}
+.l1{background:var(--blue-soft); border-color:var(--blue); box-shadow:0 5px 0 var(--blue)}
+.l1 .no{color:var(--blue-deep)} .l1 .go{background:var(--blue); color:var(--on-btn)}
+.l2{background:var(--yellow-soft); border-color:var(--yellow-deep); box-shadow:0 5px 0 var(--yellow-deep)}
+.l2 .no{color:var(--ink-soft)} .l2 .go{background:var(--yellow); color:var(--on-yellow)}
+.l3{background:var(--pink-soft); border-color:var(--pink-deep); box-shadow:0 5px 0 var(--pink-deep)}
+.l3 .no{color:var(--pink-deep)} .l3 .go{background:var(--pink); color:#4a1530}
+.foot{margin:0; text-align:center; color:var(--ink-soft); font-size:.9rem}
+
+/* ---------- quiz ---------- */
+.topbar{display:flex; align-items:center; justify-content:space-between; gap:12px}
+.ghost{min-height:44px; padding:0 16px; border-radius:999px; border:3px solid var(--line); background:var(--card); cursor:pointer}
+.lesson-name{font-size:1rem; color:var(--ink-soft); text-align:right}
+.progress{display:flex; gap:6px; flex-wrap:wrap}
+.dot{flex:1 1 0; min-width:18px; height:14px; border-radius:999px; border:3px solid var(--line); background:var(--card)}
+.dot.cur{border-color:var(--blue); background:var(--blue-soft)}
+.dot.ok{border-color:var(--yellow-deep); background:var(--yellow)}
+.dot.bad{border-color:var(--pink-deep); background:var(--pink)}
+
+.qcard{background:var(--card); border:3px solid var(--line); border-radius:28px; padding:18px; display:grid; gap:14px; box-shadow:0 6px 0 var(--line)}
+.qhead{display:flex; align-items:center; justify-content:space-between; gap:10px}
+.qnum{display:inline-block; padding:2px 14px; border-radius:999px; background:var(--yellow); color:var(--on-yellow); font-family:var(--font-num); font-weight:700; font-size:1rem}
+.speak{width:48px; height:48px; border-radius:50%; border:3px solid var(--blue); background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; cursor:pointer}
+.speak svg{width:24px; height:24px}
+.qtext{margin:0; font-size:1.4rem; line-height:1.55; font-weight:400; text-wrap:pretty}
+.art{display:flex; justify-content:center; padding:6px 0; min-width:0}
+.art-svg{display:block; height:auto; max-width:100%}
+
+.choices{display:grid; gap:12px}
+.choice{
+  display:flex; align-items:center; gap:14px; width:100%; min-height:64px; padding:10px 16px;
+  font-size:1.2rem; text-align:left; cursor:pointer;
+  border:3px solid var(--line); border-radius:20px; background:var(--card); box-shadow:0 4px 0 var(--line);
+  transition:transform .08s;
+}
+.choice:hover:not(:disabled){border-color:var(--blue)}
+.choice:active:not(:disabled){transform:translateY(3px); box-shadow:0 1px 0 var(--line)}
+.zy{flex:none; width:40px; height:40px; border-radius:50%; background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; font-weight:700}
+.choice .tx{flex:1; min-width:0}
+.choice:disabled{cursor:default}
+.choice:disabled:not(.correct):not(.wrong){opacity:.55}
+.choice.correct{background:var(--yellow-soft); border-color:var(--yellow-deep); box-shadow:0 4px 0 var(--yellow-deep)}
+.choice.correct .zy{background:var(--yellow); color:var(--on-yellow)}
+.choice.correct::after{content:"✓"; font-weight:700; font-size:1.5rem; color:var(--blue-deep)}
+.choice.wrong{background:var(--pink-soft); border-color:var(--pink-deep); box-shadow:0 4px 0 var(--pink-deep)}
+.choice.wrong .zy{background:var(--pink); color:#4a1530}
+.choice.wrong::after{content:"✗"; font-weight:700; font-size:1.4rem; color:var(--pink-deep)}
+
+.fill{display:grid; gap:12px; justify-items:center}
+.fill-row{display:flex; align-items:center; gap:10px; font-size:1.3rem}
+.fill-lab{color:var(--ink-soft); font-size:1rem}
+.fill input{
+  width:6ch; padding:6px 10px; text-align:center; font:700 2.2rem var(--font-num);
+  border:3px solid var(--blue); border-radius:18px; background:var(--card); color:var(--ink);
+}
+.fill input.correct{background:var(--yellow-soft); border-color:var(--yellow-deep)}
+.fill input.wrong{background:var(--pink-soft); border-color:var(--pink-deep)}
+.primary{
+  min-height:56px; padding:0 30px; border:0; border-radius:999px; cursor:pointer;
+  background:var(--btn); color:var(--on-btn); font-size:1.2rem; box-shadow:0 5px 0 var(--btn-shadow);
+}
+.primary:active:not(:disabled){transform:translateY(3px); box-shadow:0 2px 0 var(--btn-shadow)}
+.primary:disabled{opacity:.45; cursor:default}
+
+.feedback{display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 14px; align-items:center; padding:16px; border-radius:24px; border:3px solid}
+.feedback svg{width:84px; height:84px; grid-row:span 2}
+.feedback.ok{background:var(--yellow-soft); border-color:var(--yellow-deep)}
+.feedback.no{background:var(--pink-soft); border-color:var(--pink-deep)}
+.feedback h3{margin:0; font-size:1.35rem; line-height:1.3}
+.feedback p{margin:0; font-size:1.05rem}
+.feedback .primary{grid-column:1 / -1; justify-self:center; margin-top:6px}
+.bounce{animation:bounce .7s ease-out 1}
+.shake{animation:shake .5s ease-out 1}
+@keyframes bounce{0%{transform:translateY(0)}35%{transform:translateY(-16px)}65%{transform:translateY(0)}82%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+
+/* ---------- art pieces ---------- */
+.tiles{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
+.tile{min-width:76px; padding:6px 14px; text-align:center; font:700 2rem var(--font-num); border-radius:18px; border:3px solid var(--blue); background:var(--blue-soft); color:var(--ink)}
+.tile.hi{background:var(--pink-soft); border-color:var(--pink-deep)}
+.tile.q{background:var(--yellow-soft); border-color:var(--yellow-deep); border-style:dashed}
+.tile.big{font-size:2.4rem; min-width:96px}
+.pv{display:grid; grid-template-columns:repeat(3, minmax(0,92px)); gap:10px; justify-content:center}
+.pv div{border:3px solid var(--line); border-radius:18px; overflow:hidden; text-align:center; background:var(--card)}
+.pv b{display:block; font:700 2.2rem var(--font-num); padding:2px 0}
+.pv span{display:block; padding:2px 0; font-size:.95rem; color:var(--on-yellow); background:var(--yellow)}
+.pv div:nth-child(1) span{background:var(--blue); color:var(--on-btn)}
+.pv div:nth-child(2) span{background:var(--pink); color:#4a1530}
+.vert{display:grid; grid-template-columns:2rem 2.4rem 2.4rem; justify-content:center; align-items:center; font:700 2.6rem/1.15 var(--font-num); text-align:center}
+.vert .vline{grid-column:1 / -1; height:0; border-top:5px solid var(--ink); margin-top:6px; border-radius:4px}
+.vert .vop{color:var(--pink-deep)}
+
+.f-yellow{fill:var(--yellow)} .f-yellow-d{fill:var(--yellow-deep)} .f-blue{fill:var(--blue)} .f-pink{fill:var(--pink)} .f-ink{fill:#23324d} .f-white{fill:#fff}
+.blk{fill:var(--blue-soft); stroke:var(--blue); stroke-width:2}
+.grid{stroke:var(--blue); stroke-width:1; fill:none; opacity:.6}
+.cube{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:1.5}
+.coin{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:3}
+.coin-in{fill:none; stroke:var(--yellow-deep); stroke-width:1.5}
+.note{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:3}
+.note-c{fill:var(--pink); stroke:var(--pink-deep); stroke-width:2}
+.svgtext{fill:var(--ink); font-family:var(--font-num); font-weight:700; text-anchor:middle}
+.coin-t{fill:var(--on-yellow); font-family:var(--font-num); font-weight:700; text-anchor:middle}
+.ruler{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:3}
+.tick{stroke:var(--ink); stroke-width:2; stroke-linecap:round}
+.guide{stroke:var(--pink-deep); stroke-width:2; stroke-dasharray:4 4}
+.seg-b{fill:var(--blue-soft); stroke:var(--blue); stroke-width:3}
+.seg-p{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:3}
+.seg-y{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:3}
+.seg-cut{fill:none; stroke:var(--pink-deep); stroke-width:3; stroke-dasharray:6 5}
+.plate{fill:var(--blue-soft); stroke:var(--blue); stroke-width:3}
+.cookie{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:2.5}
+.chip{fill:#7a4a2a}
+
+/* ---------- result ---------- */
+.res{background:var(--card); border:3px solid var(--line); border-radius:28px; padding:20px; display:grid; gap:12px; justify-items:center; text-align:center; box-shadow:0 6px 0 var(--line)}
+.res svg.mas{width:120px; height:120px}
+.res h2{margin:0; font-size:1.7rem}
+.stars{display:flex; gap:8px}
+.stars svg{width:52px; height:52px}
+.star-on{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:3; stroke-linejoin:round}
+.star-off{fill:none; stroke:var(--line); stroke-width:3; stroke-linejoin:round; stroke-dasharray:5 5}
+.score{margin:0; font:700 1.6rem var(--font-num)}
+.review{width:100%; text-align:left; display:grid; gap:10px}
+.review h3{margin:0; font-size:1.1rem}
+.rv{padding:10px 14px; border-radius:16px; background:var(--pink-soft); border:3px solid var(--pink-deep); font-size:1rem}
+.rv b{font-family:var(--font-num)}
+.rv small{display:block; color:var(--ink-soft)}
+.actions{display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
+.secondary{min-height:56px; padding:0 24px; border-radius:999px; border:3px solid var(--blue); background:var(--card); color:var(--blue-deep); font-size:1.15rem; cursor:pointer}
+
+@media (max-width:420px){
+  body{font-size:17px}
+  .lesson .ico{width:60px; height:60px}
+  .lesson .go{padding:4px 10px}
+  .qcard{padding:14px}
+  .qtext{font-size:1.3rem}
+}
+@media (prefers-reduced-motion:reduce){
+  *{animation:none !important; transition:none !important}
+}
+</style>
+
+<div class="wrap">
+
+  <section id="home" class="screen">
+    <header class="hero">
+      <div id="heroMascot"></div>
+      <div>
+        <p class="eyebrow">翰林版 · 115 學年度上學期</p>
+        <h1>二年級數學小測驗</h1>
+        <p class="lede">選一課開始，每課 10 題。答對就能集星星！</p>
+      </div>
+    </header>
+    <div class="lessons" id="lessonList"></div>
+    <p class="foot">題目旁邊的喇叭，可以把題目唸給你聽。</p>
+  </section>
+
+  <section id="quiz" class="screen" hidden>
+    <div class="topbar">
+      <button id="backBtn" class="ghost" type="button">← 回選單</button>
+      <div class="lesson-name" id="qLesson"></div>
+    </div>
+    <div class="progress" id="progress"></div>
+    <article class="qcard">
+      <div class="qhead">
+        <span class="qnum" id="qNum"></span>
+        <button id="speakBtn" class="speak" type="button" aria-label="把題目唸給我聽">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+        </button>
+      </div>
+      <h2 class="qtext" id="qText"></h2>
+      <div class="art" id="qArt"></div>
+      <div id="qAnswer"></div>
+    </article>
+    <div id="feedback" class="feedback" hidden aria-live="polite"></div>
+  </section>
+
+  <section id="result" class="screen" hidden>
+    <div class="res" id="resBox"></div>
+  </section>
+
+</div>
+
+<script>
+(function(){
+  "use strict";
+
+  /* ================= 小黃雞（原創吉祥物） ================= */
+  function chick(mood){
+    var eyes, brows = "", sweat = "", beak, wingR = 20, wingL = -20;
+    if(mood === "cheer"){
+      eyes = '<path d="M31 50q6-8 12 0M57 50q6-8 12 0" fill="none" stroke="#23324d" stroke-width="3.6" stroke-linecap="round"/>';
+      beak = '<path d="M43 57q7-5 14 0z" fill="#ffa23a"/><path d="M44 58q6 10 12 0z" fill="#e0527a"/>';
+      wingR = -35; wingL = 35;
+    } else {
+      eyes = '<circle cx="38" cy="50" r="4.4" class="f-ink"/><circle cx="62" cy="50" r="4.4" class="f-ink"/><circle cx="39.6" cy="48.4" r="1.5" class="f-white"/><circle cx="63.6" cy="48.4" r="1.5" class="f-white"/>';
+      beak = '<path d="M43 57q7-6 14 0q-7 8-14 0z" fill="#ffa23a"/>';
+    }
+    if(mood === "oops"){
+      brows = '<path d="M30 40l11 4M70 40l-11 4" stroke="#23324d" stroke-width="3" stroke-linecap="round"/>';
+      sweat = '<path d="M82 28q6 9 0 13q-6-4 0-13z" class="f-blue"/>';
+    }
+    return '<svg viewBox="0 0 100 100" role="img" aria-label="小黃雞">' +
+      '<ellipse cx="50" cy="56" rx="38" ry="35" class="f-yellow"/>' +
+      '<path d="M45 22q-5-10 1-13M52 21q0-10 6-11M58 23q4-9 10-6" fill="none" stroke="#e0aa00" stroke-width="4" stroke-linecap="round"/>' +
+      '<ellipse cx="13" cy="62" rx="8" ry="14" class="f-yellow-d" transform="rotate(' + wingR + ' 13 62)"/>' +
+      '<ellipse cx="87" cy="62" rx="8" ry="14" class="f-yellow-d" transform="rotate(' + wingL + ' 87 62)"/>' +
+      '<path d="M40 89v7M35 96h10M60 89v7M55 96h10" stroke="#ffa23a" stroke-width="3.5" stroke-linecap="round" fill="none"/>' +
+      eyes + brows + beak +
+      '<circle cx="29" cy="61" r="5.5" fill="#ff9fbd" opacity=".85"/><circle cx="71" cy="61" r="5.5" fill="#ff9fbd" opacity=".85"/>' +
+      '<path d="M27 76q23 12 46 0l-2 9q-21 9-42 0z" class="f-blue"/><path d="M62 82l6 12 7-3-4-11z" class="f-blue"/>' +
+      sweat + '</svg>';
+  }
+
+  /* ================= 插圖零件 ================= */
+  var S = 9;
+  function flat(x, y){
+    var d = "";
+    for(var i = 1; i < 10; i++){ d += "M" + (x + i*S) + " " + y + "V" + (y + S*10) + "M" + x + " " + (y + i*S) + "H" + (x + S*10); }
+    return '<rect x="' + x + '" y="' + y + '" width="' + (S*10) + '" height="' + (S*10) + '" rx="3" class="blk"/><path d="' + d + '" class="grid"/>';
+  }
+  function rod(x, y){
+    var d = "";
+    for(var i = 1; i < 10; i++){ d += "M" + x + " " + (y + i*S) + "H" + (x + S); }
+    return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + (S*10) + '" rx="2" class="blk"/><path d="' + d + '" class="grid"/>';
+  }
+  function cube(x, y){ return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + S + '" rx="2" class="cube"/>'; }
+
+  function blocksSvg(h, t, o){
+    var x = 4, g = "", i;
+    for(i = 0; i < h; i++){ g += flat(x, 6); x += S*10 + 10; }
+    if(h) x += 6;
+    for(i = 0; i < t; i++){ g += rod(x, 6); x += S + 4; }
+    if(t) x += 10;
+    for(i = 0; i < o; i++){ g += cube(x + (i % 3)*(S + 3), 6 + Math.floor(i/3)*(S + 3)); }
+    var w = x + Math.min(o, 3)*(S + 3) + 4;
+    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 102" style="width:min(100%,' + Math.round(w*1.8) + 'px)" role="img" aria-label="積木圖">' + g + '</svg>';
+  }
+  function hundredIsTenTens(){
+    var g = flat(4, 6) + '<text x="116" y="62" class="svgtext" font-size="34">=</text>', x = 140, i;
+    for(i = 0; i < 10; i++){ g += rod(x, 6); x += S + 4; }
+    var w = x + 4;
+    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 102" style="width:min(100%,' + Math.round(w*1.6) + 'px)" role="img" aria-label="1個百和10個十一樣多">' + g + '</svg>';
+  }
+  function moneySvg(notes, coins, coinLabel){
+    var x = 4, g = "", i;
+    for(i = 0; i < notes; i++){
+      g += '<rect x="' + x + '" y="14" width="88" height="48" rx="7" class="note"/><circle cx="' + (x + 22) + '" cy="38" r="12" class="note-c"/><text x="' + (x + 58) + '" y="46" class="svgtext" font-size="22">100</text>';
+      x += 98;
+    }
+    for(i = 0; i < coins; i++){
+      g += '<circle cx="' + (x + 22) + '" cy="38" r="22" class="coin"/><circle cx="' + (x + 22) + '" cy="38" r="17" class="coin-in"/><text x="' + (x + 22) + '" y="45" class="coin-t" font-size="19">' + coinLabel + '</text>';
+      x += 50;
+    }
+    var w = x + 4;
+    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 76" style="width:min(100%,' + Math.round(w*1.3) + 'px)" role="img" aria-label="錢幣圖">' + g + '</svg>';
+  }
+  function tiles(list, opt){
+    opt = opt || {};
+    return '<div class="tiles">' + list.map(function(n, i){
+      var cls = "tile";
+      if(n === "？") cls += " q";
+      if(opt.hi === i) cls += " hi";
+      if(opt.big) cls += " big";
+      return '<span class="' + cls + '">' + n + '</span>';
+    }).join("") + '</div>';
+  }
+  function placeValue(h, t, o){
+    return '<div class="pv"><div><b>' + h + '</b><span>百位</span></div><div><b>' + t + '</b><span>十位</span></div><div><b>' + o + '</b><span>個位</span></div></div>';
+  }
+  function vertical(a, b, op){
+    var A = String(a).split(""), B = String(b).split("");
+    return '<div class="vert" role="img" aria-label="' + a + (op === "+" ? " 加 " : " 減 ") + b + '">' +
+      '<span></span><span>' + A[0] + '</span><span>' + A[1] + '</span>' +
+      '<span class="vop">' + (op === "+" ? "+" : "−") + '</span><span>' + B[0] + '</span><span>' + B[1] + '</span>' +
+      '<span class="vline"></span></div>';
+  }
+  function chickRow(n){
+    var g = "", i;
+    for(i = 0; i < n; i++){
+      g += '<g transform="translate(' + (i*58) + ' ' + (i % 2 ? 6 : 0) + ') scale(.6)">' + chick("happy").replace(/<svg[^>]*>/, "").replace("</svg>", "") + '</g>';
+    }
+    var w = (n - 1)*58 + 64;
+    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 70" style="width:min(100%,' + Math.round(w*1.3) + 'px)" aria-hidden="true">' + g + '</svg>';
+  }
+  function cookiePlate(){
+    var g = '<ellipse cx="100" cy="64" rx="92" ry="22" class="plate"/><ellipse cx="100" cy="60" rx="66" ry="14" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".5"/>';
+    var pos = [[56,46],[88,40],[122,44],[150,50],[104,56]], i, p;
+    for(i = 0; i < pos.length; i++){
+      p = pos[i];
+      g += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="17" class="cookie"/>' +
+        '<circle cx="' + (p[0] - 6) + '" cy="' + (p[1] - 4) + '" r="2.5" class="chip"/><circle cx="' + (p[0] + 5) + '" cy="' + (p[1] + 2) + '" r="2.5" class="chip"/><circle cx="' + (p[0] - 1) + '" cy="' + (p[1] + 8) + '" r="2.5" class="chip"/>';
+    }
+    return '<svg class="art-svg" viewBox="0 0 200 90" style="width:min(100%,280px)" aria-hidden="true">' + g + '</svg>';
+  }
+
+  /* 尺：max=最大刻度, obj={type:'pencil'|'ribbon', from, to} */
+  function rulerSvg(max, obj){
+    var unit = 28, pad = 20, W = pad*2 + max*unit, ry = obj ? 58 : 10, H = ry + 50, g = "", i, x, x0, x1;
+    if(obj){
+      x0 = pad + obj.from*unit; x1 = pad + obj.to*unit;
+      if(obj.type === "pencil"){
+        g += '<rect x="' + x0 + '" y="14" width="12" height="26" rx="4" class="f-pink" stroke="var(--pink-deep)" stroke-width="2"/>';
+        g += '<rect x="' + (x0 + 12) + '" y="14" width="' + (x1 - x0 - 26) + '" height="26" class="seg-y"/>';
+        g += '<path d="M' + (x1 - 14) + ' 14L' + x1 + ' 27L' + (x1 - 14) + ' 40z" class="seg-p"/>';
+        g += '<path d="M' + (x1 - 5) + ' 23L' + x1 + ' 27L' + (x1 - 5) + ' 31z" class="f-ink"/>';
+      } else {
+        g += '<rect x="' + x0 + '" y="16" width="' + (x1 - x0) + '" height="22" rx="4" class="seg-b"/>';
+        g += '<path d="M' + (x0 + 10) + ' 16v22M' + (x1 - 10) + ' 16v22" stroke="var(--blue)" stroke-width="2" opacity=".6"/>';
+      }
+      g += '<path d="M' + x0 + ' 42V' + ry + 'M' + x1 + ' 42V' + ry + '" class="guide"/>';
+    }
+    g += '<rect x="' + (pad - 10) + '" y="' + ry + '" width="' + (max*unit + 20) + '" height="44" rx="8" class="ruler"/>';
+    for(i = 0; i <= max; i++){
+      x = pad + i*unit;
+      g += '<path d="M' + x + ' ' + ry + 'v15" class="tick"/><text x="' + x + '" y="' + (ry + 36) + '" class="svgtext" font-size="15">' + i + '</text>';
+    }
+    return '<svg class="art-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + Math.round(W*1.4) + 'px)" role="img" aria-label="尺">' + g + '</svg>';
+  }
+  /* 長條：rows=[[{len,label,cls}]]，各列由左邊開始 */
+  function barsSvg(rows, total){
+    var W = 340, left = 10, scale = 300/total, rh = 38, gap = 14, g = "", r, s, x, seg, w, y;
+    for(r = 0; r < rows.length; r++){
+      x = left; y = 8 + r*(rh + gap);
+      for(s = 0; s < rows[r].length; s++){
+        seg = rows[r][s]; w = seg.len*scale;
+        g += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + rh + '" rx="8" class="' + seg.cls + '"/>';
+        g += '<text x="' + (x + w/2) + '" y="' + (y + 25) + '" class="svgtext" font-size="16">' + seg.label + '</text>';
+        x += w;
+      }
+    }
+    var H = 8 + rows.length*(rh + gap);
+    return '<svg class="art-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + (W*1.3) + 'px)" role="img" aria-label="長度比較圖">' + g + '</svg>';
+  }
+  function unitBlocksSvg(){
+    var g = '<rect x="10" y="8" width="240" height="28" rx="8" class="seg-p"/><text x="130" y="28" class="svgtext" font-size="16">桌子</text>', i;
+    for(i = 0; i < 6; i++){ g += '<rect x="' + (10 + i*40) + '" y="48" width="40" height="28" class="seg-y"/>'; }
+    g += '<text x="130" y="100" class="svgtext" font-size="15">小花用小積木量：6 個</text>';
+    g += '<rect x="262" y="48" width="64" height="28" class="seg-b"/><text x="294" y="100" class="svgtext" font-size="15">大積木</text>';
+    return '<svg class="art-svg" viewBox="0 0 340 112" style="width:min(100%,460px)" role="img" aria-label="用小積木量桌子，另有一個比較長的大積木">' + g + '</svg>';
+  }
+  function cmBlocksSvg(n){
+    var g = "", i;
+    for(i = 0; i < n; i++){
+      g += '<rect x="' + (10 + i*46) + '" y="10" width="46" height="46" class="seg-y"/><text x="' + (33 + i*46) + '" y="40" class="svgtext" font-size="17">1公分</text>';
+    }
+    var w = n*46 + 20;
+    g += '<path d="M10 70v8h' + (n*46) + 'v-8" fill="none" stroke="var(--pink-deep)" stroke-width="3" stroke-linecap="round"/><text x="' + (w/2) + '" y="104" class="svgtext" font-size="20">一共 ？ 公分</text>';
+    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 114" style="width:min(100%,' + Math.round(w*1.3) + 'px)" role="img" aria-label="' + n + ' 個 1 公分積木">' + g + '</svg>';
+  }
+
+  /* 課程小圖示 */
+  var ICONS = {
+    1: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><rect x="8" y="14" width="34" height="34" rx="4" class="blk"/><path d="M19.3 14v34M30.7 14v34M8 25.3h34M8 36.7h34" class="grid"/><rect x="48" y="14" width="8" height="34" rx="2" class="blk"/><rect x="60" y="14" width="8" height="34" rx="2" class="blk"/><rect x="48" y="54" width="8" height="8" rx="2" class="cube"/><rect x="60" y="54" width="8" height="8" rx="2" class="cube"/><rect x="8" y="54" width="8" height="8" rx="2" class="cube"/></svg>',
+    2: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="32" class="f-yellow" stroke="var(--yellow-deep)" stroke-width="3"/><path d="M22 28h18M31 19v18" stroke="#3a2e00" stroke-width="5" stroke-linecap="round"/><path d="M40 52h18" stroke="#3a2e00" stroke-width="5" stroke-linecap="round"/></svg>',
+    3: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><rect x="6" y="26" width="64" height="26" rx="6" class="ruler"/><path d="M16 26v10M26 26v6M36 26v10M46 26v6M56 26v10" class="tick"/><rect x="10" y="12" width="40" height="9" rx="3" class="seg-b"/></svg>'
+  };
+
+  /* ================= 題目 ================= */
+  var LESSONS = [
+    { id:1, cls:"l1", name:"200以內的數", qs:[
+      { t:"mc", text:"189 的下一個數是多少？", art:tiles(["187","188","189","？"], {big:true}),
+        ch:["188","190","199"], a:1, exp:"189 再多 1 個，9 個一湊成 10 個一，要換成 1 個十，所以是 190。" },
+      { t:"mc", text:"一共有幾個積木？", art:blocksSvg(0,3,4),
+        ch:["7","34","43"], a:1, exp:"3 條是 3 個十，就是 30。再加 4 個小方塊，是 34。" },
+      { t:"mc", text:"看看積木，是幾個百、幾個十、幾個一？", art:blocksSvg(1,3,6),
+        ch:["1個百、6個十、3個一","1個百、3個十、6個一","3個百、1個十、6個一"], a:1, exp:"1 大片是 1 個百，3 條是 3 個十，6 個小方塊是 6 個一。合起來是 136。" },
+      { t:"fill", text:"1 個百、5 個十、2 個一，合起來是多少？", art:placeValue(1,5,2), a:"152", unit:"", exp:"100 + 50 + 2 = 152。" },
+      { t:"mc", text:"157 的 5，在哪一個位置？", art:tiles(["1","5","7"], {hi:1, big:true}),
+        ch:["百位","十位","個位"], a:1, exp:"157 是 1 個百、5 個十、7 個一。5 在十位，代表 50。" },
+      { t:"mc", text:"128 和 182，哪一個數比較大？", art:tiles(["128","182"], {big:true}),
+        ch:["128","182","一樣大"], a:1, exp:"先比百位，都是 1。再比十位，8 比 2 大，所以 182 比較大。" },
+      { t:"mc", text:"哪一組數，是從小排到大？", art:"",
+        ch:["130、120、109","120、109、130","109、120、130"], a:2, exp:"109 最小，接著是 120，最大是 130。從小排到大就是 109、120、130。" },
+      { t:"fill", text:"小豬有 1 張 100 元，還有 4 個 10 元。一共有多少元？", art:moneySvg(1,4,"10"), a:"140", unit:"元", exp:"100 元再加 4 個 10 元：100 + 10 + 10 + 10 + 10 = 140。" },
+      { t:"fill", text:"一個一個數下去，問號要填多少？", art:tiles(["120","130","140","？"], {big:true}), a:"150", unit:"", exp:"120、130、140，每次都多 10，所以下一個是 150。" },
+      { t:"fill", text:"1 個百，可以換成幾個十？", art:hundredIsTenTens(), a:"10", unit:"個十", exp:"1 個百 = 10 個十，也就是 100。" }
+    ]},
+    { id:2, cls:"l2", name:"二位數的直式加減", qs:[
+      { t:"fill", text:"用直式算算看，23 加 15 等於多少？", art:vertical(23,15,"+"), a:"38", unit:"", exp:"個位 3 + 5 = 8，十位 2 + 1 = 3，答案是 38。" },
+      { t:"fill", text:"小雞有 41 隻，又來了 36 隻。現在一共有幾隻？", art:chickRow(5), a:"77", unit:"隻", exp:"41 + 36：個位 1 + 6 = 7，十位 4 + 3 = 7，答案是 77 隻。" },
+      { t:"mc", text:"算 28 加 15。個位 8 + 5 = 13，接下來要怎麼做？", art:vertical(28,15,"+"),
+        ch:["個位寫 13，十位不變","個位寫 3，向十位進 1","個位寫 8，向十位進 5"], a:1, exp:"13 是 1 個十和 3 個一。個位寫 3，把 1 個十進到十位。" },
+      { t:"fill", text:"用直式算算看，36 加 27 等於多少？", art:vertical(36,27,"+"), a:"63", unit:"", exp:"個位 6 + 7 = 13，寫 3 進 1。十位 3 + 2 + 1 = 6。答案是 63。" },
+      { t:"fill", text:"用直式算算看，58 加 26 等於多少？", art:vertical(58,26,"+"), a:"84", unit:"", exp:"個位 8 + 6 = 14，寫 4 進 1。十位 5 + 2 + 1 = 8。答案是 84。" },
+      { t:"fill", text:"用直式算算看，69 減 24 等於多少？", art:vertical(69,24,"-"), a:"45", unit:"", exp:"個位 9 − 4 = 5，十位 6 − 2 = 4，答案是 45。" },
+      { t:"fill", text:"用直式算算看，85 減 32 等於多少？", art:vertical(85,32,"-"), a:"53", unit:"", exp:"個位 5 − 2 = 3，十位 8 − 3 = 5，答案是 53。" },
+      { t:"mc", text:"算 52 減 27。個位 2 不夠減 7，要怎麼辦？", art:vertical(52,27,"-"),
+        ch:["用 7 減 2 就好","十位的 5 變成 6","向十位借 1 個十，個位變成 12 再減"], a:2, exp:"個位不夠減，要從十位借 1 個十，換成 10 個一。2 + 10 = 12，再算 12 − 7 = 5。" },
+      { t:"fill", text:"用直式算算看，74 減 38 等於多少？", art:vertical(74,38,"-"), a:"36", unit:"", exp:"個位 4 不夠減 8，向十位借 1。14 − 8 = 6。十位剩 6，6 − 3 = 3。答案是 36。" },
+      { t:"fill", text:"盤子裡有 63 塊餅乾，吃掉 29 塊，還剩幾塊？", art:cookiePlate(), a:"34", unit:"塊", exp:"63 − 29：個位 3 不夠減 9，借 1 個十，13 − 9 = 4。十位 5 − 2 = 3。答案是 34 塊。" }
+    ]},
+    { id:3, cls:"l3", name:"量長度", qs:[
+      { t:"mc", text:"小花用小積木量桌子，量了 6 個。小明改用比較長的大積木來量，結果會怎麼樣？", art:unitBlocksSvg(),
+        ch:["也是 6 個","比 6 個多","比 6 個少"], a:2, exp:"每一個積木變長了，量完桌子需要的個數就會變少。" },
+      { t:"mc", text:"把 6 個 1 公分的積木排成一排，一共長幾公分？", art:cmBlocksSvg(6),
+        ch:["1 公分","6 公分","7 公分"], a:1, exp:"1 個積木是 1 公分，6 個積木就是 6 公分。" },
+      { t:"mc", text:"用尺量東西時，東西的一端要對齊尺的哪裡？", art:rulerSvg(10, null),
+        ch:["刻度 0","刻度 5","哪裡都可以"], a:0, exp:"量長度要從刻度 0 開始對齊，這樣才量得準。" },
+      { t:"mc", text:"這枝鉛筆長幾公分？", art:rulerSvg(10, {type:"pencil", from:0, to:7}),
+        ch:["8 公分","6 公分","7 公分"], a:2, exp:"鉛筆從 0 量到 7，所以長 7 公分。" },
+      { t:"mc", text:"這條緞帶從 3 量到 8，長幾公分？", art:rulerSvg(10, {type:"ribbon", from:3, to:8}),
+        ch:["8 公分","5 公分","3 公分"], a:1, exp:"從 3 數到 8，一共 5 格，每格 1 公分，所以長 5 公分。" },
+      { t:"mc", text:"粉紅色緞帶長 9 公分，藍色緞帶長 14 公分。哪一條比較長？", art:barsSvg([[{len:9,label:"粉紅 9 公分",cls:"seg-p"}],[{len:14,label:"藍色 14 公分",cls:"seg-b"}]],14),
+        ch:["粉紅色","藍色","一樣長"], a:1, exp:"14 比 9 大，所以藍色緞帶比較長。" },
+      { t:"fill", text:"鉛筆長 12 公分，橡皮擦長 5 公分。接在一起，一共長幾公分？", art:barsSvg([[{len:12,label:"鉛筆 12",cls:"seg-y"},{len:5,label:"橡皮擦 5",cls:"seg-p"}]],17), a:"17", unit:"公分", exp:"12 + 5 = 17，所以一共長 17 公分。" },
+      { t:"fill", text:"繩子長 20 公分，剪掉 8 公分，還剩幾公分？", art:barsSvg([[{len:12,label:"還剩 ？",cls:"seg-b"},{len:8,label:"剪掉 8",cls:"seg-cut"}]],20), a:"12", unit:"公分", exp:"20 − 8 = 12，所以還剩 12 公分。" },
+      { t:"fill", text:"粉紅色緞帶長 15 公分，藍色緞帶長 8 公分。粉紅色比藍色長幾公分？", art:barsSvg([[{len:15,label:"粉紅 15 公分",cls:"seg-p"}],[{len:8,label:"藍色 8 公分",cls:"seg-b"}]],15), a:"7", unit:"公分", exp:"比長多少要用減法。15 − 8 = 7，所以長 7 公分。" },
+      { t:"fill", text:"彩帶第一段長 25 公分，第二段長 17 公分。接起來一共長幾公分？", art:barsSvg([[{len:25,label:"第一段 25",cls:"seg-y"},{len:17,label:"第二段 17",cls:"seg-b"}]],42), a:"42", unit:"公分", exp:"25 + 17：個位 5 + 7 = 12，寫 2 進 1。十位 2 + 1 + 1 = 4。答案是 42 公分。" }
+    ]}
+  ];
+
+  /* ================= 狀態與畫面 ================= */
+  var ZY = ["ㄅ","ㄆ","ㄇ"];
+  var $ = function(id){ return document.getElementById(id); };
+  var reduce = false;
+  try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
+  var cur = { lesson:null, idx:0, marks:[], answered:false };
+
+  function getBest(){ try { return JSON.parse(localStorage.getItem("math2-best") || "{}"); } catch(e){ return {}; } }
+  function saveBest(id, score){
+    try {
+      var b = getBest();
+      if(b[id] === undefined || score > b[id]){ b[id] = score; localStorage.setItem("math2-best", JSON.stringify(b)); }
+    } catch(e){}
+  }
+  function show(name){
+    ["home","quiz","result"].forEach(function(n){ $(n).hidden = (n !== name); });
+    try { window.scrollTo(0, 0); } catch(e){}
+  }
+
+  function renderHome(){
+    $("heroMascot").innerHTML = chick("cheer");
+    var best = getBest();
+    $("lessonList").innerHTML = LESSONS.map(function(L, i){
+      var b = best[L.id];
+      var label = ["第一課","第二課","第三課"][i];
+      return '<button type="button" class="lesson ' + L.cls + '" data-lesson="' + L.id + '">' +
+        ICONS[L.id] +
+        '<div><p class="no">' + label + '</p><p class="nm">' + L.name + '</p><p class="best">' + (b === undefined ? "10 題 · 還沒玩過" : "10 題 · 最佳 " + b + " 題答對") + '</p></div>' +
+        '<span class="go">開始</span></button>';
+    }).join("");
+  }
+
+  function startLesson(id){
+    cur.lesson = LESSONS.filter(function(L){ return L.id === id; })[0];
+    cur.idx = 0; cur.marks = [];
+    $("qLesson").textContent = ["第一課","第二課","第三課"][id - 1] + "　" + cur.lesson.name;
+    show("quiz");
+    renderQuestion();
+  }
+
+  function renderProgress(){
+    var html = "", i, c, okN = cur.marks.filter(function(m){ return m; }).length;
+    for(i = 0; i < 10; i++){
+      c = "dot";
+      if(i < cur.marks.length) c += cur.marks[i] ? " ok" : " bad";
+      else if(i === cur.idx) c += " cur";
+      html += '<span class="' + c + '"></span>';
+    }
+    $("progress").innerHTML = html;
+    $("progress").setAttribute("aria-label", "第 " + (cur.idx + 1) + " 題，共 10 題，已答對 " + okN + " 題");
+  }
+
+  function renderQuestion(){
+    var q = cur.lesson.qs[cur.idx];
+    cur.answered = false;
+    renderProgress();
+    $("qNum").textContent = "第 " + (cur.idx + 1) + " 題";
+    $("qText").textContent = q.text;
+    $("qArt").innerHTML = q.art || "";
+    $("qArt").hidden = !q.art;
+    var fb = $("feedback"); fb.hidden = true; fb.innerHTML = "";
+    var box = $("qAnswer");
+    if(q.t === "mc"){
+      box.innerHTML = '<div class="choices">' + q.ch.map(function(c, i){
+        return '<button type="button" class="choice" data-i="' + i + '"><span class="zy">' + ZY[i] + '</span><span class="tx">' + c + '</span></button>';
+      }).join("") + '</div>';
+    } else {
+      box.innerHTML = '<form class="fill" id="fillForm" autocomplete="off">' +
+        '<span class="fill-lab">把答案寫在這裡</span>' +
+        '<div class="fill-row"><input id="fillInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" aria-label="答案"><span>' + (q.unit || "") + '</span></div>' +
+        '<button id="checkBtn" class="primary" type="submit" disabled>檢查答案</button></form>';
+      var inp = $("fillInput");
+      inp.addEventListener("input", function(){
+        inp.value = inp.value.replace(/[^0-9]/g, "");
+        $("checkBtn").disabled = inp.value === "";
+      });
+      $("fillForm").addEventListener("submit", function(ev){
+        ev.preventDefault();
+        if(cur.answered || inp.value === "") return;
+        var ok = Number(inp.value) === Number(q.a);
+        inp.className = ok ? "correct" : "wrong";
+        inp.disabled = true; $("checkBtn").disabled = true;
+        finishQuestion(ok, q.a + (q.unit ? " " + q.unit : ""));
+      });
+      try { inp.focus({preventScroll:true}); } catch(e){}
+    }
+  }
+
+  function finishQuestion(ok, answerText){
+    var q = cur.lesson.qs[cur.idx];
+    cur.answered = true;
+    cur.marks.push(ok);
+    renderProgress();
+    var last = cur.idx === 9;
+    var fb = $("feedback");
+    var praise = ["答對了！","好棒喔！","太厲害了！","你好聰明！"][cur.idx % 4];
+    fb.className = "feedback " + (ok ? "ok" : "no");
+    fb.innerHTML =
+      '<span class="' + (reduce ? "" : (ok ? "bounce" : "shake")) + '">' + chick(ok ? "cheer" : "oops") + '</span>' +
+      '<div><h3>' + (ok ? praise : "再看看喔，沒關係！") + '</h3>' +
+      '<p>' + (ok ? "" : "正確答案是 <b>" + answerText + "</b>。") + q.exp + '</p></div>' +
+      '<button type="button" class="primary" id="nextBtn">' + (last ? "看成績" : "下一題") + '</button>';
+    fb.hidden = false;
+    try { fb.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"nearest"}); } catch(e){}
+    $("nextBtn").addEventListener("click", function(){
+      if(last){ renderResult(); } else { cur.idx++; renderQuestion(); try { window.scrollTo(0,0); } catch(e){} }
+    });
+  }
+
+  function renderResult(){
+    var score = cur.marks.filter(function(m){ return m; }).length;
+    saveBest(cur.lesson.id, score);
+    var n = score >= 9 ? 3 : (score >= 6 ? 2 : 1);
+    var msg = score >= 9 ? "太厲害了！你是數學小達人！" : (score >= 6 ? "很棒喔！再練習一次會更好！" : "加油！多玩幾次就會進步！");
+    var starPath = "M30 6l7.2 15.4 16.8 2-12.4 11.5 3.4 16.6L30 43l-15 8.5 3.4-16.6L6 23.4l16.8-2z";
+    var stars = [1,2,3].map(function(i){
+      return '<svg viewBox="0 0 60 56" aria-hidden="true"><path d="' + starPath + '" class="' + (i <= n ? "star-on" : "star-off") + '"/></svg>';
+    }).join("");
+    var wrong = [];
+    cur.marks.forEach(function(m, i){
+      if(!m){
+        var q = cur.lesson.qs[i];
+        var ans = q.t === "mc" ? q.ch[q.a] : q.a + (q.unit ? " " + q.unit : "");
+        wrong.push('<div class="rv"><small>第 ' + (i + 1) + ' 題</small>' + q.text + '<br>正確答案：<b>' + ans + '</b></div>');
+      }
+    });
+    var nextLesson = LESSONS.filter(function(L){ return L.id === cur.lesson.id + 1; })[0];
+    $("resBox").innerHTML =
+      '<span class="' + (reduce ? "" : "bounce") + '">' + chick(score >= 6 ? "cheer" : "happy").replace("<svg ", '<svg class="mas" ') + '</span>' +
+      '<h2>' + msg + '</h2>' +
+      '<div class="stars" role="img" aria-label="得到 ' + n + ' 顆星">' + stars + '</div>' +
+      '<p class="score">答對 ' + score + ' / 10 題</p>' +
+      (wrong.length ? '<div class="review"><h3>這幾題再看一次：</h3>' + wrong.join("") + '</div>' : '<p>10 題全部答對，沒有要複習的題目！</p>') +
+      '<div class="actions"><button type="button" class="primary" id="againBtn">再玩一次</button>' +
+      (nextLesson ? '<button type="button" class="secondary" id="nextLessonBtn">下一課</button>' : '') +
+      '<button type="button" class="secondary" id="homeBtn">回選單</button></div>';
+    show("result");
+    $("againBtn").addEventListener("click", function(){ startLesson(cur.lesson.id); });
+    if(nextLesson){ $("nextLessonBtn").addEventListener("click", function(){ startLesson(nextLesson.id); }); }
+    $("homeBtn").addEventListener("click", goHome);
+  }
+
+  function goHome(){ renderHome(); show("home"); }
+
+  /* ================= 事件 ================= */
+  $("lessonList").addEventListener("click", function(ev){
+    var b = ev.target.closest("[data-lesson]");
+    if(b) startLesson(Number(b.getAttribute("data-lesson")));
+  });
+  $("backBtn").addEventListener("click", goHome);
+  $("qAnswer").addEventListener("click", function(ev){
+    var b = ev.target.closest(".choice");
+    if(!b || cur.answered) return;
+    var q = cur.lesson.qs[cur.idx], i = Number(b.getAttribute("data-i")), ok = i === q.a;
+    var all = $("qAnswer").querySelectorAll(".choice");
+    all.forEach(function(el, k){
+      el.disabled = true;
+      if(k === q.a) el.classList.add("correct");
+      else if(k === i) el.classList.add("wrong");
+    });
+    finishQuestion(ok, q.ch[q.a]);
+  });
+
+  /* 唸題目 */
+  var canSpeak = false;
+  try { canSpeak = "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined"; } catch(e){}
+  if(!canSpeak){ $("speakBtn").hidden = true; }
+  $("speakBtn").addEventListener("click", function(){
+    try {
+      var q = cur.lesson.qs[cur.idx];
+      window.speechSynthesis.cancel();
+      var u = new SpeechSynthesisUtterance(q.text);
+      u.lang = "zh-TW"; u.rate = 0.85;
+      window.speechSynthesis.speak(u);
+    } catch(e){}
+  });
+
+  renderHome();
+})();
+</script>

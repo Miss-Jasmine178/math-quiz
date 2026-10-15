@@ -1,228 +1,265 @@
+<!doctype html>
+<html lang="zh-Hant-TW">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
 <title>二年級數學小測驗</title>
-<meta name="claude:viewport-fit-sides" content="cover">
-<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Fredoka:wght@500;600;700&family=Huninn&display=swap">
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Huninn&family=Quicksand:wght@500;600&display=swap">
 <style>
-/* Layout: one centered column. Home (three lesson cards) -> quiz (one question at a time) -> result (stars + review). */
+/* Layout: one centered column. Home (ten unit cards) -> quiz (one question at a time) -> result (stars + review). */
 :root{
-  --bg:#e6f2ff; --bg-dot:#cfe3fa; --card:#ffffff; --ink:#1c3558; --ink-soft:#52698a;
-  --blue:#4c9cf2; --blue-deep:#1f6bcc; --blue-soft:#d6eaff;
-  --yellow:#ffd53f; --yellow-deep:#e0aa00; --yellow-soft:#fff2bd; --on-yellow:#3a2e00;
-  --pink:#ffc2d6; --pink-deep:#d9467c; --pink-soft:#ffe6ef;
-  --line:#b9d4f3;
-  --btn:#2f7de1; --on-btn:#ffffff; --btn-shadow:#1a55a8;
+  color-scheme:light;
+  --bg:#eaf4ff; --dot:#d6e7fb; --card:#ffffff; --ink:#263f5f; --ink-soft:#5d7392;
+  --blue:#5aa5f2; --blue-deep:#2468c4; --blue-soft:#dcecff;
+  --yellow:#ffd96b; --yellow-deep:#e0ad00; --yellow-soft:#fff4c9; --on-yellow:#3d3100;
+  --pink:#ffc6da; --pink-deep:#d4487f; --pink-soft:#ffe9f1; --on-pink:#4d1833;
+  --line:#c6dbf4; --btn:#2f7de1; --on-btn:#ffffff; --btn-edge:#1d5cb0;
+  --lift:0 12px 24px -16px rgba(36,104,196,.55);
   --font-body:'Huninn','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
-  --font-num:'Fredoka','Huninn','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
+  --font-num:'Quicksand','Huninn','Noto Sans TC','PingFang TC','Microsoft JhengHei',sans-serif;
 }
 @media (prefers-color-scheme: dark){
   :root:not([data-theme="light"]){
-    --bg:#0f1e38; --bg-dot:#18305a; --card:#193056; --ink:#eaf3ff; --ink-soft:#a8bfdf;
-    --blue:#6fb2ff; --blue-deep:#9bcbff; --blue-soft:#244677;
-    --yellow:#ffd53f; --yellow-deep:#ffd53f; --yellow-soft:#4f4520;
-    --pink:#ff9ec1; --pink-deep:#ff9ec1; --pink-soft:#4e2a45;
-    --line:#36598a;
-    --btn:#5aa8ff; --on-btn:#0b2447; --btn-shadow:#3478c2;
     color-scheme:dark;
+    --bg:#101f3a; --dot:#193259; --card:#18305a; --ink:#eaf3ff; --ink-soft:#aac0df;
+    --blue:#6fb2ff; --blue-deep:#a3cfff; --blue-soft:#25477a;
+    --yellow:#ffd96b; --yellow-deep:#ffd96b; --yellow-soft:#52471f;
+    --pink:#ff9fc2; --pink-deep:#ff9fc2; --pink-soft:#4f2b46;
+    --line:#37598a; --btn:#5aa8ff; --on-btn:#0b2447; --btn-edge:#3a7bc4;
+    --lift:0 12px 24px -16px rgba(0,0,0,.6);
   }
 }
 :root[data-theme="dark"]{
-  --bg:#0f1e38; --bg-dot:#18305a; --card:#193056; --ink:#eaf3ff; --ink-soft:#a8bfdf;
-  --blue:#6fb2ff; --blue-deep:#9bcbff; --blue-soft:#244677;
-  --yellow:#ffd53f; --yellow-deep:#ffd53f; --yellow-soft:#4f4520;
-  --pink:#ff9ec1; --pink-deep:#ff9ec1; --pink-soft:#4e2a45;
-  --line:#36598a;
-  --btn:#5aa8ff; --on-btn:#0b2447; --btn-shadow:#3478c2;
   color-scheme:dark;
+  --bg:#101f3a; --dot:#193259; --card:#18305a; --ink:#eaf3ff; --ink-soft:#aac0df;
+  --blue:#6fb2ff; --blue-deep:#a3cfff; --blue-soft:#25477a;
+  --yellow:#ffd96b; --yellow-deep:#ffd96b; --yellow-soft:#52471f;
+  --pink:#ff9fc2; --pink-deep:#ff9fc2; --pink-soft:#4f2b46;
+  --line:#37598a; --btn:#5aa8ff; --on-btn:#0b2447; --btn-edge:#3a7bc4;
+  --lift:0 12px 24px -16px rgba(0,0,0,.6);
 }
 
 *{box-sizing:border-box}
+[hidden]{display:none !important}
+html{-webkit-text-size-adjust:100%}
 body{
   margin:0; background:var(--bg); color:var(--ink);
-  font-family:var(--font-body); font-size:18px; line-height:1.6;
-  background-image:radial-gradient(var(--bg-dot) 2px, transparent 2px);
-  background-size:28px 28px;
-  padding-block:16px 48px;
+  font-family:var(--font-body); font-weight:400; font-size:17px; line-height:1.7; letter-spacing:.03em;
+  background-image:radial-gradient(var(--dot) 1.6px, transparent 1.6px); background-size:30px 30px;
+  padding-block:20px 56px;
   padding-left:max(16px, env(safe-area-inset-left, 0px));
   padding-right:max(16px, env(safe-area-inset-right, 0px));
 }
-button{font:inherit; color:inherit}
-.wrap{max-width:680px; margin-inline:auto}
-.screen{display:grid; gap:18px}
-:focus-visible{outline:4px solid var(--yellow-deep); outline-offset:3px}
+h1,h2,h3,h4,b,strong,button,th{font-weight:400}
+h1,h2,h3,p{margin:0}
+button{font:inherit; letter-spacing:inherit; color:inherit}
+.wrap{max-width:720px; margin-inline:auto}
+.screen{display:grid; gap:20px}
+:focus-visible{outline:3px solid var(--yellow-deep); outline-offset:3px}
+.num{font-family:var(--font-num); font-weight:500; letter-spacing:.02em}
 
-/* ---------- hero ---------- */
-.hero{display:grid; grid-template-columns:auto minmax(0,1fr); gap:16px; align-items:center; padding:8px 0 4px}
-.hero svg{width:96px; height:96px}
-.eyebrow{margin:0; font-size:.85rem; color:var(--blue-deep); letter-spacing:.08em}
-h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:balance}
-.lede{margin:4px 0 0; color:var(--ink-soft)}
-
-/* ---------- lesson cards ---------- */
-.lessons{display:grid; gap:14px}
+/* ---------- home ---------- */
+.hero{display:grid; grid-template-columns:auto minmax(0,1fr); gap:18px; align-items:center; padding:6px 0 2px}
+.hero-pig{width:104px; height:104px}
+.hero-pig svg{width:100%; height:100%; display:block}
+.eyebrow{font-size:.82rem; color:var(--blue-deep); letter-spacing:.14em}
+h1{font-size:clamp(1.7rem,6.4vw,2.2rem); line-height:1.3; text-wrap:balance; margin-top:2px}
+.lede{margin-top:6px; color:var(--ink-soft); font-size:.98rem}
+.lessons{display:grid; grid-template-columns:repeat(auto-fill,minmax(min(100%,300px),1fr)); gap:14px}
 .lesson{
-  display:grid; grid-template-columns:auto minmax(0,1fr) auto; gap:14px; align-items:center;
-  padding:14px 16px; border-radius:26px; border:3px solid; text-align:left; cursor:pointer;
-  transition:transform .1s;
+  display:grid; grid-template-columns:auto minmax(0,1fr); gap:14px; align-items:center;
+  padding:14px 16px; border-radius:24px; border:2px solid; text-align:left; cursor:pointer; box-shadow:var(--lift);
+  transition:transform .12s ease;
 }
-.lesson:active{transform:translateY(3px)}
-.lesson .ico{width:76px; height:76px}
-.lesson .no{margin:0; font-size:.85rem; letter-spacing:.08em}
-.lesson .nm{margin:0; font-size:1.3rem; line-height:1.3}
-.lesson .best{margin:2px 0 0; font-size:.9rem; color:var(--ink-soft)}
-.lesson .go{padding:6px 14px; border-radius:999px; font-size:.95rem; white-space:nowrap}
-.l1{background:var(--blue-soft); border-color:var(--blue); box-shadow:0 5px 0 var(--blue)}
-.l1 .no{color:var(--blue-deep)} .l1 .go{background:var(--blue); color:var(--on-btn)}
-.l2{background:var(--yellow-soft); border-color:var(--yellow-deep); box-shadow:0 5px 0 var(--yellow-deep)}
-.l2 .no{color:var(--ink-soft)} .l2 .go{background:var(--yellow); color:var(--on-yellow)}
-.l3{background:var(--pink-soft); border-color:var(--pink-deep); box-shadow:0 5px 0 var(--pink-deep)}
-.l3 .no{color:var(--pink-deep)} .l3 .go{background:var(--pink); color:#4a1530}
-.foot{margin:0; text-align:center; color:var(--ink-soft); font-size:.9rem}
+.lesson:hover{transform:translateY(-2px)}
+.lesson:active{transform:translateY(1px)}
+.lesson .ico{width:60px; height:60px; display:block}
+.lesson .no{font-size:.8rem; letter-spacing:.14em}
+.lesson .nm{font-size:1.14rem; line-height:1.4; margin-top:1px}
+.lesson .sub{font-size:.84rem; color:var(--ink-soft); line-height:1.5; margin-top:3px}
+.lesson .best{font-size:.8rem; color:var(--ink-soft); margin-top:5px}
+.l1{background:var(--blue-soft); border-color:var(--blue)} .l1 .no{color:var(--blue-deep)}
+.l2{background:var(--yellow-soft); border-color:var(--yellow-deep)} .l2 .no{color:var(--ink-soft)}
+.l3{background:var(--pink-soft); border-color:var(--pink-deep)} .l3 .no{color:var(--pink-deep)}
+.foot{text-align:center; color:var(--ink-soft); font-size:.88rem; line-height:1.8}
 
 /* ---------- quiz ---------- */
 .topbar{display:flex; align-items:center; justify-content:space-between; gap:12px}
-.ghost{min-height:44px; padding:0 16px; border-radius:999px; border:3px solid var(--line); background:var(--card); cursor:pointer}
-.lesson-name{font-size:1rem; color:var(--ink-soft); text-align:right}
-.progress{display:flex; gap:6px; flex-wrap:wrap}
-.dot{flex:1 1 0; min-width:18px; height:14px; border-radius:999px; border:3px solid var(--line); background:var(--card)}
+.ghost{min-height:44px; padding:0 18px; border-radius:999px; border:2px solid var(--line); background:var(--card); cursor:pointer; font-size:.95rem}
+.lesson-name{font-size:.95rem; color:var(--ink-soft); text-align:right}
+.progress{display:flex; gap:6px}
+.dot{flex:1 1 0; min-width:0; height:10px; border-radius:999px; border:2px solid var(--line); background:var(--card)}
 .dot.cur{border-color:var(--blue); background:var(--blue-soft)}
 .dot.ok{border-color:var(--yellow-deep); background:var(--yellow)}
 .dot.bad{border-color:var(--pink-deep); background:var(--pink)}
 
-.qcard{background:var(--card); border:3px solid var(--line); border-radius:28px; padding:18px; display:grid; gap:14px; box-shadow:0 6px 0 var(--line)}
+.qcard{background:var(--card); border:2px solid var(--line); border-radius:28px; padding:20px; display:grid; align-content:start; gap:16px; box-shadow:var(--lift)}
 .qhead{display:flex; align-items:center; justify-content:space-between; gap:10px}
-.qnum{display:inline-block; padding:2px 14px; border-radius:999px; background:var(--yellow); color:var(--on-yellow); font-family:var(--font-num); font-weight:700; font-size:1rem}
-.speak{width:48px; height:48px; border-radius:50%; border:3px solid var(--blue); background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; cursor:pointer}
-.speak svg{width:24px; height:24px}
-.qtext{margin:0; font-size:1.4rem; line-height:1.55; font-weight:400; text-wrap:pretty}
-.art{display:flex; justify-content:center; padding:6px 0; min-width:0}
+.qnum{display:inline-block; padding:1px 16px; border-radius:999px; background:var(--yellow); color:var(--on-yellow); font-size:.95rem; letter-spacing:.08em}
+.speak{width:46px; height:46px; border-radius:50%; border:2px solid var(--blue); background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; cursor:pointer}
+.speak svg{width:22px; height:22px}
+.qtext{font-size:1.28rem; line-height:1.75; text-wrap:pretty}
+.art{display:flex; justify-content:center; padding:4px 0; min-width:0}
 .art-svg{display:block; height:auto; max-width:100%}
 
 .choices{display:grid; gap:12px}
 .choice{
-  display:flex; align-items:center; gap:14px; width:100%; min-height:64px; padding:10px 16px;
-  font-size:1.2rem; text-align:left; cursor:pointer;
-  border:3px solid var(--line); border-radius:20px; background:var(--card); box-shadow:0 4px 0 var(--line);
+  display:flex; align-items:center; gap:14px; width:100%; min-height:62px; padding:10px 16px;
+  font-size:1.1rem; text-align:left; cursor:pointer;
+  border:2px solid var(--line); border-radius:20px; background:var(--card); box-shadow:0 3px 0 var(--line);
   transition:transform .08s;
 }
 .choice:hover:not(:disabled){border-color:var(--blue)}
-.choice:active:not(:disabled){transform:translateY(3px); box-shadow:0 1px 0 var(--line)}
-.zy{flex:none; width:40px; height:40px; border-radius:50%; background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; font-weight:700}
-.choice .tx{flex:1; min-width:0}
+.choice:active:not(:disabled){transform:translateY(2px); box-shadow:0 1px 0 var(--line)}
+.zy{flex:none; width:36px; height:36px; border-radius:50%; background:var(--blue-soft); color:var(--blue-deep); display:grid; place-items:center; font-size:1rem}
+.choice .tx{flex:1; min-width:0; font-family:var(--font-num); font-weight:500}
+.choice .tx.cn{font-family:var(--font-body); font-weight:400}
 .choice:disabled{cursor:default}
-.choice:disabled:not(.correct):not(.wrong){opacity:.55}
-.choice.correct{background:var(--yellow-soft); border-color:var(--yellow-deep); box-shadow:0 4px 0 var(--yellow-deep)}
+.choice:disabled:not(.correct):not(.wrong){opacity:.5}
+.choice.correct{background:var(--yellow-soft); border-color:var(--yellow-deep); box-shadow:0 3px 0 var(--yellow-deep)}
 .choice.correct .zy{background:var(--yellow); color:var(--on-yellow)}
-.choice.correct::after{content:"✓"; font-weight:700; font-size:1.5rem; color:var(--blue-deep)}
-.choice.wrong{background:var(--pink-soft); border-color:var(--pink-deep); box-shadow:0 4px 0 var(--pink-deep)}
-.choice.wrong .zy{background:var(--pink); color:#4a1530}
-.choice.wrong::after{content:"✗"; font-weight:700; font-size:1.4rem; color:var(--pink-deep)}
+.choice.correct::after{content:"✓"; font-size:1.4rem; color:var(--blue-deep)}
+.choice.wrong{background:var(--pink-soft); border-color:var(--pink-deep); box-shadow:0 3px 0 var(--pink-deep)}
+.choice.wrong .zy{background:var(--pink); color:var(--on-pink)}
+.choice.wrong::after{content:"✗"; font-size:1.3rem; color:var(--pink-deep)}
 
 .fill{display:grid; gap:12px; justify-items:center}
-.fill-row{display:flex; align-items:center; gap:10px; font-size:1.3rem}
-.fill-lab{color:var(--ink-soft); font-size:1rem}
+.fill-lab{color:var(--ink-soft); font-size:.9rem}
+.fill-row{display:flex; align-items:center; gap:10px; font-size:1.2rem}
 .fill input{
-  width:6ch; padding:6px 10px; text-align:center; font:700 2.2rem var(--font-num);
-  border:3px solid var(--blue); border-radius:18px; background:var(--card); color:var(--ink);
+  width:6.2ch; padding:6px 10px; text-align:center; font:500 2rem var(--font-num);
+  border:2px solid var(--blue); border-radius:18px; background:var(--card); color:var(--ink);
 }
 .fill input.correct{background:var(--yellow-soft); border-color:var(--yellow-deep)}
 .fill input.wrong{background:var(--pink-soft); border-color:var(--pink-deep)}
 .primary{
-  min-height:56px; padding:0 30px; border:0; border-radius:999px; cursor:pointer;
-  background:var(--btn); color:var(--on-btn); font-size:1.2rem; box-shadow:0 5px 0 var(--btn-shadow);
+  min-height:54px; padding:0 30px; border:0; border-radius:999px; cursor:pointer;
+  background:var(--btn); color:var(--on-btn); font-size:1.1rem; letter-spacing:.1em; box-shadow:0 4px 0 var(--btn-edge);
 }
-.primary:active:not(:disabled){transform:translateY(3px); box-shadow:0 2px 0 var(--btn-shadow)}
-.primary:disabled{opacity:.45; cursor:default}
+.primary:active:not(:disabled){transform:translateY(3px); box-shadow:0 1px 0 var(--btn-edge)}
+.primary:disabled{opacity:.4; cursor:default}
 
-.feedback{display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 14px; align-items:center; padding:16px; border-radius:24px; border:3px solid}
-.feedback svg{width:84px; height:84px; grid-row:span 2}
+.feedback{display:grid; grid-template-columns:auto minmax(0,1fr); gap:6px 14px; align-items:center; padding:16px 18px; border-radius:24px; border:2px solid}
+.feedback .fp{width:84px; height:84px; grid-row:span 2}
+.feedback .fp svg{width:100%; height:100%; display:block}
 .feedback.ok{background:var(--yellow-soft); border-color:var(--yellow-deep)}
 .feedback.no{background:var(--pink-soft); border-color:var(--pink-deep)}
-.feedback h3{margin:0; font-size:1.35rem; line-height:1.3}
-.feedback p{margin:0; font-size:1.05rem}
+.feedback h3{font-size:1.2rem; line-height:1.4}
+.feedback p{font-size:.98rem; line-height:1.75}
 .feedback .primary{grid-column:1 / -1; justify-self:center; margin-top:6px}
 .bounce{animation:bounce .7s ease-out 1}
 .shake{animation:shake .5s ease-out 1}
-@keyframes bounce{0%{transform:translateY(0)}35%{transform:translateY(-16px)}65%{transform:translateY(0)}82%{transform:translateY(-6px)}100%{transform:translateY(0)}}
+@keyframes bounce{0%{transform:translateY(0)}35%{transform:translateY(-14px)}65%{transform:translateY(0)}82%{transform:translateY(-5px)}100%{transform:translateY(0)}}
 @keyframes shake{0%,100%{transform:rotate(0)}25%{transform:rotate(-6deg)}75%{transform:rotate(6deg)}}
+@keyframes bob{0%,100%{transform:translateY(0) rotate(-1.5deg)}50%{transform:translateY(-5px) rotate(1.5deg)}}
+.hero-pig{animation:bob 3.4s ease-in-out infinite}
 
 /* ---------- art pieces ---------- */
-.tiles{display:flex; gap:10px; justify-content:center; flex-wrap:wrap}
-.tile{min-width:76px; padding:6px 14px; text-align:center; font:700 2rem var(--font-num); border-radius:18px; border:3px solid var(--blue); background:var(--blue-soft); color:var(--ink)}
+.tiles{display:flex; gap:8px; justify-content:center; flex-wrap:wrap}
+.tile{min-width:60px; padding:4px 12px; text-align:center; font:500 1.6rem var(--font-num); letter-spacing:.04em; border-radius:16px; border:2px solid var(--blue); background:var(--blue-soft); color:var(--ink)}
 .tile.hi{background:var(--pink-soft); border-color:var(--pink-deep)}
 .tile.q{background:var(--yellow-soft); border-color:var(--yellow-deep); border-style:dashed}
-.tile.big{font-size:2.4rem; min-width:96px}
+.tile.big{font-size:1.8rem; min-width:76px}
 .pv{display:grid; grid-template-columns:repeat(3, minmax(0,92px)); gap:10px; justify-content:center}
-.pv div{border:3px solid var(--line); border-radius:18px; overflow:hidden; text-align:center; background:var(--card)}
-.pv b{display:block; font:700 2.2rem var(--font-num); padding:2px 0}
-.pv span{display:block; padding:2px 0; font-size:.95rem; color:var(--on-yellow); background:var(--yellow)}
+.pv div{border:2px solid var(--line); border-radius:18px; overflow:hidden; text-align:center; background:var(--card)}
+.pv b{display:block; font:500 1.9rem var(--font-num); padding:2px 0}
+.pv span{display:block; padding:1px 0; font-size:.85rem; color:var(--on-yellow); background:var(--yellow)}
 .pv div:nth-child(1) span{background:var(--blue); color:var(--on-btn)}
-.pv div:nth-child(2) span{background:var(--pink); color:#4a1530}
-.vert{display:grid; grid-template-columns:2rem 2.4rem 2.4rem; justify-content:center; align-items:center; font:700 2.6rem/1.15 var(--font-num); text-align:center}
-.vert .vline{grid-column:1 / -1; height:0; border-top:5px solid var(--ink); margin-top:6px; border-radius:4px}
+.pv div:nth-child(2) span{background:var(--pink); color:var(--on-pink)}
+.vert{display:grid; grid-template-columns:1.6rem 2rem 2rem; column-gap:6px; justify-content:center; align-items:center; font:500 2.3rem/1.25 var(--font-num); text-align:center}
+.vert .vline{grid-column:1 / -1; height:0; border-top:3px solid var(--ink); margin-top:4px; border-radius:3px}
 .vert .vop{color:var(--pink-deep)}
+.eq{font:500 1.9rem/1.5 var(--font-num); text-align:center; letter-spacing:.06em; color:var(--ink)}
+.eq .ci{display:inline-block; width:1.5em; height:1.5em; line-height:1.4em; border:2px dashed var(--yellow-deep); border-radius:50%; background:var(--yellow-soft); font-size:.9em; vertical-align:middle}
+.bx{display:inline-block; width:1.4em; height:1.15em; border:2px dashed var(--yellow-deep); border-radius:8px; background:var(--yellow-soft); vertical-align:-.18em}
+.digital{display:inline-block; padding:2px 18px; border-radius:16px; border:2px solid var(--blue); background:var(--blue-soft); font:500 2.1rem var(--font-num); letter-spacing:.08em; font-variant-numeric:tabular-nums}
+.pairs{display:flex; flex-wrap:wrap; gap:12px; justify-content:center; align-items:center}
+.art-center{text-align:center}
 
-.f-yellow{fill:var(--yellow)} .f-yellow-d{fill:var(--yellow-deep)} .f-blue{fill:var(--blue)} .f-pink{fill:var(--pink)} .f-ink{fill:#23324d} .f-white{fill:#fff}
+.f-ink{fill:#4f3647} .f-white{fill:#ffffff}
 .blk{fill:var(--blue-soft); stroke:var(--blue); stroke-width:2}
-.grid{stroke:var(--blue); stroke-width:1; fill:none; opacity:.6}
+.grid{stroke:var(--blue); stroke-width:1; fill:none; opacity:.55}
 .cube{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:1.5}
-.coin{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:3}
-.coin-in{fill:none; stroke:var(--yellow-deep); stroke-width:1.5}
-.note{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:3}
-.note-c{fill:var(--pink); stroke:var(--pink-deep); stroke-width:2}
-.svgtext{fill:var(--ink); font-family:var(--font-num); font-weight:700; text-anchor:middle}
-.coin-t{fill:var(--on-yellow); font-family:var(--font-num); font-weight:700; text-anchor:middle}
-.ruler{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:3}
-.tick{stroke:var(--ink); stroke-width:2; stroke-linecap:round}
-.guide{stroke:var(--pink-deep); stroke-width:2; stroke-dasharray:4 4}
-.seg-b{fill:var(--blue-soft); stroke:var(--blue); stroke-width:3}
-.seg-p{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:3}
-.seg-y{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:3}
-.seg-cut{fill:none; stroke:var(--pink-deep); stroke-width:3; stroke-dasharray:6 5}
-.plate{fill:var(--blue-soft); stroke:var(--blue); stroke-width:3}
-.cookie{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:2.5}
-.chip{fill:#7a4a2a}
+.coin{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:2.5}
+.coin5{fill:var(--blue); stroke:var(--blue-deep); stroke-width:2.5}
+.coin1{fill:var(--pink); stroke:var(--pink-deep); stroke-width:2.5}
+.coin-in{fill:none; stroke:rgba(61,49,0,.28); stroke-width:1.4}
+.note{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:2.5}
+.note-c{fill:var(--pink); stroke:var(--pink-deep); stroke-width:1.8}
+.svgtext{fill:var(--ink); font-family:var(--font-num); font-weight:500; text-anchor:middle}
+.svgcn{fill:var(--ink); font-family:var(--font-body); font-weight:400; text-anchor:middle}
+.coin-t{fill:#2b2300; font-family:var(--font-num); font-weight:500; text-anchor:middle}
+.ruler{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:2.5}
+.tick{stroke:var(--ink); stroke-width:1.8; stroke-linecap:round}
+.guide{stroke:var(--pink-deep); stroke-width:1.8; stroke-dasharray:4 4}
+.seg-b{fill:var(--blue-soft); stroke:var(--blue); stroke-width:2.5}
+.seg-p{fill:var(--pink-soft); stroke:var(--pink-deep); stroke-width:2.5}
+.seg-y{fill:var(--yellow-soft); stroke:var(--yellow-deep); stroke-width:2.5}
+.seg-cut{fill:none; stroke:var(--pink-deep); stroke-width:2.5; stroke-dasharray:6 5}
+.plate{fill:var(--blue-soft); stroke:var(--blue); stroke-width:2.5}
+.cookie{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:2}
+.apple{fill:var(--pink); stroke:var(--pink-deep); stroke-width:2}
+.ball{fill:var(--blue); stroke:var(--blue-deep); stroke-width:2}
+.leaf{fill:var(--yellow-deep); stroke:none}
+.gbox{fill:var(--blue-soft); stroke:var(--blue); stroke-width:2; stroke-dasharray:5 4}
+.cup{fill:none; stroke:var(--blue-deep); stroke-width:3; stroke-linecap:round; stroke-linejoin:round}
+.water{fill:var(--blue); opacity:.55}
+.waterfull{fill:var(--blue); opacity:.55}
+.cell{stroke-width:2}
+.cA{fill:var(--blue-soft); stroke:var(--blue)} .cB{fill:var(--pink-soft); stroke:var(--pink-deep)} .cC{fill:var(--yellow-soft); stroke:var(--yellow-deep)}
+.lab-dot{stroke-width:2}
+.face{fill:var(--card); stroke:var(--blue); stroke-width:4}
+.ear{fill:var(--pink); stroke:var(--pink-deep); stroke-width:3}
+.hand-h{stroke:var(--pink-deep); stroke-width:6; stroke-linecap:round}
+.hand-m{stroke:var(--blue-deep); stroke-width:4; stroke-linecap:round}
+.cdot{fill:var(--ink)}
 
 /* ---------- result ---------- */
-.res{background:var(--card); border:3px solid var(--line); border-radius:28px; padding:20px; display:grid; gap:12px; justify-items:center; text-align:center; box-shadow:0 6px 0 var(--line)}
-.res svg.mas{width:120px; height:120px}
-.res h2{margin:0; font-size:1.7rem}
+.res{background:var(--card); border:2px solid var(--line); border-radius:28px; padding:24px 20px; display:grid; gap:14px; justify-items:center; text-align:center; box-shadow:var(--lift)}
+.res .rp{width:128px; height:128px}
+.res .rp svg{width:100%; height:100%; display:block}
+.res h2{font-size:1.45rem; line-height:1.5; text-wrap:balance}
 .stars{display:flex; gap:8px}
-.stars svg{width:52px; height:52px}
+.stars svg{width:50px; height:50px}
 .star-on{fill:var(--yellow); stroke:var(--yellow-deep); stroke-width:3; stroke-linejoin:round}
 .star-off{fill:none; stroke:var(--line); stroke-width:3; stroke-linejoin:round; stroke-dasharray:5 5}
-.score{margin:0; font:700 1.6rem var(--font-num)}
+.score{font:500 1.5rem var(--font-num); letter-spacing:.04em}
 .review{width:100%; text-align:left; display:grid; gap:10px}
-.review h3{margin:0; font-size:1.1rem}
-.rv{padding:10px 14px; border-radius:16px; background:var(--pink-soft); border:3px solid var(--pink-deep); font-size:1rem}
-.rv b{font-family:var(--font-num)}
-.rv small{display:block; color:var(--ink-soft)}
+.review h3{font-size:1rem; color:var(--ink-soft)}
+.rv{padding:10px 14px; border-radius:16px; background:var(--pink-soft); border:2px solid var(--pink-deep); font-size:.95rem; line-height:1.7}
+.rv small{display:block; color:var(--ink-soft); font-size:.8rem}
+.rv .ansn{font-family:var(--font-num); font-weight:500}
 .actions{display:flex; flex-wrap:wrap; gap:12px; justify-content:center}
-.secondary{min-height:56px; padding:0 24px; border-radius:999px; border:3px solid var(--blue); background:var(--card); color:var(--blue-deep); font-size:1.15rem; cursor:pointer}
+.secondary{min-height:54px; padding:0 24px; border-radius:999px; border:2px solid var(--blue); background:var(--card); color:var(--blue-deep); font-size:1.05rem; cursor:pointer}
 
 @media (max-width:420px){
-  body{font-size:17px}
-  .lesson .ico{width:60px; height:60px}
-  .lesson .go{padding:4px 10px}
-  .qcard{padding:14px}
-  .qtext{font-size:1.3rem}
+  body{font-size:16px}
+  .hero{gap:12px} .hero-pig{width:84px; height:84px}
+  .qcard{padding:16px}
+  .qtext{font-size:1.18rem}
+  .tile{min-width:52px; padding:4px 8px; font-size:1.4rem}
+  .tile.big{min-width:66px; font-size:1.6rem}
 }
 @media (prefers-reduced-motion:reduce){
   *{animation:none !important; transition:none !important}
 }
 </style>
+</head>
+<body>
 
 <div class="wrap">
 
   <section id="home" class="screen">
     <header class="hero">
-      <div id="heroMascot"></div>
+      <div class="hero-pig" id="heroPig"></div>
       <div>
-        <p class="eyebrow">翰林版 · 115 學年度上學期</p>
+        <p class="eyebrow">翰林版 · 二年級上學期</p>
         <h1>二年級數學小測驗</h1>
-        <p class="lede">選一課開始，每課 10 題。答對就能集星星！</p>
+        <p class="lede">選一個單元，每次從題庫隨機抽 10 題。答對就能集星星！</p>
       </div>
     </header>
     <div class="lessons" id="lessonList"></div>
-    <p class="foot">題目旁邊的喇叭，可以把題目唸給你聽。</p>
+    <p class="foot">每個單元有 100 題，每次玩都會抽到不同的題目。<br>題目旁邊的喇叭，可以把題目唸給你聽。</p>
   </section>
 
   <section id="quiz" class="screen" hidden>
@@ -233,9 +270,9 @@ h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:ba
     <div class="progress" id="progress"></div>
     <article class="qcard">
       <div class="qhead">
-        <span class="qnum" id="qNum"></span>
+        <span class="qnum num" id="qNum"></span>
         <button id="speakBtn" class="speak" type="button" aria-label="把題目唸給我聽">
-          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.4" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2.2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M4 9v6h4l5 4V5L8 9H4z" fill="currentColor"/><path d="M16.5 8.5a5 5 0 0 1 0 7M19 6a8.5 8.5 0 0 1 0 12"/></svg>
         </button>
       </div>
       <h2 class="qtext" id="qText"></h2>
@@ -252,270 +289,1003 @@ h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:ba
 </div>
 
 <script>
-(function(){
-  "use strict";
+"use strict";
 
-  /* ================= 小黃雞（原創吉祥物） ================= */
-  function chick(mood){
-    var eyes, brows = "", sweat = "", beak, wingR = 20, wingL = -20;
-    if(mood === "cheer"){
-      eyes = '<path d="M31 50q6-8 12 0M57 50q6-8 12 0" fill="none" stroke="#23324d" stroke-width="3.6" stroke-linecap="round"/>';
-      beak = '<path d="M43 57q7-5 14 0z" fill="#ffa23a"/><path d="M44 58q6 10 12 0z" fill="#e0527a"/>';
-      wingR = -35; wingL = 35;
-    } else {
-      eyes = '<circle cx="38" cy="50" r="4.4" class="f-ink"/><circle cx="62" cy="50" r="4.4" class="f-ink"/><circle cx="39.6" cy="48.4" r="1.5" class="f-white"/><circle cx="63.6" cy="48.4" r="1.5" class="f-white"/>';
-      beak = '<path d="M43 57q7-6 14 0q-7 8-14 0z" fill="#ffa23a"/>';
-    }
-    if(mood === "oops"){
-      brows = '<path d="M30 40l11 4M70 40l-11 4" stroke="#23324d" stroke-width="3" stroke-linecap="round"/>';
-      sweat = '<path d="M82 28q6 9 0 13q-6-4 0-13z" class="f-blue"/>';
-    }
-    return '<svg viewBox="0 0 100 100" role="img" aria-label="小黃雞">' +
-      '<ellipse cx="50" cy="56" rx="38" ry="35" class="f-yellow"/>' +
-      '<path d="M45 22q-5-10 1-13M52 21q0-10 6-11M58 23q4-9 10-6" fill="none" stroke="#e0aa00" stroke-width="4" stroke-linecap="round"/>' +
-      '<ellipse cx="13" cy="62" rx="8" ry="14" class="f-yellow-d" transform="rotate(' + wingR + ' 13 62)"/>' +
-      '<ellipse cx="87" cy="62" rx="8" ry="14" class="f-yellow-d" transform="rotate(' + wingL + ' 87 62)"/>' +
-      '<path d="M40 89v7M35 96h10M60 89v7M55 96h10" stroke="#ffa23a" stroke-width="3.5" stroke-linecap="round" fill="none"/>' +
-      eyes + brows + beak +
-      '<circle cx="29" cy="61" r="5.5" fill="#ff9fbd" opacity=".85"/><circle cx="71" cy="61" r="5.5" fill="#ff9fbd" opacity=".85"/>' +
-      '<path d="M27 76q23 12 46 0l-2 9q-21 9-42 0z" class="f-blue"/><path d="M62 82l6 12 7-3-4-11z" class="f-blue"/>' +
-      sweat + '</svg>';
-  }
-
-  /* ================= 插圖零件 ================= */
-  var S = 9;
-  function flat(x, y){
-    var d = "";
-    for(var i = 1; i < 10; i++){ d += "M" + (x + i*S) + " " + y + "V" + (y + S*10) + "M" + x + " " + (y + i*S) + "H" + (x + S*10); }
-    return '<rect x="' + x + '" y="' + y + '" width="' + (S*10) + '" height="' + (S*10) + '" rx="3" class="blk"/><path d="' + d + '" class="grid"/>';
-  }
-  function rod(x, y){
-    var d = "";
-    for(var i = 1; i < 10; i++){ d += "M" + x + " " + (y + i*S) + "H" + (x + S); }
-    return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + (S*10) + '" rx="2" class="blk"/><path d="' + d + '" class="grid"/>';
-  }
-  function cube(x, y){ return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + S + '" rx="2" class="cube"/>'; }
-
-  function blocksSvg(h, t, o){
-    var x = 4, g = "", i;
-    for(i = 0; i < h; i++){ g += flat(x, 6); x += S*10 + 10; }
-    if(h) x += 6;
-    for(i = 0; i < t; i++){ g += rod(x, 6); x += S + 4; }
-    if(t) x += 10;
-    for(i = 0; i < o; i++){ g += cube(x + (i % 3)*(S + 3), 6 + Math.floor(i/3)*(S + 3)); }
-    var w = x + Math.min(o, 3)*(S + 3) + 4;
-    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 102" style="width:min(100%,' + Math.round(w*1.8) + 'px)" role="img" aria-label="積木圖">' + g + '</svg>';
-  }
-  function hundredIsTenTens(){
-    var g = flat(4, 6) + '<text x="116" y="62" class="svgtext" font-size="34">=</text>', x = 140, i;
-    for(i = 0; i < 10; i++){ g += rod(x, 6); x += S + 4; }
-    var w = x + 4;
-    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 102" style="width:min(100%,' + Math.round(w*1.6) + 'px)" role="img" aria-label="1個百和10個十一樣多">' + g + '</svg>';
-  }
-  function moneySvg(notes, coins, coinLabel){
-    var x = 4, g = "", i;
-    for(i = 0; i < notes; i++){
-      g += '<rect x="' + x + '" y="14" width="88" height="48" rx="7" class="note"/><circle cx="' + (x + 22) + '" cy="38" r="12" class="note-c"/><text x="' + (x + 58) + '" y="46" class="svgtext" font-size="22">100</text>';
-      x += 98;
-    }
-    for(i = 0; i < coins; i++){
-      g += '<circle cx="' + (x + 22) + '" cy="38" r="22" class="coin"/><circle cx="' + (x + 22) + '" cy="38" r="17" class="coin-in"/><text x="' + (x + 22) + '" y="45" class="coin-t" font-size="19">' + coinLabel + '</text>';
-      x += 50;
-    }
-    var w = x + 4;
-    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 76" style="width:min(100%,' + Math.round(w*1.3) + 'px)" role="img" aria-label="錢幣圖">' + g + '</svg>';
-  }
-  function tiles(list, opt){
-    opt = opt || {};
-    return '<div class="tiles">' + list.map(function(n, i){
-      var cls = "tile";
-      if(n === "？") cls += " q";
-      if(opt.hi === i) cls += " hi";
-      if(opt.big) cls += " big";
-      return '<span class="' + cls + '">' + n + '</span>';
-    }).join("") + '</div>';
-  }
-  function placeValue(h, t, o){
-    return '<div class="pv"><div><b>' + h + '</b><span>百位</span></div><div><b>' + t + '</b><span>十位</span></div><div><b>' + o + '</b><span>個位</span></div></div>';
-  }
-  function vertical(a, b, op){
-    var A = String(a).split(""), B = String(b).split("");
-    return '<div class="vert" role="img" aria-label="' + a + (op === "+" ? " 加 " : " 減 ") + b + '">' +
-      '<span></span><span>' + A[0] + '</span><span>' + A[1] + '</span>' +
-      '<span class="vop">' + (op === "+" ? "+" : "−") + '</span><span>' + B[0] + '</span><span>' + B[1] + '</span>' +
-      '<span class="vline"></span></div>';
-  }
-  function chickRow(n){
-    var g = "", i;
-    for(i = 0; i < n; i++){
-      g += '<g transform="translate(' + (i*58) + ' ' + (i % 2 ? 6 : 0) + ') scale(.6)">' + chick("happy").replace(/<svg[^>]*>/, "").replace("</svg>", "") + '</g>';
-    }
-    var w = (n - 1)*58 + 64;
-    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 70" style="width:min(100%,' + Math.round(w*1.3) + 'px)" aria-hidden="true">' + g + '</svg>';
-  }
-  function cookiePlate(){
-    var g = '<ellipse cx="100" cy="64" rx="92" ry="22" class="plate"/><ellipse cx="100" cy="60" rx="66" ry="14" fill="none" stroke="var(--blue)" stroke-width="2" opacity=".5"/>';
-    var pos = [[56,46],[88,40],[122,44],[150,50],[104,56]], i, p;
-    for(i = 0; i < pos.length; i++){
-      p = pos[i];
-      g += '<circle cx="' + p[0] + '" cy="' + p[1] + '" r="17" class="cookie"/>' +
-        '<circle cx="' + (p[0] - 6) + '" cy="' + (p[1] - 4) + '" r="2.5" class="chip"/><circle cx="' + (p[0] + 5) + '" cy="' + (p[1] + 2) + '" r="2.5" class="chip"/><circle cx="' + (p[0] - 1) + '" cy="' + (p[1] + 8) + '" r="2.5" class="chip"/>';
-    }
-    return '<svg class="art-svg" viewBox="0 0 200 90" style="width:min(100%,280px)" aria-hidden="true">' + g + '</svg>';
-  }
-
-  /* 尺：max=最大刻度, obj={type:'pencil'|'ribbon', from, to} */
-  function rulerSvg(max, obj){
-    var unit = 28, pad = 20, W = pad*2 + max*unit, ry = obj ? 58 : 10, H = ry + 50, g = "", i, x, x0, x1;
-    if(obj){
-      x0 = pad + obj.from*unit; x1 = pad + obj.to*unit;
-      if(obj.type === "pencil"){
-        g += '<rect x="' + x0 + '" y="14" width="12" height="26" rx="4" class="f-pink" stroke="var(--pink-deep)" stroke-width="2"/>';
-        g += '<rect x="' + (x0 + 12) + '" y="14" width="' + (x1 - x0 - 26) + '" height="26" class="seg-y"/>';
-        g += '<path d="M' + (x1 - 14) + ' 14L' + x1 + ' 27L' + (x1 - 14) + ' 40z" class="seg-p"/>';
-        g += '<path d="M' + (x1 - 5) + ' 23L' + x1 + ' 27L' + (x1 - 5) + ' 31z" class="f-ink"/>';
-      } else {
-        g += '<rect x="' + x0 + '" y="16" width="' + (x1 - x0) + '" height="22" rx="4" class="seg-b"/>';
-        g += '<path d="M' + (x0 + 10) + ' 16v22M' + (x1 - 10) + ' 16v22" stroke="var(--blue)" stroke-width="2" opacity=".6"/>';
-      }
-      g += '<path d="M' + x0 + ' 42V' + ry + 'M' + x1 + ' 42V' + ry + '" class="guide"/>';
-    }
-    g += '<rect x="' + (pad - 10) + '" y="' + ry + '" width="' + (max*unit + 20) + '" height="44" rx="8" class="ruler"/>';
-    for(i = 0; i <= max; i++){
-      x = pad + i*unit;
-      g += '<path d="M' + x + ' ' + ry + 'v15" class="tick"/><text x="' + x + '" y="' + (ry + 36) + '" class="svgtext" font-size="15">' + i + '</text>';
-    }
-    return '<svg class="art-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + Math.round(W*1.4) + 'px)" role="img" aria-label="尺">' + g + '</svg>';
-  }
-  /* 長條：rows=[[{len,label,cls}]]，各列由左邊開始 */
-  function barsSvg(rows, total){
-    var W = 340, left = 10, scale = 300/total, rh = 38, gap = 14, g = "", r, s, x, seg, w, y;
-    for(r = 0; r < rows.length; r++){
-      x = left; y = 8 + r*(rh + gap);
-      for(s = 0; s < rows[r].length; s++){
-        seg = rows[r][s]; w = seg.len*scale;
-        g += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + rh + '" rx="8" class="' + seg.cls + '"/>';
-        g += '<text x="' + (x + w/2) + '" y="' + (y + 25) + '" class="svgtext" font-size="16">' + seg.label + '</text>';
-        x += w;
-      }
-    }
-    var H = 8 + rows.length*(rh + gap);
-    return '<svg class="art-svg" viewBox="0 0 ' + W + ' ' + H + '" style="width:min(100%,' + (W*1.3) + 'px)" role="img" aria-label="長度比較圖">' + g + '</svg>';
-  }
-  function unitBlocksSvg(){
-    var g = '<rect x="10" y="8" width="240" height="28" rx="8" class="seg-p"/><text x="130" y="28" class="svgtext" font-size="16">桌子</text>', i;
-    for(i = 0; i < 6; i++){ g += '<rect x="' + (10 + i*40) + '" y="48" width="40" height="28" class="seg-y"/>'; }
-    g += '<text x="130" y="100" class="svgtext" font-size="15">小花用小積木量：6 個</text>';
-    g += '<rect x="262" y="48" width="64" height="28" class="seg-b"/><text x="294" y="100" class="svgtext" font-size="15">大積木</text>';
-    return '<svg class="art-svg" viewBox="0 0 340 112" style="width:min(100%,460px)" role="img" aria-label="用小積木量桌子，另有一個比較長的大積木">' + g + '</svg>';
-  }
-  function cmBlocksSvg(n){
-    var g = "", i;
-    for(i = 0; i < n; i++){
-      g += '<rect x="' + (10 + i*46) + '" y="10" width="46" height="46" class="seg-y"/><text x="' + (33 + i*46) + '" y="40" class="svgtext" font-size="17">1公分</text>';
-    }
-    var w = n*46 + 20;
-    g += '<path d="M10 70v8h' + (n*46) + 'v-8" fill="none" stroke="var(--pink-deep)" stroke-width="3" stroke-linecap="round"/><text x="' + (w/2) + '" y="104" class="svgtext" font-size="20">一共 ？ 公分</text>';
-    return '<svg class="art-svg" viewBox="0 0 ' + w + ' 114" style="width:min(100%,' + Math.round(w*1.3) + 'px)" role="img" aria-label="' + n + ' 個 1 公分積木">' + g + '</svg>';
-  }
-
-  /* 課程小圖示 */
-  var ICONS = {
-    1: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><rect x="8" y="14" width="34" height="34" rx="4" class="blk"/><path d="M19.3 14v34M30.7 14v34M8 25.3h34M8 36.7h34" class="grid"/><rect x="48" y="14" width="8" height="34" rx="2" class="blk"/><rect x="60" y="14" width="8" height="34" rx="2" class="blk"/><rect x="48" y="54" width="8" height="8" rx="2" class="cube"/><rect x="60" y="54" width="8" height="8" rx="2" class="cube"/><rect x="8" y="54" width="8" height="8" rx="2" class="cube"/></svg>',
-    2: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><circle cx="38" cy="38" r="32" class="f-yellow" stroke="var(--yellow-deep)" stroke-width="3"/><path d="M22 28h18M31 19v18" stroke="#3a2e00" stroke-width="5" stroke-linecap="round"/><path d="M40 52h18" stroke="#3a2e00" stroke-width="5" stroke-linecap="round"/></svg>',
-    3: '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true"><rect x="6" y="26" width="64" height="26" rx="6" class="ruler"/><path d="M16 26v10M26 26v6M36 26v10M46 26v6M56 26v10" class="tick"/><rect x="10" y="12" width="40" height="9" rx="3" class="seg-b"/></svg>'
+/* =====================================================================
+   一、小工具
+   ===================================================================== */
+function mulberry32(a){
+  return function(){
+    a |= 0; a = a + 0x6D2B79F5 | 0;
+    var t = Math.imul(a ^ a >>> 15, 1 | a);
+    t = t + Math.imul(t ^ t >>> 7, 61 | t) ^ t;
+    return ((t ^ t >>> 14) >>> 0) / 4294967296;
   };
+}
+function R(r, a, b){ return a + Math.floor(r() * (b - a + 1)); }
+function pick(r, arr){ return arr[Math.floor(r() * arr.length)]; }
+function shuffle(r, arr){
+  var a = arr.slice(), i, j, t;
+  for(i = a.length - 1; i > 0; i--){ j = Math.floor(r() * (i + 1)); t = a[i]; a[i] = a[j]; a[j] = t; }
+  return a;
+}
+function wrap12(x){ return ((x - 1) % 12 + 12) % 12 + 1; }
+function twoOf(r, arr){
+  var a = pick(r, arr), b = pick(r, arr), g = 0;
+  while(b === a && g++ < 50) b = pick(r, arr);
+  return [a, b];
+}
+var D = ["零","一","二","三","四","五","六","七","八","九"];
+function cn(n){
+  var h = Math.floor(n / 100), t = Math.floor(n % 100 / 10), o = n % 10, s = "";
+  if(h) s += D[h] + "百";
+  if(t){ s += D[t] + "十"; if(o) s += D[o]; }
+  else if(o){ s += (h ? "零" : "") + D[o]; }
+  return s;
+}
 
-  /* ================= 題目 ================= */
-  var LESSONS = [
-    { id:1, cls:"l1", name:"200以內的數", qs:[
-      { t:"mc", text:"189 的下一個數是多少？", art:tiles(["187","188","189","？"], {big:true}),
-        ch:["188","190","199"], a:1, exp:"189 再多 1 個，9 個一湊成 10 個一，要換成 1 個十，所以是 190。" },
-      { t:"mc", text:"一共有幾個積木？", art:blocksSvg(0,3,4),
-        ch:["7","34","43"], a:1, exp:"3 條是 3 個十，就是 30。再加 4 個小方塊，是 34。" },
-      { t:"mc", text:"看看積木，是幾個百、幾個十、幾個一？", art:blocksSvg(1,3,6),
-        ch:["1個百、6個十、3個一","1個百、3個十、6個一","3個百、1個十、6個一"], a:1, exp:"1 大片是 1 個百，3 條是 3 個十，6 個小方塊是 6 個一。合起來是 136。" },
-      { t:"fill", text:"1 個百、5 個十、2 個一，合起來是多少？", art:placeValue(1,5,2), a:"152", unit:"", exp:"100 + 50 + 2 = 152。" },
-      { t:"mc", text:"157 的 5，在哪一個位置？", art:tiles(["1","5","7"], {hi:1, big:true}),
-        ch:["百位","十位","個位"], a:1, exp:"157 是 1 個百、5 個十、7 個一。5 在十位，代表 50。" },
-      { t:"mc", text:"128 和 182，哪一個數比較大？", art:tiles(["128","182"], {big:true}),
-        ch:["128","182","一樣大"], a:1, exp:"先比百位，都是 1。再比十位，8 比 2 大，所以 182 比較大。" },
-      { t:"mc", text:"哪一組數，是從小排到大？", art:"",
-        ch:["130、120、109","120、109、130","109、120、130"], a:2, exp:"109 最小，接著是 120，最大是 130。從小排到大就是 109、120、130。" },
-      { t:"fill", text:"小豬有 1 張 100 元，還有 4 個 10 元。一共有多少元？", art:moneySvg(1,4,"10"), a:"140", unit:"元", exp:"100 元再加 4 個 10 元：100 + 10 + 10 + 10 + 10 = 140。" },
-      { t:"fill", text:"一個一個數下去，問號要填多少？", art:tiles(["120","130","140","？"], {big:true}), a:"150", unit:"", exp:"120、130、140，每次都多 10，所以下一個是 150。" },
-      { t:"fill", text:"1 個百，可以換成幾個十？", art:hundredIsTenTens(), a:"10", unit:"個十", exp:"1 個百 = 10 個十，也就是 100。" }
-    ]},
-    { id:2, cls:"l2", name:"二位數的直式加減", qs:[
-      { t:"fill", text:"用直式算算看，23 加 15 等於多少？", art:vertical(23,15,"+"), a:"38", unit:"", exp:"個位 3 + 5 = 8，十位 2 + 1 = 3，答案是 38。" },
-      { t:"fill", text:"小雞有 41 隻，又來了 36 隻。現在一共有幾隻？", art:chickRow(5), a:"77", unit:"隻", exp:"41 + 36：個位 1 + 6 = 7，十位 4 + 3 = 7，答案是 77 隻。" },
-      { t:"mc", text:"算 28 加 15。個位 8 + 5 = 13，接下來要怎麼做？", art:vertical(28,15,"+"),
-        ch:["個位寫 13，十位不變","個位寫 3，向十位進 1","個位寫 8，向十位進 5"], a:1, exp:"13 是 1 個十和 3 個一。個位寫 3，把 1 個十進到十位。" },
-      { t:"fill", text:"用直式算算看，36 加 27 等於多少？", art:vertical(36,27,"+"), a:"63", unit:"", exp:"個位 6 + 7 = 13，寫 3 進 1。十位 3 + 2 + 1 = 6。答案是 63。" },
-      { t:"fill", text:"用直式算算看，58 加 26 等於多少？", art:vertical(58,26,"+"), a:"84", unit:"", exp:"個位 8 + 6 = 14，寫 4 進 1。十位 5 + 2 + 1 = 8。答案是 84。" },
-      { t:"fill", text:"用直式算算看，69 減 24 等於多少？", art:vertical(69,24,"-"), a:"45", unit:"", exp:"個位 9 − 4 = 5，十位 6 − 2 = 4，答案是 45。" },
-      { t:"fill", text:"用直式算算看，85 減 32 等於多少？", art:vertical(85,32,"-"), a:"53", unit:"", exp:"個位 5 − 2 = 3，十位 8 − 3 = 5，答案是 53。" },
-      { t:"mc", text:"算 52 減 27。個位 2 不夠減 7，要怎麼辦？", art:vertical(52,27,"-"),
-        ch:["用 7 減 2 就好","十位的 5 變成 6","向十位借 1 個十，個位變成 12 再減"], a:2, exp:"個位不夠減，要從十位借 1 個十，換成 10 個一。2 + 10 = 12，再算 12 − 7 = 5。" },
-      { t:"fill", text:"用直式算算看，74 減 38 等於多少？", art:vertical(74,38,"-"), a:"36", unit:"", exp:"個位 4 不夠減 8，向十位借 1。14 − 8 = 6。十位剩 6，6 − 3 = 3。答案是 36。" },
-      { t:"fill", text:"盤子裡有 63 塊餅乾，吃掉 29 塊，還剩幾塊？", art:cookiePlate(), a:"34", unit:"塊", exp:"63 − 29：個位 3 不夠減 9，借 1 個十，13 − 9 = 4。十位 5 − 2 = 3。答案是 34 塊。" }
-    ]},
-    { id:3, cls:"l3", name:"量長度", qs:[
-      { t:"mc", text:"小花用小積木量桌子，量了 6 個。小明改用比較長的大積木來量，結果會怎麼樣？", art:unitBlocksSvg(),
-        ch:["也是 6 個","比 6 個多","比 6 個少"], a:2, exp:"每一個積木變長了，量完桌子需要的個數就會變少。" },
-      { t:"mc", text:"把 6 個 1 公分的積木排成一排，一共長幾公分？", art:cmBlocksSvg(6),
-        ch:["1 公分","6 公分","7 公分"], a:1, exp:"1 個積木是 1 公分，6 個積木就是 6 公分。" },
-      { t:"mc", text:"用尺量東西時，東西的一端要對齊尺的哪裡？", art:rulerSvg(10, null),
-        ch:["刻度 0","刻度 5","哪裡都可以"], a:0, exp:"量長度要從刻度 0 開始對齊，這樣才量得準。" },
-      { t:"mc", text:"這枝鉛筆長幾公分？", art:rulerSvg(10, {type:"pencil", from:0, to:7}),
-        ch:["8 公分","6 公分","7 公分"], a:2, exp:"鉛筆從 0 量到 7，所以長 7 公分。" },
-      { t:"mc", text:"這條緞帶從 3 量到 8，長幾公分？", art:rulerSvg(10, {type:"ribbon", from:3, to:8}),
-        ch:["8 公分","5 公分","3 公分"], a:1, exp:"從 3 數到 8，一共 5 格，每格 1 公分，所以長 5 公分。" },
-      { t:"mc", text:"粉紅色緞帶長 9 公分，藍色緞帶長 14 公分。哪一條比較長？", art:barsSvg([[{len:9,label:"粉紅 9 公分",cls:"seg-p"}],[{len:14,label:"藍色 14 公分",cls:"seg-b"}]],14),
-        ch:["粉紅色","藍色","一樣長"], a:1, exp:"14 比 9 大，所以藍色緞帶比較長。" },
-      { t:"fill", text:"鉛筆長 12 公分，橡皮擦長 5 公分。接在一起，一共長幾公分？", art:barsSvg([[{len:12,label:"鉛筆 12",cls:"seg-y"},{len:5,label:"橡皮擦 5",cls:"seg-p"}]],17), a:"17", unit:"公分", exp:"12 + 5 = 17，所以一共長 17 公分。" },
-      { t:"fill", text:"繩子長 20 公分，剪掉 8 公分，還剩幾公分？", art:barsSvg([[{len:12,label:"還剩 ？",cls:"seg-b"},{len:8,label:"剪掉 8",cls:"seg-cut"}]],20), a:"12", unit:"公分", exp:"20 − 8 = 12，所以還剩 12 公分。" },
-      { t:"fill", text:"粉紅色緞帶長 15 公分，藍色緞帶長 8 公分。粉紅色比藍色長幾公分？", art:barsSvg([[{len:15,label:"粉紅 15 公分",cls:"seg-p"}],[{len:8,label:"藍色 8 公分",cls:"seg-b"}]],15), a:"7", unit:"公分", exp:"比長多少要用減法。15 − 8 = 7，所以長 7 公分。" },
-      { t:"fill", text:"彩帶第一段長 25 公分，第二段長 17 公分。接起來一共長幾公分？", art:barsSvg([[{len:25,label:"第一段 25",cls:"seg-y"},{len:17,label:"第二段 17",cls:"seg-b"}]],42), a:"42", unit:"公分", exp:"25 + 17：個位 5 + 7 = 12，寫 2 進 1。十位 2 + 1 + 1 = 4。答案是 42 公分。" }
-    ]}
+/* 題目建構：MC 選項會打亂；MCF 選項順序固定；FILL 是填空 */
+function MC(key, text, art, right, wrongs, exp, r){
+  var seen = {}, opts = [String(right)], sh;
+  seen[String(right)] = 1;
+  wrongs.forEach(function(w){ w = String(w); if(!seen[w]){ seen[w] = 1; opts.push(w); } });
+  opts = opts.slice(0, 3);
+  sh = shuffle(r, opts);
+  return { t:"mc", key:key, text:text, art:art || "", ch:sh, a:sh.indexOf(String(right)), exp:exp };
+}
+function MCF(key, text, art, choices, ai, exp){
+  return { t:"mc", key:key, text:text, art:art || "", ch:choices.map(String), a:ai, exp:exp };
+}
+function FILL(key, text, art, ans, unit, exp){
+  return { t:"fill", key:key, text:text, art:art || "", a:String(ans), unit:unit || "", exp:exp };
+}
+
+/* 故事用的角色與物品 */
+var PIGN = ["小豬","粉粉","胖胖","呆呆","哼哼","團團","桃桃","波波"];
+var OBJ = [["蘋果","顆"],["餅乾","塊"],["貼紙","張"],["彈珠","顆"],["氣球","個"],["糖果","顆"],["鉛筆","枝"],["小花","朵"],["貝殼","個"],["紙鶴","隻"]];
+var EDIBLE = ["蘋果", "餅乾", "糖果"];
+/* 依物品選擇通順的動詞：能吃的可以「吃掉」，其他的用「送給朋友」或「用掉」 */
+function lessVerb(r, o){ return EDIBLE.indexOf(o[0]) >= 0 ? pick(r, ["吃掉", "送給朋友"]) : pick(r, ["送給朋友", "用掉"]); }
+
+/* =====================================================================
+   二、小豬（原創角色，手繪風）
+   ===================================================================== */
+function pig(mood){
+  var INK = "#5b3c4c", PK = "#ffc9dc", PK2 = "#ffa3c1", SN = "#ff8fb3";
+  var BODY = "M17 56C13 33 33 15 54 16C77 17 90 34 88 57C86 77 72 88 50 88C30 88 19 76 17 56Z";
+  var ln = 'fill="none" stroke="' + INK + '" stroke-width="2.6" stroke-linecap="round" stroke-linejoin="round"';
+  function fo(d, fill){ return '<path d="' + d + '" fill="' + fill + '" transform="translate(1.6 1.8)"/><path d="' + d + '" ' + ln + '/>'; }
+  var eyes, mouth, extra = "";
+  if(mood === "cheer"){
+    eyes = '<path d="M30 47q5-7 11 0M60 46q5-7 11 0" ' + ln + '/>';
+    mouth = '<path d="M44 74q8 10 17 0z" fill="#e8587f" stroke="' + INK + '" stroke-width="2.2" stroke-linejoin="round"/>';
+    extra = '<path d="M9 26l2.4 4.8 5.3.7-3.9 3.7 1 5.3-4.8-2.6-4.8 2.6 1-5.3-3.9-3.7 5.3-.7z" fill="#ffd96b" stroke="' + INK + '" stroke-width="1.5" stroke-linejoin="round"/>' +
+            '<path d="M91 36l1.8 3.6 4 .6-2.9 2.8.7 4-3.6-1.9-3.6 1.9.7-4-2.9-2.8 4-.6z" fill="#ffd96b" stroke="' + INK + '" stroke-width="1.4" stroke-linejoin="round"/>';
+  } else if(mood === "oops"){
+    eyes = '<circle cx="36" cy="48" r="3.1" fill="' + INK + '"/><circle cx="66" cy="47" r="2.5" fill="' + INK + '"/><path d="M28 39l11 3M75 38l-10 3" ' + ln + '/>';
+    mouth = '<path d="M44 77q4-4 8 0t8 0" ' + ln + '/>';
+    extra = '<path d="M84 26q7 9 0 14q-7-5 0-14z" fill="#8cc4ff" stroke="' + INK + '" stroke-width="1.6" stroke-linejoin="round"/>';
+  } else {
+    eyes = '<circle cx="34" cy="49" r="4.3" fill="' + INK + '"/><circle cx="67" cy="43" r="2.4" fill="' + INK + '"/>';
+    mouth = '<path d="M44 75q5 4 9 0q3-2 7 1" ' + ln + '/><path d="M54 77q0 7 5 6q3-3 0-8z" fill="#ec5a82" stroke="' + INK + '" stroke-width="1.8" stroke-linejoin="round"/>';
+  }
+  return '<svg viewBox="0 0 100 100" role="img" aria-label="小豬">' +
+    '<path d="M88 64c9 1 12-7 7-11c-4-3-9 1-6 4" ' + ln + '/>' +
+    fo("M30 82c-3 8-2 13 5 13c6 0 7-6 6-12", PK2) + fo("M62 83c-1 7 0 12 6 12c6 0 6-6 4-12", PK2) +
+    fo("M24 28L19 15L38 21Z", PK2) + fo("M67 19L90 9L84 38Z", PK2) +
+    fo(BODY, PK) +
+    '<path d="' + BODY + '" fill="none" stroke="' + INK + '" stroke-width="1.4" opacity=".3" transform="translate(-1.6 -1.2) rotate(1 50 55)"/>' +
+    '<path d="M50 17c-4-8 1-12 4-9M56 17c1-7 6-8 9-5" ' + ln + '/>' +
+    '<circle cx="27" cy="58" r="5" fill="#ff7fa6" opacity=".5"/><circle cx="79" cy="57" r="5" fill="#ff7fa6" opacity=".5"/>' +
+    eyes +
+    '<ellipse cx="52" cy="60" rx="17" ry="11" transform="rotate(-4 52 60)" fill="' + SN + '" stroke="' + INK + '" stroke-width="2.4"/>' +
+    '<ellipse cx="45.5" cy="60" rx="2.2" ry="3.2" fill="' + INK + '"/><ellipse cx="58" cy="59" rx="2.2" ry="3.2" fill="' + INK + '"/>' +
+    mouth + extra + '</svg>';
+}
+
+/* =====================================================================
+   三、插圖零件
+   ===================================================================== */
+var S = 9;
+function flat(x, y){
+  var d = "", i;
+  for(i = 1; i < 10; i++){ d += "M" + (x + i*S) + " " + y + "V" + (y + S*10) + "M" + x + " " + (y + i*S) + "H" + (x + S*10); }
+  return '<rect x="' + x + '" y="' + y + '" width="' + (S*10) + '" height="' + (S*10) + '" rx="3" class="blk"/><path d="' + d + '" class="grid"/>';
+}
+function rod(x, y){
+  var d = "", i;
+  for(i = 1; i < 10; i++){ d += "M" + x + " " + (y + i*S) + "H" + (x + S); }
+  return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + (S*10) + '" rx="2" class="blk"/><path d="' + d + '" class="grid"/>';
+}
+function cube(x, y){ return '<rect x="' + x + '" y="' + y + '" width="' + S + '" height="' + S + '" rx="2" class="cube"/>'; }
+function wrapSvg(w, h, inner, maxw, label){
+  return '<svg class="art-svg" viewBox="0 0 ' + w + ' ' + h + '" style="width:min(100%,' + Math.round(maxw) + 'px)" role="img" aria-label="' + (label || "插圖") + '">' + inner + '</svg>';
+}
+function blocksSvg(h, t, o){
+  var x = 4, g = "", i;
+  for(i = 0; i < h; i++){ g += flat(x, 6); x += S*10 + 10; }
+  if(h) x += 6;
+  for(i = 0; i < t; i++){ g += rod(x, 6); x += S + 4; }
+  if(t) x += 10;
+  for(i = 0; i < o; i++){ g += cube(x + (i % 3)*(S + 3), 6 + Math.floor(i/3)*(S + 3)); }
+  var w = x + Math.min(o, 3)*(S + 3) + 4;
+  return wrapSvg(w, 102, g, w*1.8, "積木圖");
+}
+function moneySvg(items){
+  var x = 4, g = "";
+  items.forEach(function(d){
+    var r, cls;
+    if(d === 100){
+      g += '<rect x="' + x + '" y="10" width="86" height="50" rx="8" class="note"/><circle cx="' + (x + 22) + '" cy="35" r="12" class="note-c"/><text x="' + (x + 58) + '" y="42" class="svgtext" font-size="20">100</text>';
+      x += 96;
+    } else {
+      r = {50:24, 10:21, 5:18, 1:15}[d]; cls = {50:"coin", 10:"coin", 5:"coin5", 1:"coin1"}[d];
+      g += '<circle cx="' + (x + r) + '" cy="35" r="' + r + '" class="' + cls + '"/><circle cx="' + (x + r) + '" cy="35" r="' + (r - 5) + '" class="coin-in"/><text x="' + (x + r) + '" y="' + (d >= 10 ? 41 : 40) + '" class="coin-t" font-size="' + (d >= 10 ? 17 : 15) + '">' + d + '</text>';
+      x += 2*r + 8;
+    }
+  });
+  var w = x + 4;
+  return wrapSvg(w, 70, g, w*1.25, "錢幣圖");
+}
+function tiles(list, opt){
+  opt = opt || {};
+  return '<div class="tiles">' + list.map(function(n, i){
+    var cls = "tile";
+    if(n === "？") cls += " q";
+    if(opt.hi === i) cls += " hi";
+    if(opt.big) cls += " big";
+    return '<span class="' + cls + '">' + n + '</span>';
+  }).join("") + '</div>';
+}
+function placeValue(h, t, o){
+  return '<div class="pv"><div><b>' + h + '</b><span>百位</span></div><div><b>' + t + '</b><span>十位</span></div><div><b>' + o + '</b><span>個位</span></div></div>';
+}
+function vertical(a, b, op){
+  var A = String(a).split(""), B = String(b).split("");
+  return '<div class="vert" role="img" aria-label="' + a + (op === "+" ? " 加 " : " 減 ") + b + '">' +
+    '<span></span><span>' + A[0] + '</span><span>' + A[1] + '</span>' +
+    '<span class="vop">' + (op === "+" ? "+" : "−") + '</span><span>' + B[0] + '</span><span>' + B[1] + '</span>' +
+    '<span class="vline"></span></div>';
+}
+function eq(s){ return '<div class="eq">' + s + '</div>'; }
+function bx(){ return '<span class="bx"></span>'; }
+function ci(){ return '<span class="ci"></span>'; }
+function hundredIsTenTens(){
+  var g = flat(4, 6) + '<text x="116" y="62" class="svgtext" font-size="34">=</text>', x = 140, i;
+  for(i = 0; i < 10; i++){ g += rod(x, 6); x += S + 4; }
+  return wrapSvg(x + 4, 102, g, (x + 4)*1.6, "1個百和10個十一樣多");
+}
+
+/* 長條圖：rows 是一列一列的片段 {len,label,short,cls} */
+function barsSvg(rows, total){
+  var W = 340, left = 10, scale = 300/total, rh = 38, gap = 14, g = "", r, s, x, seg, w, y, txt;
+  for(r = 0; r < rows.length; r++){
+    x = left; y = 8 + r*(rh + gap);
+    for(s = 0; s < rows[r].length; s++){
+      seg = rows[r][s]; w = seg.len*scale;
+      g += '<rect x="' + x + '" y="' + y + '" width="' + w + '" height="' + rh + '" rx="8" class="' + seg.cls + '"/>';
+      txt = (w < 64 && seg.short) ? seg.short : seg.label;
+      g += '<text x="' + (x + w/2) + '" y="' + (y + 25) + '" class="svgcn" font-size="' + (w < 64 ? 13 : 15) + '">' + txt + '</text>';
+      x += w;
+    }
+  }
+  return wrapSvg(W, 8 + rows.length*(rh + gap), g, W*1.3, "長度比較圖");
+}
+/* 部分與整體 */
+function pwSvg(whole, p1, p2){
+  var W = 340, sc = 300/(p1.len + p2.len), w1 = p1.len*sc, w2 = p2.len*sc, g = "";
+  g += '<rect x="10" y="8" width="300" height="36" rx="8" class="seg-y"/><text x="160" y="32" class="svgcn" font-size="16">' + whole + '</text>';
+  g += '<rect x="10" y="58" width="' + w1 + '" height="36" rx="8" class="seg-b"/><text x="' + (10 + w1/2) + '" y="82" class="svgcn" font-size="16">' + p1.label + '</text>';
+  g += '<rect x="' + (10 + w1) + '" y="58" width="' + w2 + '" height="36" rx="8" class="seg-p"/><text x="' + (10 + w1 + w2/2) + '" y="82" class="svgcn" font-size="16">' + p2.label + '</text>';
+  return wrapSvg(W, 104, g, W*1.25, "部分與整體");
+}
+/* 小圖示：蘋果、餅乾、球 */
+function iconAt(kind, x, y){
+  if(kind === 0) return '<circle cx="' + x + '" cy="' + y + '" r="6.5" class="apple"/><path d="M' + x + ' ' + (y - 6) + 'q1-5 4-5" fill="none" stroke="var(--yellow-deep)" stroke-width="1.8" stroke-linecap="round"/>';
+  if(kind === 1) return '<circle cx="' + x + '" cy="' + y + '" r="6.5" class="cookie"/><circle cx="' + (x - 2) + '" cy="' + (y - 2) + '" r="1.1" fill="#7a4a2a"/><circle cx="' + (x + 2) + '" cy="' + (y + 1) + '" r="1.1" fill="#7a4a2a"/><circle cx="' + (x - 1) + '" cy="' + (y + 3) + '" r="1.1" fill="#7a4a2a"/>';
+  if(kind === 3) return '<path d="M' + (x - 6) + ' ' + (y - 4) + 'l1-6 5 3zM' + (x + 6) + ' ' + (y - 4) + 'l-1-6-5 3z" fill="#ffa3c1" stroke="#5b3c4c" stroke-width="1.2" stroke-linejoin="round"/><circle cx="' + x + '" cy="' + y + '" r="6.5" fill="#ffc9dc" stroke="#5b3c4c" stroke-width="1.4"/><ellipse cx="' + x + '" cy="' + (y + 1.8) + '" rx="3.2" ry="2.2" fill="#ff8fb3" stroke="#5b3c4c" stroke-width="1"/><circle cx="' + (x - 2.6) + '" cy="' + (y - 1.6) + '" r=".9" fill="#5b3c4c"/><circle cx="' + (x + 2.6) + '" cy="' + (y - 1.6) + '" r=".9" fill="#5b3c4c"/>';
+  return '<circle cx="' + x + '" cy="' + y + '" r="6.5" class="ball"/><path d="M' + (x - 4) + ' ' + (y - 3) + 'q4 -3 8 0" fill="none" stroke="#fff" stroke-width="1.5" stroke-linecap="round" opacity=".7"/>';
+}
+function groupsSvg(per, groups, kind){
+  var cols = per <= 4 ? per : Math.ceil(per/2), rowsN = Math.ceil(per/cols), cell = 17, gw = cols*cell + 12, gh = rowsN*cell + 12;
+  var perRow = Math.min(groups, 4), g = "", i, k, gx, gy, cx, cy;
+  for(i = 0; i < groups; i++){
+    gx = 6 + (i % perRow)*(gw + 10); gy = 6 + Math.floor(i/perRow)*(gh + 10);
+    g += '<rect x="' + gx + '" y="' + gy + '" width="' + gw + '" height="' + gh + '" rx="10" class="gbox"/>';
+    for(k = 0; k < per; k++){
+      cx = gx + 6 + (k % cols)*cell + cell/2; cy = gy + 6 + Math.floor(k/cols)*cell + cell/2;
+      g += iconAt(kind, cx, cy);
+    }
+  }
+  var W = 6 + perRow*(gw + 10), H = 6 + Math.ceil(groups/perRow)*(gh + 10);
+  return wrapSvg(W, H, g, W*1.4, groups + " 組，每組 " + per + " 個");
+}
+
+/* 尺 */
+function rulerSvg(max, obj){
+  var unit = max > 12 ? 24 : 28, pad = 18, W = pad*2 + max*unit, ry = obj ? 58 : 10, H = ry + 50, g = "", i, x, x0, x1;
+  if(obj){
+    x0 = pad + obj.from*unit; x1 = pad + obj.to*unit;
+    if(obj.type === "pencil"){
+      g += '<rect x="' + x0 + '" y="14" width="12" height="26" rx="4" fill="var(--pink)" stroke="var(--pink-deep)" stroke-width="2"/>';
+      g += '<rect x="' + (x0 + 12) + '" y="14" width="' + (x1 - x0 - 26) + '" height="26" class="seg-y"/>';
+      g += '<path d="M' + (x1 - 14) + ' 14L' + x1 + ' 27L' + (x1 - 14) + ' 40z" class="seg-p"/>';
+      g += '<path d="M' + (x1 - 5) + ' 23L' + x1 + ' 27L' + (x1 - 5) + ' 31z" class="f-ink"/>';
+    } else {
+      g += '<rect x="' + x0 + '" y="16" width="' + (x1 - x0) + '" height="22" rx="4" class="seg-b"/>';
+      g += '<path d="M' + (x0 + 10) + ' 16v22M' + (x1 - 10) + ' 16v22" stroke="var(--blue)" stroke-width="2" opacity=".6"/>';
+    }
+    g += '<path d="M' + x0 + ' 42V' + ry + 'M' + x1 + ' 42V' + ry + '" class="guide"/>';
+  }
+  g += '<rect x="' + (pad - 10) + '" y="' + ry + '" width="' + (max*unit + 20) + '" height="44" rx="8" class="ruler"/>';
+  for(i = 0; i <= max; i++){
+    x = pad + i*unit;
+    g += '<path d="M' + x + ' ' + ry + 'v15" class="tick"/><text x="' + x + '" y="' + (ry + 36) + '" class="svgtext" font-size="14">' + i + '</text>';
+  }
+  return wrapSvg(W, H, g, W*1.4, "尺");
+}
+function unitBlocksSvg(n, longer, obj){
+  var sw = 26, W = Math.max(n*sw + 20, 220), g = "", i;
+  g += '<rect x="10" y="8" width="' + (n*sw) + '" height="26" rx="8" class="seg-p"/><text x="' + (10 + n*sw/2) + '" y="27" class="svgcn" font-size="14">' + obj + '</text>';
+  for(i = 0; i < n; i++){ g += '<rect x="' + (10 + i*sw) + '" y="42" width="' + sw + '" height="26" class="seg-y"/>'; }
+  g += '<text x="10" y="96" class="svgcn" font-size="13" style="text-anchor:start">小積木量了 ' + n + ' 個</text>';
+  var bw = longer ? sw*1.7 : sw*0.6;
+  g += '<rect x="10" y="104" width="' + bw + '" height="26" class="seg-b"/><text x="' + (10 + bw + 8) + '" y="123" class="svgcn" font-size="13" style="text-anchor:start">' + (longer ? "改用比較長的積木" : "改用比較短的積木") + '</text>';
+  return wrapSvg(W, 138, g, W*1.4, "積木量長度");
+}
+function cmBlocksSvg(n){
+  var bw = 34, g = "", i, w = n*bw + 20;
+  for(i = 0; i < n; i++){ g += '<rect x="' + (10 + i*bw) + '" y="10" width="' + bw + '" height="34" class="seg-y"/><text x="' + (10 + i*bw + bw/2) + '" y="33" class="svgtext" font-size="15">1</text>'; }
+  g += '<path d="M10 56v8h' + (n*bw) + 'v-8" fill="none" stroke="var(--pink-deep)" stroke-width="2.5" stroke-linecap="round"/><text x="' + (w/2) + '" y="88" class="svgcn" font-size="16">每塊 1 公分，一共長 ？ 公分</text>';
+  return wrapSvg(w, 98, g, w*1.4, n + " 個 1 公分積木");
+}
+
+/* 容量 */
+function cupPath(x, y, w, h){ return '<path d="M' + x + ' ' + y + 'V' + (y + h - 7) + 'q0 7 7 7h' + (w - 14) + 'q7 0 7-7V' + y + '" class="cup"/>'; }
+function cupsPair(l1, l2){
+  var g = "";
+  [[40, l1, "A"], [120, l2, "B"]].forEach(function(c){
+    var x = c[0], h = 80, w = 44, y = 14, wh = h*c[1];
+    g += '<rect x="' + (x + 1.5) + '" y="' + (y + h - wh) + '" width="' + (w - 3) + '" height="' + wh + '" class="water"/>' + cupPath(x, y, w, h) +
+         '<text x="' + (x + w/2) + '" y="' + (y + h + 28) + '" class="svgtext" font-size="18">' + c[2] + '</text>';
+  });
+  return wrapSvg(204, 130, g, 300, "兩個一樣的杯子");
+}
+function containerPair(a, b){
+  var g = "", x = 14, gap = 40;
+  [[a, "A"], [b, "B"]].forEach(function(c){
+    var w = c[0][0], h = c[0][1], y = 20 + (110 - h);
+    g += '<rect x="' + (x + 1.5) + '" y="' + (y + 2) + '" width="' + (w - 3) + '" height="' + (h - 2) + '" class="waterfull"/>' + cupPath(x, y, w, h) +
+         '<text x="' + (x + w/2) + '" y="' + (y + h + 28) + '" class="svgtext" font-size="18">' + c[1] + '</text>';
+    x += w + gap;
+  });
+  return wrapSvg(x - gap + 14, 164, g, (x - gap + 14)*1.4, "兩個裝滿水的容器");
+}
+function cupsRow(total, filled){
+  var g = "", i, x;
+  for(i = 0; i < total; i++){
+    x = 6 + i*30;
+    if(i < filled) g += '<rect x="' + (x + 1.5) + '" y="16" width="19" height="18" class="water"/>';
+    g += cupPath(x, 6, 22, 30);
+  }
+  return wrapSvg(12 + total*30, 44, g, (12 + total*30)*1.3, total + " 個杯子");
+}
+
+/* 時間 */
+function clockInner(h, m){
+  var g = "", i, a, x1, y1, x2, y2;
+  g += '<circle cx="28" cy="22" r="14" class="ear"/><circle cx="112" cy="22" r="14" class="ear"/>';
+  g += '<circle cx="70" cy="74" r="60" class="face"/>';
+  for(i = 0; i < 60; i++){
+    a = i*6*Math.PI/180;
+    x1 = 70 + Math.sin(a)*(i % 5 ? 55 : 52); y1 = 74 - Math.cos(a)*(i % 5 ? 55 : 52);
+    x2 = 70 + Math.sin(a)*57; y2 = 74 - Math.cos(a)*57;
+    g += '<path d="M' + x1.toFixed(1) + ' ' + y1.toFixed(1) + 'L' + x2.toFixed(1) + ' ' + y2.toFixed(1) + '" class="tick" style="stroke-width:' + (i % 5 ? 1 : 2.2) + '"/>';
+  }
+  var nums = "";
+  for(i = 1; i <= 12; i++){
+    a = i*30*Math.PI/180;
+    nums += '<text x="' + (70 + Math.sin(a)*42).toFixed(1) + '" y="' + (74 - Math.cos(a)*42 + 5).toFixed(1) + '" class="svgtext" font-size="15" style="paint-order:stroke;stroke:var(--card);stroke-width:3px;stroke-linejoin:round">' + i + '</text>';
+  }
+  var ha = ((h % 12) + m/60)*30*Math.PI/180, ma = m*6*Math.PI/180;
+  g += '<path d="M70 74L' + (70 + Math.sin(ha)*30).toFixed(1) + ' ' + (74 - Math.cos(ha)*30).toFixed(1) + '" class="hand-h"/>';
+  g += '<path d="M70 74L' + (70 + Math.sin(ma)*46).toFixed(1) + ' ' + (74 - Math.cos(ma)*46).toFixed(1) + '" class="hand-m"/>';
+  g += nums + '<circle cx="70" cy="74" r="4.5" class="cdot"/>';
+  return g;
+}
+function clockSvg(h, m, label){
+  return wrapSvg(140, 140, clockInner(h, m), 200, label || "鐘面");
+}
+function clockPair(h1, m1, h2, m2){
+  var g = '<g>' + clockInner(h1, m1) + '</g><g transform="translate(180 0)">' + clockInner(h2, m2) + '</g>' +
+          '<path d="M150 74h20m-7-7l7 7-7 7" fill="none" stroke="var(--pink-deep)" stroke-width="3" stroke-linecap="round" stroke-linejoin="round"/>';
+  return wrapSvg(320, 140, g, 440, "兩個鐘面");
+}
+function digital(h, m){ return '<div class="art-center"><span class="digital">' + h + ':' + (m < 10 ? "0" : "") + m + '</span></div>'; }
+function pad2(m){ return (m < 10 ? "0" : "") + m; }
+
+/* 面的大小：用格子拼出的圖形 */
+function genShape(r, n, cols, rows){
+  var cells = [[R(r, 0, cols - 1), R(r, 0, rows - 1)]], set = {}, dirs = [[1,0],[-1,0],[0,1],[0,-1]], guard = 0, c, d, nx, ny;
+  set[cells[0][0] + "," + cells[0][1]] = 1;
+  while(cells.length < n && guard++ < 2000){
+    c = pick(r, cells); d = pick(r, dirs); nx = c[0] + d[0]; ny = c[1] + d[1];
+    if(nx < 0 || ny < 0 || nx >= cols || ny >= rows || set[nx + "," + ny]) continue;
+    set[nx + "," + ny] = 1; cells.push([nx, ny]);
+  }
+  return cells;
+}
+function shapeKey(cells){ return cells.slice().sort(function(a, b){ return a[1] - b[1] || a[0] - b[0]; }).map(function(c){ return c[0] + c[1]*10; }).join("."); }
+function shapesSvg(shapes, cs, cols, rows){
+  var g = "", x = 8, W;
+  shapes.forEach(function(s){
+    s.cells.forEach(function(c){ g += '<rect x="' + (x + c[0]*cs) + '" y="' + (8 + c[1]*cs) + '" width="' + cs + '" height="' + cs + '" class="cell ' + s.cls + '"/>'; });
+    if(s.label) g += '<text x="' + (x + cols*cs/2) + '" y="' + (8 + rows*cs + 24) + '" class="svgtext" font-size="18">' + s.label + '</text>';
+    x += cols*cs + cs*1.4;
+  });
+  W = x - cs*1.4 + 8;
+  return wrapSvg(W, 8 + rows*cs + (shapes[0].label ? 34 : 8), g, W*1.5, "用格子拼成的圖形");
+}
+function rectGridSvg(rowsN, colsN, cs){
+  var g = "", i, j;
+  for(i = 0; i < rowsN; i++) for(j = 0; j < colsN; j++) g += '<rect x="' + (8 + j*cs) + '" y="' + (8 + i*cs) + '" width="' + cs + '" height="' + cs + '" class="cell cA"/>';
+  return wrapSvg(colsN*cs + 16, rowsN*cs + 16, g, (colsN*cs + 16)*1.5, rowsN + " 排，每排 " + colsN + " 格");
+}
+function overlaySvg(bigCls, smallCls, tall){
+  var g = '<rect x="10" y="10" width="' + (tall ? 130 : 190) + '" height="' + (tall ? 150 : 110) + '" rx="8" class="' + bigCls + '" style="stroke-width:2.5"/>' +
+          '<rect x="26" y="26" width="' + (tall ? 70 : 100) + '" height="' + (tall ? 80 : 56) + '" rx="6" class="' + smallCls + '" style="stroke-width:2.5"/>';
+  return wrapSvg(tall ? 150 : 210, tall ? 170 : 130, g, tall ? 200 : 300, "兩張紙疊在一起");
+}
+
+/* 單元小圖示 */
+function unitIcon(n){
+  var p = {
+    1: '<rect x="6" y="14" width="34" height="34" rx="4" class="blk"/><path d="M17.3 14v34M28.7 14v34M6 25.3h34M6 36.7h34" class="grid"/><rect x="46" y="14" width="8" height="34" rx="2" class="blk"/><rect x="58" y="14" width="8" height="34" rx="2" class="blk"/><rect x="6" y="54" width="8" height="8" rx="2" class="cube"/><rect x="18" y="54" width="8" height="8" rx="2" class="cube"/>',
+    2: '<circle cx="38" cy="38" r="31" class="coin"/><path d="M22 28h18M31 19v18" stroke="#3d3100" stroke-width="4" stroke-linecap="round"/><path d="M38 52h18" stroke="#3d3100" stroke-width="4" stroke-linecap="round"/>',
+    3: '<rect x="5" y="28" width="66" height="26" rx="6" class="ruler"/><path d="M16 28v10M26 28v6M36 28v10M46 28v6M56 28v10" class="tick"/><rect x="10" y="12" width="40" height="9" rx="3" class="seg-b"/>',
+    4: '<path d="M10 28h50m-9-9l9 9-9 9" fill="none" stroke="var(--blue-deep)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/><path d="M66 50H16m9-9l-9 9 9 9" fill="none" stroke="var(--pink-deep)" stroke-width="5" stroke-linecap="round" stroke-linejoin="round"/>',
+    5: '<path d="M18 14v42q0 8 8 8h24q8 0 8-8V14" class="cup" style="stroke-width:4"/><path d="M19 34h38v22q0 6-6 6H25q-6 0-6-6z" class="water" style="opacity:.6"/>',
+    6: '<circle cx="14" cy="42" r="9" class="ball"/><circle cx="38" cy="30" r="9" class="cookie"/><circle cx="62" cy="42" r="9" class="apple"/><path d="M24 36l4-3M48 33l4 3" stroke="var(--ink)" stroke-width="3" stroke-linecap="round"/>',
+    7: '<g><circle cx="16" cy="22" r="7" class="cookie"/><circle cx="34" cy="22" r="7" class="cookie"/><circle cx="52" cy="22" r="7" class="cookie"/><circle cx="16" cy="44" r="7" class="cookie"/><circle cx="34" cy="44" r="7" class="cookie"/><circle cx="52" cy="44" r="7" class="cookie"/></g><path d="M62 54l10 10M72 54L62 64" stroke="var(--pink-deep)" stroke-width="4" stroke-linecap="round"/>',
+    8: '<circle cx="38" cy="40" r="28" class="face" style="stroke-width:4"/><path d="M38 40V22M38 40l14 6" stroke="var(--pink-deep)" stroke-width="4" stroke-linecap="round"/><circle cx="14" cy="14" r="8" class="ear"/><circle cx="62" cy="14" r="8" class="ear"/>',
+    9: '<path d="M16 16l44 44M60 16L16 60" stroke="var(--pink-deep)" stroke-width="8" stroke-linecap="round"/><circle cx="62" cy="62" r="7" class="apple"/><circle cx="14" cy="62" r="7" class="ball"/>',
+    10: '<rect x="8" y="12" width="20" height="20" class="cell cA"/><rect x="28" y="12" width="20" height="20" class="cell cA"/><rect x="28" y="32" width="20" height="20" class="cell cB"/><rect x="48" y="32" width="20" height="20" class="cell cB"/><rect x="8" y="32" width="20" height="20" class="cell cC"/>'
+  }[n];
+  return '<svg class="ico" viewBox="0 0 76 76" aria-hidden="true">' + p + '</svg>';
+}
+
+/* =====================================================================
+   四、題庫：每個單元由數種「題型」組成，每次產生參數不同的題目
+   ===================================================================== */
+
+/* ---------- 第一單元 200以內的數 ---------- */
+function cmpExp(a, b){
+  var ta = Math.floor(a/10) % 10, tb = Math.floor(b/10) % 10, big = Math.max(a, b), small = Math.min(a, b);
+  if(a === b) return a + " 和 " + b + " 一樣大。";
+  if(ta !== tb) return "百位都是 1，再比十位：" + Math.max(ta, tb) + " 比 " + Math.min(ta, tb) + " 大，所以 " + big + " 比較大、" + small + " 比較小。";
+  return "百位、十位都一樣，再比個位：" + (big % 10) + " 比 " + (small % 10) + " 大，所以 " + big + " 比較大、" + small + " 比較小。";
+}
+function coinSet(r){
+  var g, c50, c10, c5, c1, items, v, kinds, i;
+  for(g = 0; g < 300; g++){
+    c50 = R(r, 0, 1); c10 = R(r, 0, 4); c5 = R(r, 0, 2); c1 = R(r, 0, 4);
+    items = []; for(i = 0; i < c50; i++) items.push(50); for(i = 0; i < c10; i++) items.push(10); for(i = 0; i < c5; i++) items.push(5); for(i = 0; i < c1; i++) items.push(1);
+    v = c50*50 + c10*10 + c5*5 + c1; kinds = (c50 > 0) + (c10 > 0) + (c5 > 0) + (c1 > 0);
+    if(v >= 11 && v <= 99 && items.length >= 3 && items.length <= 8 && kinds >= 2) return { items:items, value:v };
+  }
+  return { items:[50, 10, 5, 1], value:66 };
+}
+function u1(){
+  var T = [];
+  T.push(function(r){ var n = R(r, 101, 198);
+    if(r() < .5) return MC("p" + n, n + " 的前一個數是多少？", tiles(["？", n, n + 1]), n - 1, [n + 1, n - 10, n - 2], n + " 的前一個數，是比 " + n + " 少 1 的數，也就是 " + (n - 1) + "。", r);
+    return MC("n" + n, n + " 的下一個數是多少？", tiles([n - 2, n - 1, n, "？"]), n + 1, [n - 1, n + 10, n + 2], n + " 的下一個數，是比 " + n + " 多 1 的數，也就是 " + (n + 1) + "。", r);
+  });
+  T.push(function(r){ var h = R(r, 0, 1), t = R(r, h ? 0 : 1, 9), o = R(r, 0, 9), tot = h*100 + t*10 + o, parts = [];
+    if(h) parts.push("1 個百是 100"); if(t) parts.push(t + " 條是 " + (t*10)); if(o) parts.push(o + " 個小方塊是 " + o);
+    return FILL("b" + h + t + o, "每一大片是 100 個、每一條是 10 個。圖裡一共有幾個小方塊？", blocksSvg(h, t, o), tot, "個", parts.join("，") + "，合起來是 " + tot + "。");
+  });
+  T.push(function(r){ var t = R(r, 1, 9), o = R(r, 1, 9);
+    return MC("d" + t + o, "看看積木，是幾個百、幾個十、幾個一？", blocksSvg(1, t, o), "1個百、" + t + "個十、" + o + "個一",
+      ["1個百、" + o + "個十、" + t + "個一", t + "個百、1個十、" + o + "個一", "1個百、" + t + "個十、" + (o % 9 + 1) + "個一"],
+      "1 大片是 1 個百，" + t + " 條是 " + t + " 個十，" + o + " 個小方塊是 " + o + " 個一。合起來是 " + (100 + t*10 + o) + "。", r);
+  });
+  T.push(function(r){ var t = R(r, 0, 9), o = R(r, 0, 9);
+    return FILL("c" + t + o, "照著位值表，合起來是多少？", placeValue(1, t, o), 100 + t*10 + o, "", "100 + " + (t*10) + " + " + o + " = " + (100 + t*10 + o) + "。");
+  });
+  T.push(function(r){ var n = R(r, 100, 199), i = R(r, 0, 2), ds = String(n).split("");
+    return MCF("pos" + n + "_" + i, "圈起來的數字，在哪一個位置？", tiles(ds, { hi:i, big:true }), ["百位", "十位", "個位"], i, n + " 是 1 個百、" + ds[1] + " 個十、" + ds[2] + " 個一。圈起來的是" + ["百位", "十位", "個位"][i] + "。");
+  });
+  T.push(function(r){ var n = R(r, 100, 199), i = R(r, 0, 2), ds = String(n).split("");
+    return FILL("dg" + n + "_" + i, n + " 的" + ["百位", "十位", "個位"][i] + "數字是多少？", tiles(ds, { big:true }), ds[i], "", n + " 的" + ["百位", "十位", "個位"][i] + "是 " + ds[i] + "。");
+  });
+  T.push(function(r){ var d = R(r, 1, 9), o = R(r, 0, 9), n = 100 + d*10 + o;
+    return MC("tv" + n, n + " 的十位是 " + d + "，它代表多少？", tiles(String(n).split(""), { hi:1, big:true }), d*10, [d, d*100, o + 10], "十位的 " + d + " 是 " + d + " 個十，也就是 " + (d*10) + "。", r);
+  });
+  T.push(function(r){ var a = R(r, 100, 199), eq0 = r() < .08, b = eq0 ? a : R(r, 100, 199), big = r() < .5, right;
+    if(!eq0 && b === a) b = a > 100 ? a - 1 : a + 1;
+    right = eq0 ? "一樣大" : (big ? Math.max(a, b) : Math.min(a, b));
+    return MC("cm" + a + "_" + b + big, a + " 和 " + b + "，哪一個數比較" + (big ? "大" : "小") + "？", tiles([a, b], { big:true }), right, [a, b, "一樣大"], cmpExp(a, b), r);
+  });
+  T.push(function(r){ var s = {}, arr = [], v, asc = r() < .5, sorted, right, all;
+    while(arr.length < 3){ v = R(r, 100, 199); if(!s[v]){ s[v] = 1; arr.push(v); } }
+    sorted = arr.slice().sort(function(x, y){ return x - y; }); if(!asc) sorted.reverse();
+    right = sorted.join("、");
+    all = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]].map(function(p){ return p.map(function(i){ return arr[i]; }).join("、"); }).filter(function(x){ return x !== right; });
+    return MC("o" + arr.join("-") + asc, "把這三個數，從" + (asc ? "小排到大" : "大排到小") + "，哪一個是對的？", tiles(arr), right, shuffle(r, all).slice(0, 2), "比大小：" + right + "。", r);
+  });
+  T.push(function(r){ var cs = coinSet(r);
+    return FILL("co" + cs.items.join("-"), "這些錢一共有多少元？", moneySvg(cs.items), cs.value, "元", cs.items.join(" + ") + " = " + cs.value + "。");
+  });
+  T.push(function(r){ var pr = pick(r, [[50,10],[10,5],[10,1],[5,1],[100,50],[100,10]]), maxk = pr[0] >= 50 ? 2 : 4, k = R(r, 1, maxk), per = pr[0]/pr[1], items = [], i;
+    for(i = 0; i < k; i++) items.push(pr[0]);
+    return FILL("ex" + pr[0] + "_" + pr[1] + "_" + k, k + " 個 " + pr[0] + " 元，可以換成幾個 " + pr[1] + " 元？", moneySvg(items), k*per, "個", "1 個 " + pr[0] + " 元可以換 " + per + " 個 " + pr[1] + " 元。" + k + " × " + per + " = " + (k*per) + "。");
+  });
+  T.push(function(r){ var step = pick(r, [1, 2, 5, 10]), start = R(r, 100, 199 - step*3), q = R(r, 1, 3), list = [], i;
+    for(i = 0; i < 4; i++) list.push(i === q ? "？" : start + i*step);
+    return FILL("sk" + step + "_" + start + "_" + q, step === 1 ? "一個一個數下去，問號要填多少？" : "每次都多 " + step + "，問號要填多少？", tiles(list, { big:true }), start + q*step, "", "每次多 " + step + "，" + (q === 3 ? "" : "") + "問號是 " + (start + q*step) + "。");
+  });
+  T.push(function(r){ var k = R(r, 10, 19);
+    if(r() < .5) return FILL("tn" + k, k + " 個十是多少？", blocksSvg(0, k, 0), k*10, "", k + " 個十就是 " + (k*10) + "。");
+    return FILL("tm" + k, k*10 + " 是幾個十？", blocksSvg(0, k, 0), k, "個十", k*10 + " 裡面有 " + k + " 個十。");
+  });
+  T.push(function(r){ var more = r() < .5, n = more ? R(r, 101, 189) : R(r, 111, 199);
+    return FILL("pm" + more + n, "比 " + n + (more ? " 多" : " 少") + " 10 的數是多少？", tiles(more ? [n, "？"] : ["？", n], { big:true }), more ? n + 10 : n - 10, "", n + (more ? " + 10 = " : " − 10 = ") + (more ? n + 10 : n - 10) + "。十位" + (more ? "多" : "少") + " 1。");
+  });
+  T.push(function(r){ var n = R(r, 100, 199), s = String(n), sw = Number(s[0] + s[2] + s[1]);
+    if(r() < .5) return MC("w1" + n, cn(n) + "，寫成數字是多少？", "", n, [sw === n ? n + 1 : sw, n + 10, n - 1], cn(n) + " 寫成數字是 " + n + "。", r);
+    return MC("w2" + n, n + " 怎麼唸？", "", cn(n), [cn(sw === n ? n + 1 : sw), cn(n + 10), cn(n - 10)], n + " 唸作「" + cn(n) + "」。", r);
+  });
+  return T;
+}
+
+/* ---------- 第二單元 二位數的加減法 ---------- */
+function addExp(a, b){
+  var a1 = Math.floor(a/10), a2 = a % 10, b1 = Math.floor(b/10), b2 = b % 10, o = a2 + b2, c = o >= 10 ? 1 : 0, t = a1 + b1 + c;
+  return "個位 " + a2 + " + " + b2 + " = " + o + (c ? "，寫 " + (o - 10) + "，向十位進 1" : "") + "。十位 " + a1 + " + " + b1 + (c ? " + 1" : "") + " = " + t + (t >= 10 ? "，滿 10 要進到百位" : "") + "。答案是 " + (a + b) + "。";
+}
+function subExp(a, b){
+  var a1 = Math.floor(a/10), a2 = a % 10, b1 = Math.floor(b/10), b2 = b % 10;
+  if(a2 >= b2) return "個位 " + a2 + " − " + b2 + " = " + (a2 - b2) + "。十位 " + a1 + " − " + b1 + " = " + (a1 - b1) + "。答案是 " + (a - b) + "。";
+  return "個位 " + a2 + " 不夠減 " + b2 + "，向十位借 1，" + (a2 + 10) + " − " + b2 + " = " + (a2 + 10 - b2) + "。十位剩 " + (a1 - 1) + "，" + (a1 - 1) + " − " + b1 + " = " + (a1 - 1 - b1) + "。答案是 " + (a - b) + "。";
+}
+function genAdd(r, kind){
+  var g, a, b, c1, c2, s;
+  for(g = 0; g < 800; g++){
+    a = R(r, 11, 99); b = R(r, 11, 99); s = a + b;
+    c1 = (a % 10) + (b % 10) >= 10; c2 = Math.floor(a/10) + Math.floor(b/10) + (c1 ? 1 : 0) >= 10;
+    if(kind === "none" && !c1 && !c2) return [a, b];
+    if(kind === "ones" && c1 && !c2) return [a, b];
+    if(kind === "over" && c2) return [a, b];
+    if(kind === "any" && s <= 199) return [a, b];
+  }
+  return [35, 28];
+}
+function genSub(r, kind){
+  var g, a, b;
+  for(g = 0; g < 800; g++){
+    a = R(r, 21, 99); b = R(r, 11, a - 1);
+    if(kind === "none" && a % 10 >= b % 10 && Math.floor(a/10) > Math.floor(b/10) - 0) return [a, b];
+    if(kind === "borrow" && a % 10 < b % 10 && Math.floor(a/10) - 1 >= Math.floor(b/10)) return [a, b];
+    if(kind === "any") return [a, b];
+  }
+  return [52, 27];
+}
+function u2(){
+  var T = [];
+  T.push(function(r){ var p = genAdd(r, "none"); return FILL("a1" + p, "用直式算算看，" + p[0] + " 加 " + p[1] + " 等於多少？", vertical(p[0], p[1], "+"), p[0] + p[1], "", addExp(p[0], p[1])); });
+  T.push(function(r){ var p = genAdd(r, "ones"); return FILL("a2" + p, "用直式算算看，" + p[0] + " 加 " + p[1] + " 等於多少？", vertical(p[0], p[1], "+"), p[0] + p[1], "", addExp(p[0], p[1])); });
+  T.push(function(r){ var p = genAdd(r, "over"); return FILL("a3" + p, "用直式算算看，" + p[0] + " 加 " + p[1] + " 等於多少？", vertical(p[0], p[1], "+"), p[0] + p[1], "", addExp(p[0], p[1])); });
+  T.push(function(r){ var p = genSub(r, "none"); return FILL("s1" + p, "用直式算算看，" + p[0] + " 減 " + p[1] + " 等於多少？", vertical(p[0], p[1], "-"), p[0] - p[1], "", subExp(p[0], p[1])); });
+  T.push(function(r){ var p = genSub(r, "borrow"); return FILL("s2" + p, "用直式算算看，" + p[0] + " 減 " + p[1] + " 等於多少？", vertical(p[0], p[1], "-"), p[0] - p[1], "", subExp(p[0], p[1])); });
+  T.push(function(r){ var p = genAdd(r, pick(r, ["none", "ones", "ones"])), nm = twoOf(r, PIGN), o = pick(r, OBJ);
+    return FILL("sa" + p + nm + o[0], nm[0] + "有 " + p[0] + " " + o[1] + o[0] + "，" + nm[1] + "有 " + p[1] + " " + o[1] + o[0] + "。兩隻小豬一共有幾" + o[1] + "？", "", p[0] + p[1], o[1], p[0] + " + " + p[1] + " = " + (p[0] + p[1]) + "。" + addExp(p[0], p[1]));
+  });
+  T.push(function(r){ var p = genSub(r, pick(r, ["none", "borrow", "borrow"])), nm = pick(r, PIGN), o = pick(r, OBJ), v = lessVerb(r, o);
+    return FILL("ss" + p + nm + o[0], nm + "原來有 " + p[0] + " " + o[1] + o[0] + "，" + v + " " + p[1] + " " + o[1] + "。還剩下幾" + o[1] + "？", "", p[0] - p[1], o[1], p[0] + " − " + p[1] + " = " + (p[0] - p[1]) + "。" + subExp(p[0], p[1]));
+  });
+  T.push(function(r){ var p = genAdd(r, "ones"), a2 = p[0] % 10, b2 = p[1] % 10, s = a2 + b2;
+    return MC("mca" + p, "算 " + p[0] + " + " + p[1] + "。個位 " + a2 + " + " + b2 + " = " + s + "，接下來要怎麼做？", vertical(p[0], p[1], "+"),
+      "個位寫 " + (s - 10) + "，向十位進 1", ["個位寫 " + s + "，十位不變", "個位寫 " + (s - 10) + "，十位不變"], s + " 是 1 個十和 " + (s - 10) + " 個一。個位寫 " + (s - 10) + "，把 1 個十進到十位。", r);
+  });
+  T.push(function(r){ var p = genSub(r, "borrow"), a2 = p[0] % 10, b2 = p[1] % 10, a1 = Math.floor(p[0]/10);
+    return MC("mcs" + p, "算 " + p[0] + " − " + p[1] + "。個位 " + a2 + " 不夠減 " + b2 + "，要怎麼辦？", vertical(p[0], p[1], "-"),
+      "向十位借 1，個位變成 " + (a2 + 10) + "，再減 " + b2, ["用 " + b2 + " − " + a2 + " 來算", "十位變成 " + (a1 + 1) + "，個位不變"], "個位不夠減，要向十位借 1 個十，換成 10 個一。" + a2 + " + 10 = " + (a2 + 10) + "，再算 " + (a2 + 10) + " − " + b2 + " = " + (a2 + 10 - b2) + "。", r);
+  });
+  T.push(function(r){ var add = r() < .5, p = add ? genAdd(r, pick(r, ["none", "ones", "ones", "over"])) : genSub(r, pick(r, ["none", "borrow"])), right = add ? p[0] + p[1] : p[0] - p[1];
+    return MC("cc" + add + p, p[0] + (add ? " + " : " − ") + p[1] + " = ？", "", right, [right - 10, right + 10, right + 1], add ? addExp(p[0], p[1]) : subExp(p[0], p[1]), r);
+  });
+  T.push(function(r){ var add = r() < .5, p = add ? genAdd(r, "any") : genSub(r, "any"), v = add ? p[0] + p[1] : p[0] - p[1], c = Math.max(1, v + R(r, -3, 3)), sym = v > c ? ">" : (v < c ? "<" : "=");
+    return MCF("sy" + add + p + c, "在 ○ 裡選出正確的符號。", eq(p[0] + (add ? " + " : " − ") + p[1] + " " + ci() + " " + c), [">", "<", "="], [">", "<", "="].indexOf(sym), p[0] + (add ? " + " : " − ") + p[1] + " = " + v + "，" + v + (v > c ? " 比 " : (v < c ? " 比 " : " 和 ")) + c + (v > c ? " 大，用「>」。" : (v < c ? " 小，用「<」。" : " 一樣大，用「=」。")));
+  });
+  T.push(function(r){ var n = R(r, 30, 150), ex = [], fa, i, g = 0, a, b, right, wr = [];
+    function mk(v, ad){ if(ad){ a = R(r, 10, Math.min(v - 10, 90)); return a + " + " + (v - a); } a = R(r, v + 10, Math.min(v + 60, 199)); return a + " − " + (a - v); }
+    right = mk(n, r() < .5);
+    wr = [mk(n + R(r, 1, 9), r() < .5), mk(n - R(r, 1, 9), r() < .5)];
+    return MC("wh" + n + right, "下面哪一個算式的答案是 " + n + "？", "", right, wr, "算一算：" + right + " = " + n + "。", r);
+  });
+  T.push(function(r){ var a = R(r, 12, 60), b = R(r, 12, 60), c = R(r, 15, Math.max(16, a + b - 2)), d = a + b - c;
+    if(d < 1) { c = a + b - 5; d = 5; }
+    return FILL("eqs" + a + "_" + b + "_" + c, "兩邊要一樣大。方塊裡要填多少？", eq(a + " + " + b + " = " + c + " + " + bx()), d, "", a + " + " + b + " = " + (a + b) + "，" + c + " + " + d + " = " + (a + b) + "。所以方塊是 " + d + "。");
+  });
+  return T;
+}
+
+/* ---------- 第三單元 認識公分 ---------- */
+var LEN_ITEMS = [
+  ["指甲的寬", 1, [10, 100]], ["迴紋針", 3, [30, 1]], ["橡皮擦", 5, [50, 1]], ["鉛筆", 15, [1, 150]], ["牙刷", 18, [2, 180]],
+  ["直尺", 30, [3, 300]], ["書桌的高", 70, [7, 700]], ["二年級小朋友的身高", 120, [12, 20]], ["課本的長", 25, [2, 250]], ["原子筆", 14, [1, 140]]
+];
+function u3(){
+  var T = [], OBJ3 = ["桌子", "書桌", "黑板", "課本", "床", "走廊", "門", "圍巾"], TOOL = ["鉛筆", "橡皮擦", "積木", "迴紋針", "手掌", "筷子"], CONC = [
+    ["用尺量東西時，東西的一端要對齊尺的哪裡？", "刻度 0", ["刻度 1", "哪裡都可以"], "要從刻度 0 開始對齊，才量得準。"],
+    ["尺上相鄰兩個數字之間，是多長？", "1 公分", ["2 公分", "10 公分"], "相鄰兩個數字之間是 1 公分。"],
+    ["「公分」可以用來量什麼？", "長度", ["重量", "時間"], "公分是長度的單位。"],
+    ["量好長度後，答案後面要寫上什麼？", "單位「公分」", ["單位「公斤」", "什麼都不用寫"], "量長度的答案要加上單位「公分」。"],
+    ["尺上的刻度 0，通常在尺的哪一邊？", "最左邊", ["最右邊", "正中間"], "刻度 0 在尺的最左邊，由左往右越來越大。"],
+    ["量長度時，尺要怎麼放才準？", "放直，貼著要量的東西", ["斜斜地放", "隨便放"], "尺要放直，並貼著東西。"],
+    ["尺上寫的「cm」是什麼意思？", "公分", ["公斤", "公升"], "cm 是公分的符號。"],
+    ["用比較短的單位量同一個東西，量的次數會怎樣？", "比較多", ["比較少", "一樣多"], "單位越短，要量的次數越多。"]
   ];
+  T.push(function(r){ var o = pick(r, OBJ3), n = R(r, 3, 12), longer = r() < .5;
+    return MCF("iu" + o + n + longer, "用小積木量" + o + "，量了 " + n + " 個。改用比較" + (longer ? "長" : "短") + "的積木來量，結果會怎麼樣？", unitBlocksSvg(n, longer, o),
+      ["比 " + n + " 個多", "比 " + n + " 個少", "還是 " + n + " 個"], longer ? 1 : 0, longer ? "積木變長了，需要的個數會變少。" : "積木變短了，需要的個數會變多。");
+  });
+  T.push(function(r){ var nm = twoOf(r, PIGN), tl = twoOf(r, TOOL), x = R(r, 3, 15), y = R(r, 3, 15), g = 0;
+    while(y === x && g++ < 30) y = R(r, 3, 15);
+    return MC("cu" + nm + tl + x + y, nm[0] + "用" + tl[0] + "量同一張桌子，量了 " + x + " 次。" + nm[1] + "用" + tl[1] + "量，量了 " + y + " 次。誰用的單位比較長？", "", x < y ? nm[0] : nm[1], [x < y ? nm[1] : nm[0], "一樣長"],
+      "量的次數越少，表示用的單位越長。" + (x < y ? x + " 比 " + y + " 少" : y + " 比 " + x + " 少") + "，所以用的單位比較長。", r);
+  });
+  T.push(function(r){ var n = R(r, 2, 10);
+    return FILL("cb" + n, "把 " + n + " 塊 1 公分的積木排成一排，一共長幾公分？", cmBlocksSvg(n), n, "公分", "1 塊是 1 公分，" + n + " 塊就是 " + n + " 公分。");
+  });
+  T.push(function(r){ var n = R(r, 2, 14), pen = r() < .5, mx = Math.min(15, Math.max(10, n + 1));
+    return MC("rd" + n + pen, "這" + (pen ? "枝鉛筆" : "條緞帶") + "長幾公分？", rulerSvg(mx, { type:pen ? "pencil" : "ribbon", from:0, to:n }), n + " 公分", [(n + 1) + " 公分", (n - 1) + " 公分"], "從刻度 0 量到刻度 " + n + "，長 " + n + " 公分。", r);
+  });
+  T.push(function(r){ var a = R(r, 1, 8), b = R(r, a + 2, Math.min(a + 9, 14));
+    return FILL("rs" + a + "_" + b, "這條緞帶從刻度 " + a + " 量到刻度 " + b + "，長幾公分？", rulerSvg(Math.min(15, b + 1), { type:"ribbon", from:a, to:b }), b - a, "公分", b + " − " + a + " = " + (b - a) + "，長 " + (b - a) + " 公分。");
+  });
+  T.push(function(r){ var c = pick(r, CONC); return MC("cc" + c[0], c[0], "", c[1], c[2], c[3], r); });
+  T.push(function(r){ var it = pick(r, LEN_ITEMS);
+    return MC("es" + it[0], it[0] + "大約是多長？", "", it[1] + " 公分", [it[2][0] + " 公分", it[2][1] + " 公分"], it[0] + "大約是 " + it[1] + " 公分。", r);
+  });
+  T.push(function(r){ var tgt = pick(r, LEN_ITEMS), others = shuffle(r, LEN_ITEMS.filter(function(x){ return x !== tgt && x[1] !== tgt[1] && (x[1] >= tgt[1]*2.5 || x[1] <= tgt[1]/2.5); })).slice(0, 2);
+    return MC("er" + tgt[0] + others.map(function(o){ return o[0]; }), "哪一個東西大約是 " + tgt[1] + " 公分長？", "", tgt[0], others.map(function(o){ return o[0]; }), tgt[0] + "大約是 " + tgt[1] + " 公分。", r);
+  });
+  T.push(function(r){ var x = R(r, 5, 30), eqq = r() < .08, y = eqq ? x : R(r, 5, 30), big = r() < .5, right;
+    if(!eqq && x === y) y = x + 3;
+    right = eqq ? "一樣長" : ((x > y) === big ? "粉紅色" : "藍色");
+    return MC("bc" + x + "_" + y + big, "粉紅色緞帶長 " + x + " 公分，藍色緞帶長 " + y + " 公分。哪一條比較" + (big ? "長" : "短") + "？", barsSvg([[{ len:x, label:"粉紅 " + x + " 公分", short:x, cls:"seg-p" }], [{ len:y, label:"藍色 " + y + " 公分", short:y, cls:"seg-b" }]], Math.max(x, y)), right, ["粉紅色", "藍色", "一樣長"],
+      x === y ? "兩條都是 " + x + " 公分，一樣長。" : x + " 和 " + y + " 比，" + Math.max(x, y) + " 比較大，" + Math.min(x, y) + " 比較小。", r);
+  });
+  T.push(function(r){ var y = R(r, 5, 25), d = R(r, 2, 20), x = y + d;
+    return FILL("df" + x + "_" + y, "粉紅色緞帶長 " + x + " 公分，藍色緞帶長 " + y + " 公分。粉紅色比藍色長幾公分？", barsSvg([[{ len:x, label:"粉紅 " + x + " 公分", short:x, cls:"seg-p" }], [{ len:y, label:"藍色 " + y + " 公分", short:y, cls:"seg-b" }]], x), d, "公分", "比長多少要用減法。" + x + " − " + y + " = " + d + "。");
+  });
+  T.push(function(r){ var a = R(r, 8, 40), b = R(r, 8, 45), pair = pick(r, [["鉛筆", "橡皮擦"], ["緞帶", "繩子"], ["第一段", "第二段"], ["紅線", "藍線"]]);
+    return FILL("sm" + a + "_" + b + pair[0], pair[0] + "長 " + a + " 公分，" + pair[1] + "長 " + b + " 公分。接在一起，一共長幾公分？", barsSvg([[{ len:a, label:pair[0] + " " + a, short:a, cls:"seg-y" }, { len:b, label:pair[1] + " " + b, short:b, cls:"seg-b" }]], a + b), a + b, "公分", a + " + " + b + " = " + (a + b) + "。");
+  });
+  T.push(function(r){ var n = R(r, 25, 80), m = R(r, 8, Math.floor(n*0.7));
+    return FILL("ct" + n + "_" + m, "繩子長 " + n + " 公分，剪掉 " + m + " 公分，還剩幾公分？", barsSvg([[{ len:n - m, label:"還剩 ？", short:"？", cls:"seg-b" }, { len:m, label:"剪掉 " + m, short:m, cls:"seg-cut" }]], n), n - m, "公分", n + " − " + m + " = " + (n - m) + "。");
+  });
+  T.push(function(r){ var nm = pick(r, PIGN), an = pick(r, ["毛毛蟲", "小蝸牛", "螞蟻", "小烏龜"]), a = R(r, 8, 45), b = R(r, 8, 45);
+    return FILL("wk" + nm + an + a + "_" + b, an + "先爬了 " + a + " 公分，又爬了 " + b + " 公分。" + nm + "看到牠一共爬了幾公分？", "", a + b, "公分", a + " + " + b + " = " + (a + b) + "。");
+  });
+  T.push(function(r){ var tot = R(r, 20, 80), a = R(r, 8, tot - 6);
+    return FILL("nd" + tot + "_" + a, "緞帶長 " + a + " 公分，還要再接幾公分，才會有 " + tot + " 公分？", barsSvg([[{ len:a, label:a + " 公分", short:a, cls:"seg-y" }, { len:tot - a, label:"還要接 ？", short:"？", cls:"seg-cut" }]], tot), tot - a, "公分", tot + " − " + a + " = " + (tot - a) + "。");
+  });
+  return T;
+}
 
-  /* ================= 狀態與畫面 ================= */
-  var ZY = ["ㄅ","ㄆ","ㄇ"];
+/* ---------- 第四單元 加減應用 ---------- */
+function u4(){
+  var T = [];
+  T.push(function(r){ var w = R(r, 20, 99), a = R(r, 10, w - 8), nm = pick(r, PIGN), o = pick(r, OBJ);
+    return FILL("pu" + w + "_" + a + o[0], nm + "有 " + w + " " + o[1] + o[0] + "，其中 " + a + " " + o[1] + "是粉紅色的，其他的是藍色的。藍色的有幾" + o[1] + "？", pwSvg("全部 " + w, { len:a, label:"粉紅 " + a }, { len:w - a, label:"藍色 ？" }), w - a, o[1], "全部是 " + w + "，拿掉 " + a + "，用減法：" + w + " − " + a + " = " + (w - a) + "。");
+  });
+  T.push(function(r){ var a = R(r, 10, 60), b = R(r, 10, 99 - a), o = pick(r, OBJ), nm = twoOf(r, PIGN);
+    return FILL("wu" + a + "_" + b + o[0], nm[0] + "有 " + a + " " + o[1] + o[0] + "，" + nm[1] + "有 " + b + " " + o[1] + o[0] + "。合起來一共有幾" + o[1] + "？", pwSvg("全部 ？", { len:a, label:nm[0] + " " + a }, { len:b, label:nm[1] + " " + b }), a + b, o[1], "合起來用加法：" + a + " + " + b + " = " + (a + b) + "。");
+  });
+  T.push(function(r){ var a = R(r, 10, 60), b = R(r, 10, 99 - a), c = a + b, ask = r() < .5;
+    return MC("ri" + a + "_" + b + ask, a + " + " + b + " = " + c + "，下面哪一個算式也是對的？", "", ask ? c + " − " + a + " = " + b : c + " − " + b + " = " + a,
+      [c + " + " + a + " = " + b, a + " − " + b + " = " + c, b + " − " + c + " = " + a], "加法和減法是相反的。從全部 " + c + " 拿走一個部分，就會得到另一個部分。", r);
+  });
+  T.push(function(r){ var a = R(r, 10, 60), b = R(r, 10, 99 - a), c = a + b, ask = r() < .5;
+    return MC("sq" + a + "_" + b + ask, "因為 " + a + " + " + b + " = " + c + "，所以 " + c + " − " + (ask ? b : a) + " = ？", eq(a + " + " + b + " = " + c), ask ? a : b, ask ? [b, c] : [a, c], c + " − " + (ask ? b : a) + " = " + (ask ? a : b) + "。", r);
+  });
+  T.push(function(r){ var a = R(r, 10, 70), c = R(r, a + 5, 99), left = r() < .5;
+    return FILL("au" + a + "_" + c + left, "方塊裡要填多少？", eq(left ? a + " + " + bx() + " = " + c : bx() + " + " + a + " = " + c), c - a, "", "全部是 " + c + "，已經有 " + a + "，用減法：" + c + " − " + a + " = " + (c - a) + "。");
+  });
+  T.push(function(r){ var c = R(r, 30, 99), a = R(r, 10, c - 8), nm = pick(r, PIGN), o = pick(r, OBJ), v = lessVerb(r, o);
+    return FILL("su" + c + "_" + a + o[0], nm + "原來有 " + c + " " + o[1] + o[0] + "，" + v + "一些以後，還剩 " + a + " " + o[1] + "。" + v + "了幾" + o[1] + "？", eq(c + " − " + bx() + " = " + a), c - a, o[1], "減數未知：" + c + " − " + (c - a) + " = " + a + "。要求" + v + "多少，用 " + c + " − " + a + " = " + (c - a) + "。");
+  });
+  T.push(function(r){ var b = R(r, 10, 60), a = R(r, 10, 99 - b), nm = pick(r, PIGN), o = pick(r, OBJ), v = lessVerb(r, o);
+    return FILL("bu" + a + "_" + b + o[0], nm + "原來有一些" + o[0] + "，" + v + " " + b + " " + o[1] + "以後，還剩 " + a + " " + o[1] + "。原來有幾" + o[1] + "？", eq(bx() + " − " + b + " = " + a), a + b, o[1], "原來的 = 剩下的 + " + v + "的：" + a + " + " + b + " = " + (a + b) + "。");
+  });
+  T.push(function(r){ var a = R(r, 10, 60), b = R(r, 10, 99 - a), c = a + b;
+    return MC("vf" + a + "_" + b, "小豬算 " + c + " − " + b + " = " + a + "。要用「加法」驗算，哪一個算式對？", eq(c + " − " + b + " = " + a), a + " + " + b + " = " + c, [c + " + " + b, a + " − " + b, c + " + " + a], "減法的答案加上減數，要等於原來的數：" + a + " + " + b + " = " + c + "。", r);
+  });
+  T.push(function(r){ var nm = pick(r, PIGN), o = pick(r, OBJ), a = R(r, 10, 60), b = R(r, 5, 30), kind = R(r, 0, 3), text, right, exp;
+    if(kind === 0){ text = nm + "有 " + a + " " + o[1] + o[0] + "，又買了 " + b + " " + o[1] + "。現在有幾" + o[1] + "？"; right = "加法"; exp = "又買了，東西變多，用加法。"; }
+    else if(kind === 1){ text = nm + "有 " + (a + b) + " " + o[1] + o[0] + "，送給朋友 " + b + " " + o[1] + "。還剩幾" + o[1] + "？"; right = "減法"; exp = "送給朋友，東西變少，用減法。"; }
+    else if(kind === 2){ text = "全部有 " + (a + b) + " " + o[1] + o[0] + "，其中 " + a + " " + o[1] + "是粉紅色的。其他的有幾" + o[1] + "？"; right = "減法"; exp = "知道全部和一部分，求另一部分，用減法。"; }
+    else { text = nm + "有 " + a + " " + o[1] + o[0] + "，朋友給他 " + b + " " + o[1] + "。現在有幾" + o[1] + "？"; right = "加法"; exp = "朋友給他，東西變多，用加法。"; }
+    return MCF("ad" + kind + nm + o[0] + a + "_" + b, text + " 要用哪一種算法？", "", ["加法", "減法"], right === "加法" ? 0 : 1, exp);
+  });
+  T.push(function(r){ var c = R(r, 40, 99), b = R(r, 11, c - 11), x = c - b, good = r() < .5, shown = good ? x : x + pick(r, [10, 1, -1, -10]);
+    if(shown === x && !good) shown = x + 1;
+    return MCF("ck" + c + "_" + b + shown, "小明算 " + c + " − " + b + " = " + shown + "。他用加法驗算：" + shown + " + " + b + " = " + (shown + b) + "。結果和 " + c + " 一樣嗎？", "", ["一樣，算對了", "不一樣，算錯了"], (shown + b === c) ? 0 : 1,
+      shown + " + " + b + " = " + (shown + b) + "，" + (shown + b === c ? "和 " + c + " 一樣，所以算對了。" : "和 " + c + " 不一樣，所以算錯了。正確答案是 " + x + "。"));
+  });
+  T.push(function(r){ var w = R(r, 20, 99), a = R(r, 8, w - 6), who = pick(r, [["全班", "男生", "女生"], ["籃子裡", "紅色的", "黃色的"], ["盒子裡", "大的", "小的"]]);
+    return FILL("pt" + w + "_" + a + who[0], who[0] + "共有 " + w + " 個，其中" + who[1] + "有 " + a + " 個，" + who[2] + "有幾個？", pwSvg("全部 " + w, { len:a, label:who[1] + " " + a }, { len:w - a, label:who[2] + " ？" }), w - a, "個", w + " − " + a + " = " + (w - a) + "。");
+  });
+  T.push(function(r){ var w = R(r, 20, 99), a = R(r, 8, w - 6);
+    return FILL("sp" + w + "_" + a, w + " 可以分成 " + a + " 和幾？", eq(a + " + " + bx() + " = " + w), w - a, "", a + " + " + (w - a) + " = " + w + "。要算「" + w + " − " + a + "」。");
+  });
+  return T;
+}
+
+/* ---------- 第五單元 容量 ---------- */
+var CONT = ["水壺", "水桶", "魚缸", "花瓶", "水瓶", "鍋子"], CUPN = ["紅杯", "藍杯", "黃杯", "粉紅杯"];
+var VOL = [["湯匙", 1], ["養樂多瓶", 2], ["杯子", 3], ["湯碗", 4], ["寶特瓶", 5], ["水壺", 6], ["水桶", 7], ["浴缸", 8], ["游泳池", 9]];
+function u5(){
+  var T = [], LV = [0.2, 0.3, 0.4, 0.5, 0.6, 0.7, 0.8, 0.9];
+  T.push(function(r){ var l1 = pick(r, LV), l2 = pick(r, LV), more = r() < .5, ans = l1 === l2 ? 2 : ((l1 > l2) === more ? 0 : 1);
+    return MCF("cp" + l1 + "_" + l2 + more, "兩個杯子一樣大。哪一個杯子的水比較" + (more ? "多" : "少") + "？", cupsPair(l1, l2), ["A 杯", "B 杯", "一樣多"], ans, l1 === l2 ? "兩杯的水一樣高，一樣多。" : "杯子一樣大，水位比較高的，水比較多；水位比較低的，水比較少。");
+  });
+  T.push(function(r){ var W = [40, 52, 64, 76], H = [50, 66, 82, 98], a, b, g = 0, ans;
+    do { a = [pick(r, W), pick(r, H)]; b = [pick(r, W), pick(r, H)]; g++; } while(g < 100 && !((a[0] > b[0] && a[1] > b[1]) || (b[0] > a[0] && b[1] > a[1])));
+    ans = a[0] > b[0] ? 0 : 1;
+    return MCF("cs" + a + "_" + b, "A、B 兩個容器都裝滿了水。哪一個容器的容量比較大？", containerPair(a, b), ["A 容器", "B 容器", "一樣大"], ans, "又高又寬的容器，可以裝比較多的水，容量比較大。");
+  });
+  T.push(function(r){ var cs = twoOf(r, CONT), x = R(r, 3, 15), y = R(r, 3, 15), g = 0;
+    while(y === x && g++ < 30) y = R(r, 3, 15);
+    return MC("iu" + cs + x + y, "用同一種杯子量。" + cs[0] + "倒滿要 " + x + " 杯，" + cs[1] + "倒滿要 " + y + " 杯。哪一個的容量比較大？", "", x > y ? cs[0] : cs[1], [x > y ? cs[1] : cs[0], "一樣大"], "用同一種杯子量，杯數越多，容量越大。" + Math.max(x, y) + " 杯比 " + Math.min(x, y) + " 杯多。", r);
+  });
+  T.push(function(r){ var cs = twoOf(r, CUPN), x = R(r, 3, 15), y = R(r, 3, 15), ct = pick(r, CONT), g = 0;
+    while(y === x && g++ < 30) y = R(r, 3, 15);
+    return MC("dc" + cs + x + y + ct, "同一個" + ct + "，用" + cs[0] + "倒滿要 " + x + " 杯，用" + cs[1] + "倒滿要 " + y + " 杯。哪一種杯子的容量比較大？", "", x < y ? cs[0] : cs[1], [x < y ? cs[1] : cs[0], "一樣大"], "量同一個" + ct + "，用的杯數越少，表示杯子越大。" + Math.min(x, y) + " 杯比 " + Math.max(x, y) + " 杯少。", r);
+  });
+  T.push(function(r){ var a = R(r, 5, 12), b = R(r, 1, a - 1), ct = pick(r, CONT), more = r() < .5;
+    if(more) return FILL("rm" + a + "_" + b + ct, ct + "要倒 " + a + " 杯才會滿。現在已經倒了 " + b + " 杯，還要再倒幾杯？", cupsRow(a, b), a - b, "杯", a + " − " + b + " = " + (a - b) + "。");
+    var c = R(r, 1, 12 - b); return FILL("rp" + b + "_" + c + ct, "用杯子裝水，倒進空的" + ct + "裡。先倒了 " + b + " 杯，又倒了 " + c + " 杯。一共倒了幾杯？", cupsRow(b + c, b), b + c, "杯", b + " + " + c + " = " + (b + c) + "。");
+  });
+  T.push(function(r){ var xy = twoOf(r, ["矮胖的杯子", "細長的杯子", "寬口的碗", "小瓶子", "圓圓的杯子", "大水盆"]);
+    return MCF("kp" + xy, "把" + xy[0] + "裡的水，全部倒進" + xy[1] + "，沒有灑出來。水的量會怎麼樣？", "", ["一樣多", "變多了", "變少了"], 0, "只是換了容器，水看起來高低不同，水的量沒有變，還是一樣多。");
+  });
+  T.push(function(r){ var cs = shuffle(r, CONT).slice(0, 3), cnt = [], s = {}, v, big = r() < .5, idx;
+    while(cnt.length < 3){ v = R(r, 3, 15); if(!s[v]){ s[v] = 1; cnt.push(v); } }
+    idx = cnt.indexOf(big ? Math.max.apply(null, cnt) : Math.min.apply(null, cnt));
+    return MC("oc" + cs + cnt + big, "用同一種杯子量。" + cs[0] + "要 " + cnt[0] + " 杯，" + cs[1] + "要 " + cnt[1] + " 杯，" + cs[2] + "要 " + cnt[2] + " 杯。哪一個的容量最" + (big ? "大" : "小") + "？", "", cs[idx], cs.filter(function(x, i){ return i !== idx; }), "杯數最" + (big ? "多" : "少") + "的，容量最" + (big ? "大" : "小") + "。是 " + cnt[idx] + " 杯。", r);
+  });
+  T.push(function(r){ var x = R(r, 3, 12), d = R(r, 2, 8), cs = twoOf(r, CONT);
+    return FILL("dd" + x + "_" + d + cs, cs[0] + "倒滿要 " + x + " 杯，" + cs[1] + "倒滿要 " + (x + d) + " 杯。" + cs[1] + "比" + cs[0] + "多幾杯？", "", d, "杯", (x + d) + " − " + x + " = " + d + "。");
+  });
+  T.push(function(r){ var trio = shuffle(r, VOL).slice(0, 3), big = r() < .5, idx = 0, i;
+    for(i = 1; i < 3; i++) if(big ? trio[i][1] > trio[idx][1] : trio[i][1] < trio[idx][1]) idx = i;
+    return MC("rk" + trio.map(function(t){ return t[0]; }) + big, "下面哪一個東西的容量最" + (big ? "大" : "小") + "？", "", trio[idx][0], trio.filter(function(x, i){ return i !== idx; }).map(function(t){ return t[0]; }), trio[idx][0] + "的容量最" + (big ? "大" : "小") + "。", r);
+  });
+  T.push(function(r){ var x = R(r, 3, 12), d = R(r, 2, 8), cs = twoOf(r, CONT);
+    return FILL("mo" + x + "_" + d + cs, cs[1] + "倒滿的杯數，比" + cs[0] + "多 " + d + " 杯。" + cs[0] + "倒滿要 " + x + " 杯，" + cs[1] + "倒滿要幾杯？", "", x + d, "杯", x + " + " + d + " = " + (x + d) + "。");
+  });
+  var CONC = [
+    ["要比較兩個水瓶哪個裝得比較多，又不能把水倒來倒去，可以怎麼做？", "用同一個杯子分別量，比較杯數", ["看哪一個比較高", "看哪一個比較重"], "用同一個杯子分別量，杯數多的，容量大。"],
+    ["用杯子量水壺，每次都要把杯子裝得一樣滿嗎？", "要，每杯都要一樣滿", ["不用，隨便倒", "只要第一杯一樣滿"], "每一杯都要裝得一樣滿，量出來的杯數才準。"],
+    ["「容量」是指什麼？", "容器最多能裝多少東西", ["容器有多重", "容器有多高"], "容量是容器最多能裝的量。"],
+    ["兩個一樣大的杯子，水比較高的那一杯，水怎麼樣？", "比較多", ["比較少", "一樣多"], "杯子一樣大，水位越高，水越多。"],
+    ["用比較大的杯子去量同一個水壺，需要的杯數會怎麼樣？", "比較少", ["比較多", "一樣多"], "杯子越大，需要的杯數越少。"]
+  ];
+  T.push(function(r){ var c = pick(r, CONC); return MC("cc" + c[0], c[0], "", c[1], c[2], c[3], r); });
+  return T;
+}
+
+/* ---------- 第六單元 加減兩步驟 ---------- */
+function u6(){
+  var T = [], VERB = ["早上", "中午", "下午"];
+  function ex3(a, b, c, op1, op2){
+    var m = op1 === "+" ? a + b : a - b, f = op2 === "+" ? m + c : m - c;
+    return "先算 " + a + " " + (op1 === "+" ? "+" : "−") + " " + b + " = " + m + "，再算 " + m + " " + (op2 === "+" ? "+" : "−") + " " + c + " = " + f + "。";
+  }
+  function trip(r, op1, op2){
+    var g, a, b, c, m, f;
+    for(g = 0; g < 500; g++){
+      a = R(r, 10, 70); b = R(r, 5, 40); c = R(r, 5, 40);
+      m = op1 === "+" ? a + b : a - b; if(m < 1) continue;
+      f = op2 === "+" ? m + c : m - c;
+      if(f >= 1 && f <= 99) return [a, b, c, f];
+    }
+    return [30, 20, 10, 60];
+  }
+  var OPS = [["+", "+"], ["-", "-"], ["+", "-"], ["-", "+"]];
+  function story(nm, o, a, b, c, op1, op2){
+    var u = o[1], n = o[0];
+    if(op1 === "+" && op2 === "+") return nm + "早上收集 " + a + " " + u + n + "，中午收集 " + b + " " + u + "，下午又收集 " + c + " " + u + "。一共收集幾" + u + "？";
+    if(op1 === "-" && op2 === "-") return nm + "有 " + a + " " + u + n + "，送給朋友 " + b + " " + u + "，又送給弟弟 " + c + " " + u + "。還剩幾" + u + "？";
+    if(op1 === "+" && op2 === "-") return nm + "有 " + a + " " + u + n + "，又買了 " + b + " " + u + "，然後送給朋友 " + c + " " + u + "。現在有幾" + u + "？";
+    return nm + "有 " + a + " " + u + n + "，用掉 " + b + " " + u + "，後來又得到 " + c + " " + u + "。現在有幾" + u + "？";
+  }
+  function sym(o){ return o === "+" ? "+" : "−"; }
+  OPS.forEach(function(ops, k){
+    T.push(function(r){ var t = trip(r, ops[0], ops[1]), nm = pick(r, PIGN), o = pick(r, OBJ);
+      return FILL("st" + k + t + nm + o[0], story(nm, o, t[0], t[1], t[2], ops[0], ops[1]), "", t[3], o[1], ex3(t[0], t[1], t[2], ops[0], ops[1]));
+    });
+  });
+  T.push(function(r){ var k = R(r, 0, 3), ops = OPS[k], t = trip(r, ops[0], ops[1]);
+    return FILL("ex" + k + t, "算算看。", eq(t[0] + " " + sym(ops[0]) + " " + t[1] + " " + sym(ops[1]) + " " + t[2] + " = ？"), t[3], "", ex3(t[0], t[1], t[2], ops[0], ops[1]));
+  });
+  T.push(function(r){ var k = R(r, 0, 3), ops = OPS[k], t = trip(r, ops[0], ops[1]), nm = pick(r, PIGN), o = pick(r, OBJ), right = t[0] + " " + sym(ops[0]) + " " + t[1] + " " + sym(ops[1]) + " " + t[2], wr = [];
+    OPS.forEach(function(p, i){ if(i !== k) wr.push(t[0] + " " + sym(p[0]) + " " + t[1] + " " + sym(p[1]) + " " + t[2]); });
+    return MC("me" + k + t + nm + o[0], story(nm, o, t[0], t[1], t[2], ops[0], ops[1]).replace(/？$/, "？ 哪一個算式是對的？"), "", right, wr, "照著故事的順序列式：" + right + "。" + ex3(t[0], t[1], t[2], ops[0], ops[1]), r);
+  });
+  T.push(function(r){ var x1 = R(r, 1, 7), y1 = 10 - x1, x = R(r, 1, 7)*10 + x1, y = R(r, 1, 7)*10 + y1, z, g = 0, zo;
+    do { z = R(r, 11, 49); zo = z % 10; g++; } while(g < 50 && (zo === x1 || zo === y1 || zo + x1 === 10 || zo + y1 === 10));
+    var order = shuffle(r, [0, 1, 2]), nums = [x, y, z], arr = order.map(function(i){ return nums[i]; }), pos = { }, right, wr;
+    var p = function(i, j){ return arr[i] + " + " + arr[j]; };
+    var ix = arr.indexOf(x), iy = arr.indexOf(y), iz = arr.indexOf(z);
+    right = ix < iy ? x + " + " + y : y + " + " + x;
+    wr = [ix < iz ? x + " + " + z : z + " + " + x, iy < iz ? y + " + " + z : z + " + " + y];
+    return MC("gd" + arr, arr.join(" + ") + "，先算哪兩個數比較好算？", eq(arr.join(" + ")), right, wr, x + " + " + y + " = " + (x + y) + "，個位 " + x1 + " + " + y1 + " = 10，湊成整十，比較好算。三個數相加，換順序，和不會變。", r);
+  });
+  T.push(function(r){ var k = R(r, 0, 3), ops = OPS[k], t = trip(r, ops[0], ops[1]), m = ops[0] === "+" ? t[0] + t[1] : t[0] - t[1];
+    return FILL("fs" + k + t, t[0] + " " + sym(ops[0]) + " " + t[1] + " " + sym(ops[1]) + " " + t[2] + "，第一步 " + t[0] + " " + sym(ops[0]) + " " + t[1] + " 是多少？", eq(t[0] + " " + sym(ops[0]) + " " + t[1] + " " + sym(ops[1]) + " " + t[2]), m, "", t[0] + " " + sym(ops[0]) + " " + t[1] + " = " + m + "。" + ex3(t[0], t[1], t[2], ops[0], ops[1]));
+  });
+  T.push(function(r){ var k = R(r, 0, 3), ops = OPS[k], t = trip(r, ops[0], ops[1]), right = t[3];
+    return MC("mx" + k + t, t[0] + " " + sym(ops[0]) + " " + t[1] + " " + sym(ops[1]) + " " + t[2] + " = ？", "", right, [right + 10, right - 10, right + 1], ex3(t[0], t[1], t[2], ops[0], ops[1]), r);
+  });
+  T.push(function(r){ var a = R(r, 10, 40), b = R(r, 10, 30), c = R(r, 5, 30), d = c + R(r, 1, 9)*(r() < .5 ? 1 : -1), s;
+    if(d < 1) d = c + 3;
+    s = (a + b + c) > (a + b + d) ? ">" : ((a + b + c) < (a + b + d) ? "<" : "=");
+    return MCF("cp" + a + "_" + b + "_" + c + "_" + d, "在 ○ 裡選出正確的符號。", eq(a + " + " + b + " + " + c + " " + ci() + " " + a + " + " + b + " + " + d), [">", "<", "="], [">", "<", "="].indexOf(s), "前面 " + a + " + " + b + " 一樣，只要比 " + c + " 和 " + d + "。" + c + (c > d ? " 比 " : (c < d ? " 比 " : " 和 ")) + d + (c > d ? " 大。" : (c < d ? " 小。" : " 一樣大。")));
+  });
+  return T;
+}
+
+/* ---------- 第七、九單元 乘法 ---------- */
+var STORY_M = [["盒", "餅乾", "塊", 1], ["籃", "蘋果", "顆", 0], ["袋", "糖果", "顆", 2], ["盤", "包子", "個", 1], ["束", "小花", "朵", 0], ["排", "小豬", "隻", 3], ["桌", "小朋友", "位", 3], ["串", "葡萄", "顆", 2]];
+var PRICE_M = [["棒棒糖", "支"], ["橡皮擦", "個"], ["貼紙", "張"], ["布丁", "杯"], ["小餅乾", "包"], ["氣球", "個"]];
+function repAdd(a, b){ var s = [], i; for(i = 0; i < b; i++) s.push(a); return s.join(" + "); }
+function mulUnit(set, review){
+  var T = [];
+  function A(r){ return (review && r() < .22) ? pick(r, review) : pick(r, set); }
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9), st = pick(r, STORY_M), kind = st[3], show = a <= 9 && b <= 6;
+    return FILL("g" + a + "_" + b + st[0], "每" + st[0] + "有 " + a + " " + st[2] + st[1] + "，" + b + " " + st[0] + "一共有幾" + st[2] + "？", show ? groupsSvg(a, b, kind) : "", a*b, st[2], a + " × " + b + " = " + a*b + "。" + (b <= 6 ? repAdd(a, b) + " = " + a*b + "。" : ""));
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 1, 9);
+    return FILL("f" + a + "_" + b, "算算看。", eq(a + " × " + b + " = ？"), a*b, "", a + " × " + b + " 是 " + b + " 個 " + a + " 相加，答案是 " + a*b + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 1, 9), left = r() < .5;
+    return FILL("m" + a + "_" + b + left, "方塊裡要填多少？", eq(left ? a + " × " + bx() + " = " + a*b : bx() + " × " + b + " = " + a*b), left ? b : a, "", left ? a + " × " + b + " = " + a*b + "，所以方塊是 " + b + "。" : a + " × " + b + " = " + a*b + "，所以方塊是 " + a + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9), right = a*b;
+    return MC("c" + a + "_" + b, a + " × " + b + " = ？", "", right, [right - a, right + a, a + b === right ? right + 2 : a + b], a + " × " + b + " = " + right + "。", r);
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 6), right = repAdd(a, b), wr = [repAdd(a, b + 1), repAdd(a, b - 1 >= 2 ? b - 1 : b + 2), a + " + " + b];
+    return MC("r" + a + "_" + b, a + " × " + b + " 是「" + b + " 個 " + a + "」。哪一個算式的答案一樣？", "", right, wr, a + " × " + b + " 就是 " + right + "，" + right + " = " + a*b + "。", r);
+  });
+  T.push(function(r){ var a = A(r), q = R(r, 1, 4), list = [], i;
+    for(i = 1; i <= 5; i++) list.push(i - 1 === q ? "？" : a*i);
+    return FILL("s" + a + "_" + q, "每次都多 " + a + "，問號要填多少？", tiles(list), a*(q + 1), "", "每次多 " + a + "，所以問號是 " + a*(q + 1) + "。" + a + " × " + (q + 1) + " = " + a*(q + 1) + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9), pr = pick(r, PRICE_M);
+    return FILL("p" + a + "_" + b + pr[0], "一" + pr[1] + pr[0] + " " + a + " 元，買 " + b + " " + pr[1] + "，一共要多少元？", "", a*b, "元", a + " × " + b + " = " + a*b + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 6), nm = twoOf(r, PIGN), o = pick(r, OBJ);
+    return FILL("t" + a + "_" + b + nm + o[0], nm[0] + "有 " + a + " " + o[1] + o[0] + "，" + nm[1] + "的" + o[0] + "是" + nm[0] + "的 " + b + " 倍。" + nm[1] + "有幾" + o[1] + "？", b <= 5 ? barsSvg([[{ len:1, label:nm[0] + " " + a, short:a, cls:"seg-b" }], Array.apply(null, Array(b)).map(function(){ return { len:1, label:a, short:a, cls:"seg-p" }; })], b) : "", a*b, o[1], a + " 的 " + b + " 倍，就是 " + a + " × " + b + " = " + a*b + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 8), c = R(r, 1, 9), st = pick(r, STORY_M);
+    return FILL("x" + a + "_" + b + "_" + c + st[0], "每" + st[0] + "有 " + a + " " + st[2] + st[1] + "，" + b + " " + st[0] + "。再多 " + c + " " + st[2] + "，一共有幾" + st[2] + "？", "", a*b + c, st[2], a + " × " + b + " = " + a*b + "，再加 " + c + "：" + a*b + " + " + c + " = " + (a*b + c) + "。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9), right = a + " × " + b, o1 = R(r, 2, 9), o2 = R(r, 2, 9);
+    while(o1 === b) o1 = R(r, 2, 9); while(o2 === b || o2 === o1) o2 = R(r, 2, 9);
+    return MC("w" + a + "_" + b + o1 + o2, "下面哪一個算式的答案是 " + a*b + "？", "", right, [a + " × " + o1, a + " × " + o2], right + " = " + a*b + "。", r);
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9);
+    return FILL("rv" + a + "_" + b, a*b + " 是 " + a + " 的幾倍？", eq(a + " × " + bx() + " = " + a*b), b, "倍", a + " × " + b + " = " + a*b + "，所以 " + a*b + " 是 " + a + " 的 " + b + " 倍。");
+  });
+  T.push(function(r){ var a = A(r), b = R(r, 2, 9), c = A(r), d = R(r, 2, 9), g = 0;
+    while(g++ < 50 && (a*b === c*d)){ d = R(r, 2, 9); }
+    var big = r() < .5, right = ((a*b > c*d) === big) ? a + " × " + b : c + " × " + d;
+    if(a*b === c*d) return FILL("ff" + a + b, "算算看。", eq(a + " × " + b + " = ？"), a*b, "", a + " × " + b + " = " + a*b + "。");
+    return MC("cm" + a + "_" + b + "_" + c + "_" + d + big, a + " × " + b + " 和 " + c + " × " + d + "，哪一個算式的答案比較" + (big ? "大" : "小") + "？", "", right, [(((a*b > c*d) === big) ? c + " × " + d : a + " × " + b), "一樣大"], a + " × " + b + " = " + a*b + "，" + c + " × " + d + " = " + c*d + "。", r);
+  });
+  return T;
+}
+function u7(){ return mulUnit([2, 5, 4, 8], null); }
+function u9(){ return mulUnit([3, 6, 7, 9], [2, 5, 4, 8]); }
+
+/* ---------- 第八單元 時間 ---------- */
+function u8(){
+  var T = [], EV = ["看電影", "寫功課", "玩積木", "畫畫", "看故事書", "做點心"], MIN5 = [5, 10, 15, 20, 25, 30, 35, 40, 45, 50, 55];
+  T.push(function(r){ var h = R(r, 1, 12);
+    return MC("on" + h, "現在是幾時？", clockSvg(h, 0), h + " 時", [wrap12(h + 1) + " 時", wrap12(h - 1) + " 時", "12 時"], "分針指著 12，時針指著 " + h + "，是 " + h + " 時整。", r);
+  });
+  T.push(function(r){ var h = R(r, 1, 12);
+    return MC("hf" + h, "現在是幾時幾分？", clockSvg(h, 30), h + " 時 30 分", [wrap12(h + 1) + " 時 30 分", h + " 時 6 分"], "分針指著 6，是 30 分。時針剛過 " + h + "，所以是 " + h + " 時 30 分。", r);
+  });
+  T.push(function(r){ var h = R(r, 1, 12), m = pick(r, [5, 10, 15, 20, 25, 35, 40, 45, 50, 55]), k = m/5;
+    return MC("ay" + h + "_" + m, "現在是幾時幾分？", clockSvg(h, m), h + " 時 " + m + " 分", [h + " 時 " + k + " 分", wrap12(h + 1) + " 時 " + m + " 分", (k > 6 ? k - 6 : k + 6) + " 時 " + m + " 分"], "分針指著 " + k + "，每 1 大格是 5 分，" + k + " × 5 = " + m + " 分。時針剛過 " + h + "，所以是 " + h + " 時 " + m + " 分。", r);
+  });
+  T.push(function(r){ var k = R(r, 1, 11), h = R(r, 1, 12), m = k*5;
+    return FILL("mk" + k + "_" + h, "分針指到數字 " + k + "，表示幾分？", clockSvg(h, m), m, "分", "每 1 大格是 5 分。" + k + " × 5 = " + m + "，是 " + m + " 分。");
+  });
+  T.push(function(r){ var n = R(r, 1, 11);
+    return FILL("bg" + n, "分針走了 " + n + " 大格，是幾分鐘？", "", n*5, "分鐘", "1 大格是 5 分鐘。" + n + " × 5 = " + n*5 + "，是 " + n*5 + " 分鐘。");
+  });
+  T.push(function(r){ var h = R(r, 1, 12), m = pick(r, MIN5), k = m/5;
+    return MC("dg" + h + "_" + m, "數字鐘顯示 " + h + ":" + pad2(m) + "，是幾時幾分？", digital(h, m), h + " 時 " + m + " 分", [h + " 時 " + k + " 分", wrap12(h + 1) + " 時 " + m + " 分", m + " 時 " + h + " 分"], "數字鐘上，冒號左邊是時，右邊是分。" + h + ":" + pad2(m) + " 是 " + h + " 時 " + m + " 分。", r);
+  });
+  T.push(function(r){ var h = R(r, 1, 12), m = pick(r, MIN5), k = m/5;
+    return MC("mn" + h + "_" + m, "數字鐘是 " + h + ":" + pad2(m) + "，分針會指在哪一個數字？", digital(h, m), String(k), [m, h, k + 1 > 12 ? k - 1 : k + 1], m + " 分是 " + k + " 大格，分針指著數字 " + k + "。", r);
+  });
+  T.push(function(r){ var h = R(r, 1, 12), nx = wrap12(h + 1);
+    return MCF("hp" + h, "現在是 " + h + " 時 30 分，時針會在哪裡？", clockSvg(h, 30), ["剛好指著 " + h, "在 " + h + " 和 " + nx + " 中間", "剛好指著 " + nx], 1, "過了 " + h + " 時 30 分，已經走了半小時，時針走到 " + h + " 和 " + nx + " 的中間。");
+  });
+  T.push(function(r){ var h1 = R(r, 1, 8), d = R(r, 1, 4);
+    return FILL("eh" + h1 + "_" + d, "從 " + h1 + " 時到 " + (h1 + d) + " 時，經過了幾小時？", clockPair(h1, 0, h1 + d, 0), d, "小時", (h1 + d) + " − " + h1 + " = " + d + "，經過 " + d + " 小時。");
+  });
+  T.push(function(r){ var h = R(r, 1, 12), a = pick(r, [0, 5, 10, 15, 20, 25, 30]), b = pick(r, MIN5), g = 0;
+    while((b <= a) && g++ < 50) b = pick(r, MIN5);
+    if(b <= a) { a = 0; b = 30; }
+    return FILL("em" + h + "_" + a + "_" + b, "從 " + h + " 時 " + a + " 分到 " + h + " 時 " + b + " 分，經過了幾分鐘？", clockPair(h, a, h, b), b - a, "分鐘", b + " − " + a + " = " + (b - a) + "，經過 " + (b - a) + " 分鐘。");
+  });
+  T.push(function(r){ var h = R(r, 1, 8), x = R(r, 1, 3), ev = pick(r, EV), nm = pick(r, PIGN);
+    return FILL("en" + h + "_" + x + ev + nm, nm + "從 " + h + " 點開始" + ev + "，" + ev + "了 " + x + " 小時，結束時是幾點？", clockSvg(h, 0), h + x, "點", h + " + " + x + " = " + (h + x) + "，結束時是 " + (h + x) + " 點。");
+  });
+  T.push(function(r){ var h = R(r, 1, 12), m = pick(r, [5, 10, 15, 20, 25, 30]), d = pick(r, [5, 10, 15, 20, 25]);
+    if(m + d > 55) d = 5;
+    return FILL("pl" + h + "_" + m + "_" + d, "現在是 " + h + " 時 " + m + " 分，再過 " + d + " 分鐘，是 " + h + " 時幾分？", digital(h, m), m + d, "分", m + " + " + d + " = " + (m + d) + "，是 " + h + " 時 " + (m + d) + " 分。");
+  });
+  T.push(function(r){ var h1 = R(r, 1, 11), m1 = pick(r, [0, 15, 30, 45]), h2 = h1, m2 = pick(r, [0, 15, 30, 45]), early = r() < .5, g = 0;
+    if(r() < .5) h2 = h1 + 1;
+    while(h1 === h2 && m1 === m2 && g++ < 20) m2 = pick(r, [0, 15, 30, 45]);
+    if(h1 === h2 && m1 === m2) m2 = (m1 + 15) % 60;
+    var t1 = h1 + ":" + pad2(m1), t2 = h2 + ":" + pad2(m2), first = (h1*60 + m1) < (h2*60 + m2);
+    return MC("cp" + t1 + "_" + t2 + early, t1 + " 和 " + t2 + "，哪一個時刻比較" + (early ? "早" : "晚") + "？", "", (first === early) ? t1 : t2, [first === early ? t2 : t1], "先比時，時一樣再比分。比較" + (early ? "早" : "晚") + "的是 " + ((first === early) ? t1 : t2) + "。", r);
+  });
+  var CONC = [
+    ["1 小時是多少分鐘？", "60 分鐘", ["30 分鐘", "100 分鐘"], "1 小時 = 60 分鐘。"],
+    ["半小時是多少分鐘？", "30 分鐘", ["60 分鐘", "15 分鐘"], "半小時是 1 小時的一半，也就是 30 分鐘。"],
+    ["鐘面上，短短的針叫什麼？", "時針", ["分針", "秒針"], "短的針是時針，長的針是分針。"],
+    ["鐘面上，長長的針叫什麼？", "分針", ["時針", "指針"], "長的針是分針，用來看幾分。"],
+    ["時針走 1 大格，經過多久？", "1 小時", ["5 分鐘", "30 分鐘"], "時針走 1 大格是 1 小時。"],
+    ["分針走 1 大格，經過多久？", "5 分鐘", ["1 小時", "10 分鐘"], "分針走 1 大格是 5 分鐘。"]
+  ];
+  T.push(function(r){ var c = pick(r, CONC); return MC("cc" + c[0], c[0], "", c[1], c[2], c[3], r); });
+  return T;
+}
+
+/* ---------- 第十單元 面的大小比較 ---------- */
+function u10(){
+  var T = [], SURF = ["桌面", "地毯", "桌巾", "紙板", "地板"];
+  T.push(function(r){ var n = R(r, 4, 13), cells = genShape(r, n, 5, 4);
+    return FILL("ct" + shapeKey(cells), "每一格一樣大。這個圖形佔了幾格？", shapesSvg([{ cells:cells, cls:"cA", label:"" }], 26, 5, 4), n, "格", "一格一格數，共 " + n + " 格。");
+  });
+  T.push(function(r){ var a = R(r, 3, 12), b = r() < .2 ? a : R(r, 3, 12), more = r() < .5, ca = genShape(r, a, 5, 4), cb = genShape(r, b, 5, 4), ans = a === b ? 2 : ((a > b) === more ? 0 : 1);
+    return MCF("cm" + shapeKey(ca) + "_" + shapeKey(cb) + more, "每一格一樣大。哪一個圖形的面比較" + (more ? "大" : "小") + "？", shapesSvg([{ cells:ca, cls:"cA", label:"A" }, { cells:cb, cls:"cB", label:"B" }], 20, 5, 4), ["A", "B", "一樣大"], ans, "A 有 " + a + " 格，B 有 " + b + " 格。" + (a === b ? "一樣大。" : "格數比較" + (more ? "多" : "少") + "的，面比較" + (more ? "大" : "小") + "。"));
+  });
+  T.push(function(r){ var b = R(r, 3, 9), d = R(r, 1, 4), a = b + d, ca = genShape(r, a, 5, 4), cb = genShape(r, b, 5, 4);
+    return FILL("df" + shapeKey(ca) + "_" + shapeKey(cb), "每一格一樣大。A 比 B 大幾格？", shapesSvg([{ cells:ca, cls:"cA", label:"A" }, { cells:cb, cls:"cB", label:"B" }], 20, 5, 4), d, "格", "A 有 " + a + " 格，B 有 " + b + " 格。" + a + " − " + b + " = " + d + "。");
+  });
+  T.push(function(r){ var a = R(r, 3, 9), b = R(r, 3, 9), ca = genShape(r, a, 5, 4), cb = genShape(r, b, 5, 4);
+    return FILL("sm" + shapeKey(ca) + "_" + shapeKey(cb), "每一格一樣大。A 和 B 合起來，一共有幾格？", shapesSvg([{ cells:ca, cls:"cA", label:"A" }, { cells:cb, cls:"cB", label:"B" }], 20, 5, 4), a + b, "格", "A 有 " + a + " 格，B 有 " + b + " 格。" + a + " + " + b + " = " + (a + b) + "。");
+  });
+  T.push(function(r){ var rowsN = R(r, 2, 5), colsN = R(r, 3, 6), cs = 28;
+    return FILL("rg" + rowsN + "_" + colsN, "每一排有 " + colsN + " 格，一共有 " + rowsN + " 排。這個長方形一共有幾格？", rectGridSvg(rowsN, colsN, cs), rowsN*colsN, "格", colsN + " × " + rowsN + " = " + rowsN*colsN + "，一共 " + rowsN*colsN + " 格。");
+  });
+  T.push(function(r){ var tall = r() < .5, blueBig = r() < .5, names = blueBig ? ["藍色的紙", "粉紅色的紙"] : ["粉紅色的紙", "藍色的紙"];
+    return MC("ov" + tall + blueBig, "把兩張紙疊在一起，小張的紙完全被蓋在大張的紙上面。哪一張紙的面比較大？", overlaySvg(blueBig ? "cA" : "cB", blueBig ? "cB" : "cA", tall), names[0], [names[1], "一樣大"], "被蓋住的比較小，蓋在外面的那張比較大。", r);
+  });
+  T.push(function(r){ var s = pick(r, SURF), x = R(r, 6, 30), y = R(r, 6, 30), g = 0;
+    while(y === x && g++ < 30) y = R(r, 6, 30);
+    return MCF("tl" + s + x + "_" + y, "用同樣大的磁磚鋪。A " + s + "要 " + x + " 塊，B " + s + "要 " + y + " 塊。哪一個" + s + "的面比較大？", "", ["A", "B", "一樣大"], x > y ? 0 : 1, "磁磚一樣大，用的塊數越多，面越大。" + Math.max(x, y) + " 比 " + Math.min(x, y) + " 多。");
+  });
+  T.push(function(r){ var s = pick(r, SURF), x = R(r, 6, 30), bigger = r() < .5;
+    return MCF("tu" + s + x + bigger, "用小方塊鋪滿同一個" + s + "，要 " + x + " 塊。改用比較" + (bigger ? "大" : "小") + "的方塊來鋪，需要的塊數會怎麼樣？", "", ["比 " + x + " 塊多", "比 " + x + " 塊少", "還是 " + x + " 塊"], bigger ? 1 : 0, "方塊變" + (bigger ? "大" : "小") + "了，需要的塊數會變" + (bigger ? "少" : "多") + "。");
+  });
+  T.push(function(r){ var vals = [], s = {}, v, ls = ["A", "B", "C"], cls = ["cA", "cB", "cC"], shapes, big = r() < .5, order, right, wr, all;
+    while(vals.length < 3){ v = R(r, 3, 11); if(!s[v]){ s[v] = 1; vals.push(v); } }
+    shapes = vals.map(function(n, i){ return { cells:genShape(r, n, 5, 4), cls:cls[i], label:ls[i] }; });
+    order = [0, 1, 2].sort(function(x, y){ return vals[x] - vals[y]; }); if(big) order.reverse();
+    right = order.map(function(i){ return ls[i]; }).join("、");
+    all = [[0,1,2],[0,2,1],[1,0,2],[1,2,0],[2,0,1],[2,1,0]].map(function(p){ return p.map(function(i){ return ls[i]; }).join("、"); }).filter(function(x){ return x !== right; });
+    return MC("or" + shapes.map(function(x){ return shapeKey(x.cells); }).join("_") + big, "每一格一樣大。把 A、B、C 的面，從" + (big ? "大排到小" : "小排到大") + "，哪一個是對的？", shapesSvg(shapes, 15, 5, 4), right, shuffle(r, all).slice(0, 2), "A 有 " + vals[0] + " 格，B 有 " + vals[1] + " 格，C 有 " + vals[2] + " 格。從" + (big ? "大排到小" : "小排到大") + "是 " + right + "。", r);
+  });
+  T.push(function(r){ var vals = [], s = {}, v, ls = ["A", "B", "C"], cls = ["cA", "cB", "cC"], shapes, big = r() < .5, idx = 0, i;
+    while(vals.length < 3){ v = R(r, 3, 11); if(!s[v]){ s[v] = 1; vals.push(v); } }
+    shapes = vals.map(function(n, k){ return { cells:genShape(r, n, 5, 4), cls:cls[k], label:ls[k] }; });
+    for(i = 1; i < 3; i++) if(big ? vals[i] > vals[idx] : vals[i] < vals[idx]) idx = i;
+    return MC("mo" + shapes.map(function(x){ return shapeKey(x.cells); }).join("_") + big, "每一格一樣大。哪一個圖形的面最" + (big ? "大" : "小") + "？", shapesSvg(shapes, 15, 5, 4), ls[idx], ls.filter(function(x, k){ return k !== idx; }), "A 有 " + vals[0] + " 格，B 有 " + vals[1] + " 格，C 有 " + vals[2] + " 格。格數最" + (big ? "多" : "少") + "的是 " + ls[idx] + "。", r);
+  });
+  var CONC = [
+    ["兩個圖形不能疊在一起比，可以怎麼比大小？", "用一樣大的小方格去鋪，比較格數", ["看誰的邊比較彎", "看誰的顏色比較深"], "用一樣大的小方格鋪滿，再比較格數。"],
+    ["「面的大小」是在比什麼？", "平面佔了多大的地方", ["東西有多重", "東西有多高"], "面的大小，是比平面佔了多大的地方。"],
+    ["A 紙完全蓋住 B 紙，沒有露出來。哪一張的面比較大？", "A 紙", ["B 紙", "一樣大"], "蓋在外面、完全蓋住別人的，面比較大。"],
+    ["用同樣大的方格比面，哪一個的面比較大？", "格數比較多的", ["格數比較少的", "形狀比較圓的"], "格子一樣大時，格數越多，面越大。"]
+  ];
+  T.push(function(r){ var c = pick(r, CONC); return MC("cc" + c[0], c[0], "", c[1], c[2], c[3], r); });
+  return T;
+}
+
+/* =====================================================================
+   五、組成題庫：每單元 100 題，內容固定、順序固定
+   ===================================================================== */
+var UNIT_FACTORIES = [u1, u2, u3, u4, u5, u6, u7, u8, u9, u10];
+var BANKCACHE = {};
+function buildBank(id){
+  var tpls = UNIT_FACTORIES[id - 1](), r = mulberry32(id*7919 + 13), seen = {}, out = [], guard = 0, q, i, key;
+  while(out.length < 100 && guard < 20000){
+    i = guard % tpls.length; guard++;
+    q = tpls[i](r); key = i + "|" + q.key + "|" + q.text;
+    if(seen[key]) continue;
+    seen[key] = 1; q.tpl = i; out.push(q);
+  }
+  return out;
+}
+function getBank(id){ if(!BANKCACHE[id]) BANKCACHE[id] = buildBank(id); return BANKCACHE[id]; }
+
+/*==DOM==*/
+(function(){
+  var UNITS = [
+    { id:1, no:"單元一", name:"200以內的數", sub:"數到 200・位值・付錢・比大小" },
+    { id:2, no:"單元二", name:"二位數的加減法", sub:"直式加法・直式減法・大於小於" },
+    { id:3, no:"單元三", name:"認識公分", sub:"個別單位・公分尺・量一量・長度加減" },
+    { id:4, no:"單元四", name:"加減應用", sub:"加減關係・驗算・求未知數" },
+    { id:5, no:"單元五", name:"容量", sub:"認識容量・直接與間接比較" },
+    { id:6, no:"單元六", name:"加減兩步驟", sub:"三數連加・連減・加減混合" },
+    { id:7, no:"單元七", name:"乘法（一）", sub:"幾的幾倍・2、5、4、8 的乘法" },
+    { id:8, no:"單元八", name:"時間", sub:"認識鐘面・報讀時刻・經過的時間" },
+    { id:9, no:"單元九", name:"乘法（二）", sub:"3、6、7、9 的乘法・乘法應用" },
+    { id:10, no:"單元十", name:"面的大小比較", sub:"直接比較・用格子比較面的大小" }
+  ];
+  var ZY = ["ㄅ", "ㄆ", "ㄇ"];
   var $ = function(id){ return document.getElementById(id); };
   var reduce = false;
   try { reduce = window.matchMedia("(prefers-reduced-motion: reduce)").matches; } catch(e){}
-  var cur = { lesson:null, idx:0, marks:[], answered:false };
+  var cur = { unit:null, qs:[], idx:0, marks:[], answered:false };
 
   function getBest(){ try { return JSON.parse(localStorage.getItem("math2-best") || "{}"); } catch(e){ return {}; } }
   function saveBest(id, score){
-    try {
-      var b = getBest();
-      if(b[id] === undefined || score > b[id]){ b[id] = score; localStorage.setItem("math2-best", JSON.stringify(b)); }
-    } catch(e){}
+    try { var b = getBest(); if(b[id] === undefined || score > b[id]){ b[id] = score; localStorage.setItem("math2-best", JSON.stringify(b)); } } catch(e){}
   }
+  function loadSeen(id){ try { var s = JSON.parse(localStorage.getItem("math2-seen-" + id) || "[]"); return Array.isArray(s) ? s : []; } catch(e){ return []; } }
+  function saveSeen(id, list){ try { localStorage.setItem("math2-seen-" + id, JSON.stringify(list)); } catch(e){} }
+
+  /* 每次從 100 題隨機抽 10 題；盡量不重複上一次看過的題目 */
+  function pickTen(id){
+    var bank = getBank(id), all = [], i, seen = loadSeen(id), pool, chosen = [], count = {}, rest = [];
+    for(i = 0; i < bank.length; i++) all.push(i);
+    pool = all.filter(function(k){ return seen.indexOf(k) < 0; });
+    if(pool.length < 10){ seen = []; pool = all.slice(); }
+    pool = shuffle(Math.random, pool);
+    pool.forEach(function(k){
+      var t = bank[k].tpl;
+      if(chosen.length < 10 && (count[t] || 0) < 2){ chosen.push(k); count[t] = (count[t] || 0) + 1; } else rest.push(k);
+    });
+    while(chosen.length < 10 && rest.length) chosen.push(rest.shift());
+    saveSeen(id, seen.concat(chosen));
+    return shuffle(Math.random, chosen).map(function(k){ return bank[k]; });
+  }
+
   function show(name){
-    ["home","quiz","result"].forEach(function(n){ $(n).hidden = (n !== name); });
+    ["home", "quiz", "result"].forEach(function(n){ $(n).hidden = (n !== name); });
     try { window.scrollTo(0, 0); } catch(e){}
   }
 
   function renderHome(){
-    $("heroMascot").innerHTML = chick("cheer");
+    $("heroPig").innerHTML = pig("happy");
     var best = getBest();
-    $("lessonList").innerHTML = LESSONS.map(function(L, i){
-      var b = best[L.id];
-      var label = ["第一課","第二課","第三課"][i];
-      return '<button type="button" class="lesson ' + L.cls + '" data-lesson="' + L.id + '">' +
-        ICONS[L.id] +
-        '<div><p class="no">' + label + '</p><p class="nm">' + L.name + '</p><p class="best">' + (b === undefined ? "10 題 · 還沒玩過" : "10 題 · 最佳 " + b + " 題答對") + '</p></div>' +
-        '<span class="go">開始</span></button>';
+    $("lessonList").innerHTML = UNITS.map(function(U, i){
+      var b = best[U.id];
+      return '<button type="button" class="lesson l' + (i % 3 + 1) + '" data-unit="' + U.id + '">' + unitIcon(U.id) +
+        '<div><p class="no">' + U.no + '</p><p class="nm">' + U.name + '</p><p class="sub">' + U.sub + '</p><p class="best">' +
+        (b === undefined ? "還沒玩過" : "最佳成績　<span class=\"num\">" + b + " / 10</span>") + '</p></div></button>';
     }).join("");
   }
 
-  function startLesson(id){
-    cur.lesson = LESSONS.filter(function(L){ return L.id === id; })[0];
-    cur.idx = 0; cur.marks = [];
-    $("qLesson").textContent = ["第一課","第二課","第三課"][id - 1] + "　" + cur.lesson.name;
+  function startUnit(id){
+    cur.unit = UNITS.filter(function(U){ return U.id === id; })[0];
+    cur.qs = pickTen(id); cur.idx = 0; cur.marks = [];
+    $("qLesson").textContent = cur.unit.no + "　" + cur.unit.name;
     show("quiz");
     renderQuestion();
   }
@@ -533,7 +1303,7 @@ h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:ba
   }
 
   function renderQuestion(){
-    var q = cur.lesson.qs[cur.idx];
+    var q = cur.qs[cur.idx], box = $("qAnswer"), inp;
     cur.answered = false;
     renderProgress();
     $("qNum").textContent = "第 " + (cur.idx + 1) + " 題";
@@ -541,122 +1311,106 @@ h1{margin:0; font-size:clamp(1.8rem, 7vw, 2.4rem); line-height:1.2; text-wrap:ba
     $("qArt").innerHTML = q.art || "";
     $("qArt").hidden = !q.art;
     var fb = $("feedback"); fb.hidden = true; fb.innerHTML = "";
-    var box = $("qAnswer");
     if(q.t === "mc"){
+      var isNum = q.ch.every(function(c){ return /^[0-9 .+\-−×<>=、:]+$/.test(c); });
       box.innerHTML = '<div class="choices">' + q.ch.map(function(c, i){
-        return '<button type="button" class="choice" data-i="' + i + '"><span class="zy">' + ZY[i] + '</span><span class="tx">' + c + '</span></button>';
+        return '<button type="button" class="choice" data-i="' + i + '"><span class="zy">' + ZY[i] + '</span><span class="tx' + (isNum ? "" : " cn") + '">' + c + '</span></button>';
       }).join("") + '</div>';
     } else {
       box.innerHTML = '<form class="fill" id="fillForm" autocomplete="off">' +
         '<span class="fill-lab">把答案寫在這裡</span>' +
         '<div class="fill-row"><input id="fillInput" type="text" inputmode="numeric" pattern="[0-9]*" maxlength="3" aria-label="答案"><span>' + (q.unit || "") + '</span></div>' +
         '<button id="checkBtn" class="primary" type="submit" disabled>檢查答案</button></form>';
-      var inp = $("fillInput");
-      inp.addEventListener("input", function(){
-        inp.value = inp.value.replace(/[^0-9]/g, "");
-        $("checkBtn").disabled = inp.value === "";
-      });
+      inp = $("fillInput");
+      inp.addEventListener("input", function(){ inp.value = inp.value.replace(/[^0-9]/g, ""); $("checkBtn").disabled = inp.value === ""; });
       $("fillForm").addEventListener("submit", function(ev){
         ev.preventDefault();
         if(cur.answered || inp.value === "") return;
         var ok = Number(inp.value) === Number(q.a);
-        inp.className = ok ? "correct" : "wrong";
-        inp.disabled = true; $("checkBtn").disabled = true;
+        inp.className = ok ? "correct" : "wrong"; inp.disabled = true; $("checkBtn").disabled = true;
         finishQuestion(ok, q.a + (q.unit ? " " + q.unit : ""));
       });
-      try { inp.focus({preventScroll:true}); } catch(e){}
+      try { inp.focus({ preventScroll:true }); } catch(e){}
     }
   }
 
   function finishQuestion(ok, answerText){
-    var q = cur.lesson.qs[cur.idx];
-    cur.answered = true;
-    cur.marks.push(ok);
-    renderProgress();
-    var last = cur.idx === 9;
-    var fb = $("feedback");
-    var praise = ["答對了！","好棒喔！","太厲害了！","你好聰明！"][cur.idx % 4];
+    var q = cur.qs[cur.idx], last = cur.idx === 9, fb = $("feedback");
+    cur.answered = true; cur.marks.push(ok); renderProgress();
+    var praise = ["答對了！", "好棒喔！", "太厲害了！", "你好聰明！"][cur.idx % 4];
     fb.className = "feedback " + (ok ? "ok" : "no");
     fb.innerHTML =
-      '<span class="' + (reduce ? "" : (ok ? "bounce" : "shake")) + '">' + chick(ok ? "cheer" : "oops") + '</span>' +
+      '<div class="fp ' + (reduce ? "" : (ok ? "bounce" : "shake")) + '">' + pig(ok ? "cheer" : "oops") + '</div>' +
       '<div><h3>' + (ok ? praise : "再看看喔，沒關係！") + '</h3>' +
-      '<p>' + (ok ? "" : "正確答案是 <b>" + answerText + "</b>。") + q.exp + '</p></div>' +
+      '<p>' + (ok ? "" : "正確答案是 <span class=\"num\">" + answerText + "</span>。") + q.exp + '</p></div>' +
       '<button type="button" class="primary" id="nextBtn">' + (last ? "看成績" : "下一題") + '</button>';
     fb.hidden = false;
-    try { fb.scrollIntoView({behavior: reduce ? "auto" : "smooth", block:"nearest"}); } catch(e){}
+    try { fb.scrollIntoView({ behavior:reduce ? "auto" : "smooth", block:"nearest" }); } catch(e){}
     $("nextBtn").addEventListener("click", function(){
-      if(last){ renderResult(); } else { cur.idx++; renderQuestion(); try { window.scrollTo(0,0); } catch(e){} }
+      if(last){ renderResult(); } else { cur.idx++; renderQuestion(); try { window.scrollTo(0, 0); } catch(e){} }
     });
   }
 
   function renderResult(){
     var score = cur.marks.filter(function(m){ return m; }).length;
-    saveBest(cur.lesson.id, score);
+    saveBest(cur.unit.id, score);
     var n = score >= 9 ? 3 : (score >= 6 ? 2 : 1);
     var msg = score >= 9 ? "太厲害了！你是數學小達人！" : (score >= 6 ? "很棒喔！再練習一次會更好！" : "加油！多玩幾次就會進步！");
     var starPath = "M30 6l7.2 15.4 16.8 2-12.4 11.5 3.4 16.6L30 43l-15 8.5 3.4-16.6L6 23.4l16.8-2z";
-    var stars = [1,2,3].map(function(i){
-      return '<svg viewBox="0 0 60 56" aria-hidden="true"><path d="' + starPath + '" class="' + (i <= n ? "star-on" : "star-off") + '"/></svg>';
-    }).join("");
+    var stars = [1, 2, 3].map(function(i){ return '<svg viewBox="0 0 60 56" aria-hidden="true"><path d="' + starPath + '" class="' + (i <= n ? "star-on" : "star-off") + '"/></svg>'; }).join("");
     var wrong = [];
     cur.marks.forEach(function(m, i){
       if(!m){
-        var q = cur.lesson.qs[i];
-        var ans = q.t === "mc" ? q.ch[q.a] : q.a + (q.unit ? " " + q.unit : "");
-        wrong.push('<div class="rv"><small>第 ' + (i + 1) + ' 題</small>' + q.text + '<br>正確答案：<b>' + ans + '</b></div>');
+        var q = cur.qs[i], ans = q.t === "mc" ? q.ch[q.a] : q.a + (q.unit ? " " + q.unit : "");
+        wrong.push('<div class="rv"><small>第 ' + (i + 1) + ' 題</small>' + q.text + '<br>正確答案：<span class="ansn">' + ans + '</span></div>');
       }
     });
-    var nextLesson = LESSONS.filter(function(L){ return L.id === cur.lesson.id + 1; })[0];
+    var next = UNITS.filter(function(U){ return U.id === cur.unit.id + 1; })[0];
     $("resBox").innerHTML =
-      '<span class="' + (reduce ? "" : "bounce") + '">' + chick(score >= 6 ? "cheer" : "happy").replace("<svg ", '<svg class="mas" ') + '</span>' +
+      '<div class="rp ' + (reduce ? "" : "bounce") + '">' + pig(score >= 6 ? "cheer" : "happy") + '</div>' +
       '<h2>' + msg + '</h2>' +
       '<div class="stars" role="img" aria-label="得到 ' + n + ' 顆星">' + stars + '</div>' +
       '<p class="score">答對 ' + score + ' / 10 題</p>' +
-      (wrong.length ? '<div class="review"><h3>這幾題再看一次：</h3>' + wrong.join("") + '</div>' : '<p>10 題全部答對，沒有要複習的題目！</p>') +
-      '<div class="actions"><button type="button" class="primary" id="againBtn">再玩一次</button>' +
-      (nextLesson ? '<button type="button" class="secondary" id="nextLessonBtn">下一課</button>' : '') +
+      (wrong.length ? '<div class="review"><h3>這幾題再看一次</h3>' + wrong.join("") + '</div>' : '<p>10 題全部答對，沒有要複習的題目！</p>') +
+      '<div class="actions"><button type="button" class="primary" id="againBtn">再抽 10 題</button>' +
+      (next ? '<button type="button" class="secondary" id="nextUnitBtn">下一個單元</button>' : '') +
       '<button type="button" class="secondary" id="homeBtn">回選單</button></div>';
     show("result");
-    $("againBtn").addEventListener("click", function(){ startLesson(cur.lesson.id); });
-    if(nextLesson){ $("nextLessonBtn").addEventListener("click", function(){ startLesson(nextLesson.id); }); }
+    $("againBtn").addEventListener("click", function(){ startUnit(cur.unit.id); });
+    if(next){ $("nextUnitBtn").addEventListener("click", function(){ startUnit(next.id); }); }
     $("homeBtn").addEventListener("click", goHome);
   }
 
   function goHome(){ renderHome(); show("home"); }
 
-  /* ================= 事件 ================= */
   $("lessonList").addEventListener("click", function(ev){
-    var b = ev.target.closest("[data-lesson]");
-    if(b) startLesson(Number(b.getAttribute("data-lesson")));
+    var b = ev.target.closest("[data-unit]");
+    if(b) startUnit(Number(b.getAttribute("data-unit")));
   });
   $("backBtn").addEventListener("click", goHome);
   $("qAnswer").addEventListener("click", function(ev){
     var b = ev.target.closest(".choice");
     if(!b || cur.answered) return;
-    var q = cur.lesson.qs[cur.idx], i = Number(b.getAttribute("data-i")), ok = i === q.a;
-    var all = $("qAnswer").querySelectorAll(".choice");
-    all.forEach(function(el, k){
+    var q = cur.qs[cur.idx], i = Number(b.getAttribute("data-i")), ok = i === q.a;
+    $("qAnswer").querySelectorAll(".choice").forEach(function(el, k){
       el.disabled = true;
-      if(k === q.a) el.classList.add("correct");
-      else if(k === i) el.classList.add("wrong");
+      if(k === q.a) el.classList.add("correct"); else if(k === i) el.classList.add("wrong");
     });
     finishQuestion(ok, q.ch[q.a]);
   });
 
-  /* 唸題目 */
   var canSpeak = false;
   try { canSpeak = "speechSynthesis" in window && typeof SpeechSynthesisUtterance !== "undefined"; } catch(e){}
   if(!canSpeak){ $("speakBtn").hidden = true; }
   $("speakBtn").addEventListener("click", function(){
     try {
-      var q = cur.lesson.qs[cur.idx];
-      window.speechSynthesis.cancel();
-      var u = new SpeechSynthesisUtterance(q.text);
-      u.lang = "zh-TW"; u.rate = 0.85;
-      window.speechSynthesis.speak(u);
+      var u = new SpeechSynthesisUtterance(cur.qs[cur.idx].text.replace(/[×]/g, "乘").replace(/[−]/g, "減").replace(/[+]/g, "加"));
+      window.speechSynthesis.cancel(); u.lang = "zh-TW"; u.rate = 0.85; window.speechSynthesis.speak(u);
     } catch(e){}
   });
 
   renderHome();
 })();
 </script>
+</body>
+</html>
